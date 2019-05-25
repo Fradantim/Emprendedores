@@ -1,7 +1,6 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.persistence.entities.Ubicacion;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
@@ -25,7 +25,7 @@ import com.tmi.emprendedores.service.UsuarioService;
 import com.tmi.emprendedores.validator.UsuarioValidator;
 
 @Controller
-public class UsuarioController {
+public class UsuarioController extends WebController{
     
 	@Autowired
     private UsuarioService usuarioService;
@@ -35,6 +35,11 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioValidator usuarioValidator;
+    
+    @GetMapping({WebUtils.MAPPING_ROOT, WebUtils.MAPPING_PORTAL})
+    public String welcome(Model model) {
+        return Page.PORTAL.getFile();
+    }
 
     @GetMapping(WebUtils.MAPPING_LOGBOX)
     public String getLogBox(Model model) {
@@ -48,7 +53,7 @@ public class UsuarioController {
      */
     @GetMapping(WebUtils.MAPPING_GET_USUARIO)
     public void getUsuarioLogueado(Model model, Principal principal) {
-    	addUsuarioLogueado(model, usuarioService.findByUsername(principal.getName()));
+    	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
     }
     
     private void addUsuarioLogueado(Model model, Usuario usuario) {
@@ -64,7 +69,7 @@ public class UsuarioController {
     
     @GetMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
     public String goToModificarUsuario(Model model, Principal principal) {
-    	model.addAttribute("usuarioLogueado", usuarioService.findByUsername(principal.getName()));
+    	model.addAttribute("usuarioLogueado", usuarioService.findByNick(principal.getName()));
         return Page.MODIFICAR_USUARIO.getFile();
     }
     
@@ -76,9 +81,9 @@ public class UsuarioController {
         	return Page.REGISTRIO.getFile();
         }
 
-        usuarioService.save(userForm);
+        usuarioService.saveNew(userForm);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+        securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
 
         return Page.PORTAL.redirect();
     }
@@ -97,22 +102,16 @@ public class UsuarioController {
 
         return Page.LOGIN.getFile();
     }
-
-    @GetMapping({WebUtils.MAPPING_ROOT, WebUtils.MAPPING_PORTAL})
-    public String welcome(Model model) {
-        return Page.PORTAL.getFile();
-    }
     
     @PostMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
     public ResponseEntity<?> registratsion(Model model, Principal principal, @RequestParam String nombre, @RequestParam String apellido,
-    		@RequestParam String username, @RequestParam String email, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad,
+    		@RequestParam String nick, @RequestParam String email, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad,
     		@RequestParam(value = "emprendedor", required = false) String emprendedorCheckBox) {
-    	
     	
     	Map<String, String> parametrosNoVacios = new HashMap<>();
     	parametrosNoVacios.put("nombre", nombre);
     	parametrosNoVacios.put("apellido", apellido);
-    	parametrosNoVacios.put("nick", username);
+    	parametrosNoVacios.put("nick", nick);
     	parametrosNoVacios.put("email", email);
     	parametrosNoVacios.put("pais", pais);
     	parametrosNoVacios.put("provincia", provincia);
@@ -123,12 +122,16 @@ public class UsuarioController {
     		return new ResponseEntity<>(jsonify(errores),HttpStatus.BAD_REQUEST);
     	}
     	
-    	Usuario usuario = usuarioService.findByUsername(principal.getName());
+    	Usuario usuario = usuarioService.findByNick(principal.getName());
     	
     	usuario.setApellido(apellido);
     	usuario.setEmail(email);
     	usuario.setNombre(nombre);
-    	usuario.setUsername(username);
+    	usuario.setNick(nick);
+    	
+    	if(usuario.getUbicacion()==null) {
+    		usuario.setUbicacion(new Ubicacion());
+    	}
     	
     	usuario.getUbicacion().setLocalidad(localidad);
     	usuario.getUbicacion().setPais(pais);
@@ -140,32 +143,18 @@ public class UsuarioController {
     		usuario.removePerfil(PerfilService.EMPRENDEDOR);
     	}
     	
-    	usuarioService.save(usuario);
+    	usuario = usuarioService.save(usuario);
     	addUsuarioLogueado(model, usuario);
     	
     	return new ResponseEntity<>(Page.PORTAL.getFile(),HttpStatus.OK);
-    	
+     }
+ 
+    @GetMapping(WebUtils.MAPPING_MI_PERFIL)
+    public String goToMiPerfil(Model model, Principal principal) {
+    	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
+    	addUsuarioLogueado(model, usuerLogueado);
+
+        return Page.MI_PERFIL.getFile();
     }
-    
-    private List<String> evaluarParametrosVacios(Map<String, String> parametrosNoNull) {
-    	List<String> errores= new ArrayList<>();
-    	for(String key: parametrosNoNull.keySet()) {
-    		String val = parametrosNoNull.get(key);
-    		if(val == null || val.trim().isEmpty()) {
-    			errores.add("El campo "+key+" es obligatorio.");
-    		}
-    	}
-    	return errores;
-    }
-    
-    private String jsonify(List<String> datos) {
-    	String json="{";
-    	for(String dato: datos) {
-    		json+="'"+dato+"',";
-    	}
-    	json=json.substring(0, json.length()-1); //saco la ultima coma
-    	json+="}";
-    	
-    	return json;
-    }
+ 
 }

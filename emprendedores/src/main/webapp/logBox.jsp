@@ -17,7 +17,7 @@
 
 			<div class="form-group ${error != null ? 'has-error' : ''}">
 				<span>${message}</span> 
-				<input name="username" type="text" class="form-control" placeholder="Usuario" />
+				<input name="nick" type="text" class="form-control" placeholder="Usuario" />
 				<input name="password" type="password" class="form-control" placeholder="Contraseña" /> 
 				<span>${error}</span> 
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -48,10 +48,10 @@
 		
 		<form:form method="POST" action="${contextPath}/registro" modelAttribute="userForm" class="form-signin">
             <h2 class="form-signin-heading">Crea tu cuenta</h2>
-            <spring:bind path="username">
+            <spring:bind path="nick">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="username" class="form-control" placeholder="NickName"></form:input>
-                    <form:errors path="username"></form:errors>
+                    <form:input type="nick" path="nick" class="form-control" placeholder="NickName"></form:input>
+                    <form:errors path="nick"></form:errors>
                 </div>
             </spring:bind>
             

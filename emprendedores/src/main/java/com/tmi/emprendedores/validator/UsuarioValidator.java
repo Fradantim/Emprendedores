@@ -30,16 +30,16 @@ public class UsuarioValidator implements Validator {
     public void validate(Object o, Errors errors) {
     	Usuario user = (Usuario) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (user.getUsername().length() < LARGO_MIN_CAMPO || user.getUsername().length() > LARGO_MAX_CAMPO) {
-            errors.rejectValue("username", "Size.userForm.username");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nick", "NotEmpty");
+        if (user.getNick().length() < LARGO_MIN_CAMPO || user.getNick().length() > LARGO_MAX_CAMPO) {
+            errors.rejectValue("nick", "Size.userForm.nick");
         }
         
-        if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+        if (userService.findByNick(user.getNick()) != null) {
+            errors.rejectValue("nick", "Duplicate.userForm.nick");
         }
         
-        if (userService.findByUsername(user.getUsername()) != null) {
+        if (userService.findByNick(user.getNick()) != null) {
             errors.rejectValue("email", "Duplicate.userForm.email");
         }
 

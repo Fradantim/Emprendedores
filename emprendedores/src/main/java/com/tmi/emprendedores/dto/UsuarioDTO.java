@@ -8,7 +8,7 @@ public class UsuarioDTO extends DTO{
 		
 	private String apellido;
 		
-	private String username;
+	private String nick;
 	
 	private String email;
 	
@@ -18,14 +18,13 @@ public class UsuarioDTO extends DTO{
 	
 	private UbicacionDTO ubicacion;
 	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String username, List<PerfilDTO> perfiles, UbicacionDTO ubicacion) {
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, List<PerfilDTO> perfiles) {
 		super(id);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;
-		this.username = username;
+		this.nick = nick;
 		this.perfiles = perfiles;
-		this.ubicacion = ubicacion;
 	}
 
 	public String getNombre() {
@@ -44,12 +43,12 @@ public class UsuarioDTO extends DTO{
 		this.apellido = apellido;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getNick() {
+		return nick;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
 	public List<PerfilDTO> getPerfiles() {

@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -14,12 +15,7 @@
 	
 	<script	src="${contextPath}/resources/js/portal.js"></script>		
 </head>
-<body>
-	
-	<form id="logoutForm" method="POST" action="${contextPath}/logout">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	</form>
-				
+<body>				
 	<div class="modal fade" id="modal-popUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -45,6 +41,9 @@
 				<h2>Bienvenido Anónimo!</h2>
 			</c:otherwise>
 		</c:choose>
+		<security:authorize access="isAuthenticated()">
+    		authenticated as <security:authentication property="principal.username" /> 
+		</security:authorize>
 	</div>
 
 </body>

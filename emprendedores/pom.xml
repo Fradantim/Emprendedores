@@ -35,6 +35,12 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!--  evaluacion de roles de usuario -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+
 		<!-- BBDD en memoria -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>

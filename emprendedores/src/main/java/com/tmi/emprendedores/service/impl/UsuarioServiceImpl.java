@@ -19,20 +19,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void saveNew(Usuario usuario) {
+    public Usuario saveNew(Usuario usuario) {
     	usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
     	usuario.addPerfil(PerfilService.CLIENTE); //fuerzo el perfil de cliente
-    	usuarioRepo.save(usuario);
+    	return usuarioRepo.save(usuario);
     }
     
     @Override
-    public void save(Usuario usuario) {
-    	usuarioRepo.save(usuario);
+    public Usuario save(Usuario usuario) {
+    	return usuarioRepo.save(usuario);
     }
 
     @Override
-    public Usuario findByUsername(String username) {
-        return usuarioRepo.findByUsername(username);
+    public Usuario findByNick(String nick) {
+        return usuarioRepo.findByNick(nick);
     }
 
 	@Override

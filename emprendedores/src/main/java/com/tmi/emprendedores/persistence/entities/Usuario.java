@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.tmi.emprendedores.dto.DTOTransformable;
+import com.tmi.emprendedores.dto.UbicacionDTO;
 import com.tmi.emprendedores.dto.UsuarioDTO;
 
 @Entity
@@ -28,8 +29,8 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@Column (name="APELLIDO")
 	private String apellido;
 	
-	@Column (name="USERNAME", unique=true)
-	private String username;
+	@Column (name="NICK", unique=true)
+	private String nick;
 	
 	@Column (name="PASSWORD")
 	private String password;
@@ -99,12 +100,12 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		this.apellido = apellido;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getNick() {
+		return nick;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
 	public String getPassword() {
@@ -173,12 +174,16 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@Override
 	public UsuarioDTO toDTO() {
 		UsuarioDTO dto = toMiniDTO();
-		dto.setEmprendimiento(emprendimiento.toMiniDTO());
+		if(emprendimiento != null)
+			dto.setEmprendimiento(emprendimiento.toMiniDTO());
 		return dto;
 	}
 
 	@Override
 	public UsuarioDTO toMiniDTO() {
-		return new UsuarioDTO(id, nombre, apellido, email, username, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()), ubicacion.toMiniDTO());
+		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()));
+		if(ubicacion != null)
+			dto.setUbicacion(ubicacion.toMiniDTO());
+		return dto;
 	}
 }

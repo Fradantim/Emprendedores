@@ -3,11 +3,14 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <head/>
 <body>
+	<form id="logoutForm" method="POST" action="${contextPath}/logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	</form>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#"> 
+				<a class="navbar-brand" href="${contextPath}/"> 
 					<img alt="Emprendedores" src="favicon.ico" style="width:15px;height:15px;">
 				</a>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -29,6 +32,7 @@
 					<c:choose>
 						<c:when test="${pageContext.request.userPrincipal.name != null}">
 							<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
+							<li> <input type="button" class="btn btn-default navbar-btn" onclick="location.href='${contextPath}/miPerfil';" value="Mi Perfil" /> </li>
 							<li> <button type="button" class="btn btn-default navbar-btn" onclick="document.forms['logoutForm'].submit()">Log out</button> </li>
 						</c:when>
 						<c:otherwise>

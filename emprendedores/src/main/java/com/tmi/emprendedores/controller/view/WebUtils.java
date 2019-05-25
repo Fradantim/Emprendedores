@@ -9,13 +9,15 @@ public interface WebUtils {
 	public final String MAPPING_GET_USUARIO = "/getUsuario";
 	public final String MAPPING_LOGIN = "/login";
 	public final String MAPPING_LOGBOX = "/logBox";
+	public final String MAPPING_MI_PERFIL= "/miPerfil";
 
 	public enum Page{
 		PORTAL("portal"),
 		REGISTRIO("registro"),
 		LOGIN("login"),
 		LOGBOX("logBox"),
-		MODIFICAR_USUARIO("modificarUsuario"),;
+		MODIFICAR_USUARIO("modificarUsuario"),
+		MI_PERFIL("miPerfil"),;
 		
 		private String file;
 		private Page(String file) {
