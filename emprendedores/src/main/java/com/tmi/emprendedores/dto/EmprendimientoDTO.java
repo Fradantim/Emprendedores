@@ -4,6 +4,14 @@ public class EmprendimientoDTO extends DTO{
 	
 	private String nombre;
 
+	private String descripcion;
+	
+	private String link;
+
+	private String contacto;
+	
+	private UsuarioDTO usuario;	
+	
 	public EmprendimientoDTO(Integer id, String nombre, String descripcion, String link, String contacto) {
 		super(id);
 		this.nombre = nombre;
@@ -11,12 +19,11 @@ public class EmprendimientoDTO extends DTO{
 		this.link = link;
 		this.contacto = contacto;
 	}
-
-	private String descripcion;
 	
-	private String link;
-
-	private String contacto;
+	public EmprendimientoDTO(Integer id, String nombre, String descripcion, String link, String contacto, UsuarioDTO usuario) {
+		this(id, nombre, descripcion, link, contacto);
+		this.usuario=usuario;
+	}	
 
 	public String getNombre() {
 		return nombre;
@@ -48,5 +55,17 @@ public class EmprendimientoDTO extends DTO{
 
 	public void setContacto(String contacto) {
 		this.contacto = contacto;
+	}
+
+
+
+	public UsuarioDTO getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
 	}
 }

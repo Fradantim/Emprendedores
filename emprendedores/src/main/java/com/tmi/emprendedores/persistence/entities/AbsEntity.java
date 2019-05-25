@@ -19,12 +19,12 @@ public abstract class AbsEntity {
 	@Column (name="BORRADO")
 	protected boolean borrado;
 	
-	@Column (name="INSERTO")
-	protected Date insertDate;
-	
+	@Column (name="FECHA_CREACION")
+	protected Date fechaCreacion;
+
 	public AbsEntity() {
 		borrado= false;
-		insertDate= new Date();
+		fechaCreacion= new Date();
 	}
 	
 	public Integer getId() {
@@ -66,5 +66,14 @@ public abstract class AbsEntity {
 
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+	
+	
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 }

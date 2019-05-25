@@ -12,10 +12,11 @@ import com.tmi.emprendedores.dto.EmprendimientoDTO;
 @Table(name="EMPRENDIMIENTO")
 public class Emprendimiento extends AbsEntity implements DTOTransformable<EmprendimientoDTO>{
 	
-	@Column (name="NOMBRE")
+	
+	@Column (name="NOMBRE", nullable=false)
 	private String nombre;
 	
-	@Column (name="DESCRIPCION")
+	@Column (name="DESCRIPCION", nullable=false)
 	private String descripcion;
 	
 	@Column (name="LINK")
@@ -63,16 +64,23 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 		this.contacto = contacto;
 	}
 
-	@Override
-	public EmprendimientoDTO toDTO() {
-		return new EmprendimientoDTO(id, nombre, descripcion, link, contacto);
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	@Override
+	public EmprendimientoDTO toMiniDTO() {
+		return new EmprendimientoDTO(id, nombre, descripcion, link, contacto);
+	}
+	
+	@Override
+	public EmprendimientoDTO toDTO() {
+		EmprendimientoDTO dto = toMiniDTO();
+		dto.setUsuario(usuario.toMiniDTO());
+		return dto;
 	}
 }

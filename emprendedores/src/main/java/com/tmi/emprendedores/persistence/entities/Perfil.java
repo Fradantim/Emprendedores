@@ -28,17 +28,12 @@ public class Perfil extends AbsEntity implements DTOTransformable<PerfilDTO>{
 	}
 	
 	@Override
-	public boolean equals(Object other){
-	    if (other == null) return false;
-	    if (other == this) return true;
-	    if (!(other instanceof Perfil))return false;
-	    Perfil otherMyClass = (Perfil)other;
-	    if(otherMyClass.getId().equals(this.getId())) return true;
-	    return false;
-	}
-	
-	@Override
 	public PerfilDTO toDTO() {
+		return toMiniDTO();
+	}
+
+	@Override
+	public PerfilDTO toMiniDTO() {
 		return new PerfilDTO(id, nombre);
 	}
 }

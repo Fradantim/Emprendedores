@@ -1,6 +1,5 @@
 package com.tmi.emprendedores.dto;
 
-import java.util.Collections;
 import java.util.List;
 
 public class UsuarioDTO extends DTO{
@@ -17,19 +16,16 @@ public class UsuarioDTO extends DTO{
 	
 	private EmprendimientoDTO emprendimiento;
 	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String username, EmprendimientoDTO emprendimiento) {
+	private UbicacionDTO ubicacion;
+	
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String username, List<PerfilDTO> perfiles, UbicacionDTO ubicacion) {
 		super(id);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;
 		this.username = username;
-		perfiles = Collections.emptyList();
-		this.setEmprendimiento(emprendimiento);
-	}
-
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, EmprendimientoDTO emprendimiento, List<PerfilDTO> perfiles) {
-		this(id,nombre,apellido, email, nick, emprendimiento);
 		this.perfiles = perfiles;
+		this.ubicacion = ubicacion;
 	}
 
 	public String getNombre() {
@@ -78,5 +74,13 @@ public class UsuarioDTO extends DTO{
 
 	public void setEmprendimiento(EmprendimientoDTO emprendimiento) {
 		this.emprendimiento = emprendimiento;
+	}
+
+	public UbicacionDTO getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(UbicacionDTO ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 }

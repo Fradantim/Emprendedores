@@ -49,6 +49,10 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPRENDIMIENTO_ID", referencedColumnName = "ID")
 	private Emprendimiento emprendimiento;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "UBICACION_ID", referencedColumnName = "ID")
+	private Ubicacion ubicacion;
 
 	public Usuario() {
 		super();
@@ -135,6 +139,14 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		this.emprendimiento = emprendimiento;
 	}
 	
+	public Ubicacion getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+	
 	public void addPerfil(Perfil... nuevosPerfiles) {
 		if(perfiles == null)
 			perfiles = new HashSet<>();
@@ -160,6 +172,13 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 
 	@Override
 	public UsuarioDTO toDTO() {
-		return new UsuarioDTO(id, nombre, apellido, email, username, emprendimiento.toDTO(), getPerfiles().stream().map(Perfil::toDTO).collect(Collectors.toList()));
+		UsuarioDTO dto = toMiniDTO();
+		dto.setEmprendimiento(emprendimiento.toMiniDTO());
+		return dto;
+	}
+
+	@Override
+	public UsuarioDTO toMiniDTO() {
+		return new UsuarioDTO(id, nombre, apellido, email, username, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()), ubicacion.toMiniDTO());
 	}
 }
