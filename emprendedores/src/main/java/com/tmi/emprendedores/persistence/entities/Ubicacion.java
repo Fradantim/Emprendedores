@@ -11,13 +11,13 @@ import com.tmi.emprendedores.dto.UbicacionDTO;
 @Table(name="UBICACION")
 public class Ubicacion extends AbsEntity implements DTOTransformable<UbicacionDTO>{
 
-	@Column (name="NOMBRE", nullable=false)
+	@Column (name="pais", nullable=false)
 	private String pais;
 	
-	@Column (name="NOMBRE", nullable=false)
+	@Column (name="nombre", nullable=false)
 	private String provincia;
 	
-	@Column (name="NOMBRE", nullable=false)
+	@Column (name="localidad", nullable=false)
 	private String localidad;
 		
 	public Ubicacion () {

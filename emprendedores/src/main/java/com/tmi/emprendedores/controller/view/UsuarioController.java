@@ -68,12 +68,6 @@ public class UsuarioController {
         return Page.MODIFICAR_USUARIO.getFile();
     }
     
-    @PostMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
-    public String modificarUsuario(Model model, Principal principal) {
-    	model.addAttribute("usuarioLogueado", usuarioService.findByUsername(principal.getName()));
-        return Page.MODIFICAR_USUARIO.getFile();
-    }
-
     @PostMapping(WebUtils.MAPPING_REGISTRO)
     public String registration(@ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
         usuarioValidator.validate(userForm, bindingResult);
