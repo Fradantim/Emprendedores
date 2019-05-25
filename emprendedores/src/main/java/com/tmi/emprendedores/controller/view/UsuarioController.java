@@ -1,10 +1,14 @@
 package com.tmi.emprendedores.controller.view;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
 import com.tmi.emprendedores.persistence.entities.Usuario;
@@ -31,10 +35,31 @@ public class UsuarioController {
         return Page.LOGBOX.getFile();
     }
     
+    /**
+     * Agrega al model unicamente el usuario logueado.
+     */
+    @GetMapping(WebUtils.MAPPING_GET_USUARIO)
+    public void getUsuario(Model model, Principal principal) {
+    	model.addAttribute("usuarioLogueado", usuarioService.findByUsername(principal.getName()));
+    }
+    
+    
     @GetMapping(WebUtils.MAPPING_REGISTRO)
     public String registration(Model model) {
         model.addAttribute("userForm", new Usuario());
         return Page.REGISTRIO.getFile();
+    }
+    
+    @GetMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
+    public String goToModificarUsuario(Model model, Principal principal) {
+    	model.addAttribute("usuarioLogueado", usuarioService.findByUsername(principal.getName()));
+        return Page.MODIFICAR_USUARIO.getFile();
+    }
+    
+    @PostMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
+    public String modificarUsuario(Model model, Principal principal) {
+    	model.addAttribute("usuarioLogueado", usuarioService.findByUsername(principal.getName()));
+        return Page.MODIFICAR_USUARIO.getFile();
     }
 
     @PostMapping(WebUtils.MAPPING_REGISTRO)

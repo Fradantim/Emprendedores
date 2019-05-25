@@ -1,5 +1,7 @@
 package com.tmi.emprendedores.persistence.entities;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +16,23 @@ public abstract class AbsEntity {
 	@Column (name="ID")
 	protected Integer id;
 	
-	@Column (name="BORRADP")
-	protected boolean borrado = false;
-
+	@Column (name="BORRADO")
+	protected boolean borrado;
+	
+	@Column (name="INSERTO")
+	protected Date insertDate;
+	
+	public AbsEntity() {
+		borrado= false;
+		insertDate= new Date();
+	}
+	
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id=id;
 	}
 	
 	/**

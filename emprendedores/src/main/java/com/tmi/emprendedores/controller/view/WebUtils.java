@@ -5,6 +5,8 @@ public interface WebUtils {
 	public final String MAPPING_ROOT ="/";
 	public final String MAPPING_PORTAL ="/portal";
 	public final String MAPPING_REGISTRO = "/registro";
+	public final String MAPPING_MODIFICAR_USUARIO = "/modificarUsuario";
+	public final String MAPPING_GET_USUARIO = "/getUsuario";
 	public final String MAPPING_LOGIN = "/login";
 	public final String MAPPING_LOGBOX = "/logBox";
 
@@ -12,7 +14,8 @@ public interface WebUtils {
 		PORTAL("portal"),
 		REGISTRIO("registro"),
 		LOGIN("login"),
-		LOGBOX("logBox");
+		LOGBOX("logBox"),
+		MODIFICAR_USUARIO("modificarUsuario"),;
 		
 		private String file;
 		private Page(String file) {

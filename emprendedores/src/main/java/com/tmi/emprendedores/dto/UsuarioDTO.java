@@ -15,17 +15,20 @@ public class UsuarioDTO extends DTO{
 	
 	private List<PerfilDTO> perfiles;
 	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String username) {
+	private EmprendimientoDTO emprendimiento;
+	
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String username, EmprendimientoDTO emprendimiento) {
 		super(id);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;
 		this.username = username;
 		perfiles = Collections.emptyList();
+		this.setEmprendimiento(emprendimiento);
 	}
 
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, List<PerfilDTO> perfiles) {
-		this(id,nombre,apellido, email, nick);
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, EmprendimientoDTO emprendimiento, List<PerfilDTO> perfiles) {
+		this(id,nombre,apellido, email, nick, emprendimiento);
 		this.perfiles = perfiles;
 	}
 
@@ -67,5 +70,13 @@ public class UsuarioDTO extends DTO{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public EmprendimientoDTO getEmprendimiento() {
+		return emprendimiento;
+	}
+
+	public void setEmprendimiento(EmprendimientoDTO emprendimiento) {
+		this.emprendimiento = emprendimiento;
 	}
 }

@@ -5,25 +5,28 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tmi.emprendedores.persistence.entities.Usuario;
-import com.tmi.emprendedores.persistence.repository.PerfilRepository;
 import com.tmi.emprendedores.persistence.repository.UsuarioRepository;
+import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.UsuarioService;
-
-import java.util.HashSet;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
-    @Autowired
+
+	@Autowired
     private UsuarioRepository usuarioRepo;
-    @Autowired
-    private PerfilRepository perfilRepo;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void save(Usuario usuario) {
+    public void saveNew(Usuario usuario) {
     	usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-    	usuario.setPerfiles(new HashSet<>(perfilRepo.findAll()));
+    	usuario.addPerfil(PerfilService.CLIENTE); //fuerzo el perfil de cliente
+    	usuarioRepo.save(usuario);
+    }
+    
+    @Override
+    public void save(Usuario usuario) {
     	usuarioRepo.save(usuario);
     }
 

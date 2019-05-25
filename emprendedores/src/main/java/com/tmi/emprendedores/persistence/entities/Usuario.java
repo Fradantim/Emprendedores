@@ -1,11 +1,17 @@
 package com.tmi.emprendedores.persistence.entities;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -22,7 +28,7 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@Column (name="APELLIDO")
 	private String apellido;
 	
-	@Column (name="USERNAME")
+	@Column (name="USERNAME", unique=true)
 	private String username;
 	
 	@Column (name="PASSWORD")
@@ -31,18 +37,22 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@Transient
 	private String passwordConfirm;
 	
-	@Column (name="EMAIL")
+	@Column (name="EMAIL", unique=true)
 	private String email;
 	
-	/*@ManyToMany(cascade = {CascadeType.MERGE},fetch=FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "USUARIO_PERFIL",
 		joinColumns = @JoinColumn(name = "USUARIO_ID"),
-		inverseJoinColumns = @JoinColumn(name = "PERFIL_ID")
-	)*/
-	@ManyToMany
+		inverseJoinColumns = @JoinColumn(name = "PERFIL_ID"))
 	private Set<Perfil> perfiles;
 	
-	public Usuario() { }
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMPRENDIMIENTO_ID", referencedColumnName = "ID")
+	private Emprendimiento emprendimiento;
+
+	public Usuario() {
+		super();
+	}
 		
 	public String getNombre() {
 		return nombre;
@@ -115,10 +125,41 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}	
+	
+	public Emprendimiento getEmprendimiento() {
+		return emprendimiento;
+	}
+
+	public void setEmprendimiento(Emprendimiento emprendimiento) {
+		this.emprendimiento = emprendimiento;
+	}
+	
+	public void addPerfil(Perfil... nuevosPerfiles) {
+		if(perfiles == null)
+			perfiles = new HashSet<>();
+		for(Perfil perfil : nuevosPerfiles)
+			perfiles.add(perfil);
+	}
+	
+	public void removePerfil(Perfil... viejosPerfiles) {
+		if(perfiles == null) 
+			perfiles = new HashSet<>();
+		else
+			for(Perfil perfil : viejosPerfiles)
+				perfiles.remove(perfil);
+	}
+	
+	public void addPerfiles(Collection<Perfil> nuevosPerfiles) {
+		addPerfil(nuevosPerfiles.stream().toArray(Perfil[]::new));
+	}
+	
+	public void removePerfiles(Collection<Perfil> viejosPerfiles) {
+		removePerfil(viejosPerfiles.stream().toArray(Perfil[]::new));
 	}
 
 	@Override
 	public UsuarioDTO toDTO() {
-		return new UsuarioDTO(id, nombre, apellido, email, username, getPerfiles().stream().map(Perfil::toDTO).collect(Collectors.toList()));
+		return new UsuarioDTO(id, nombre, apellido, email, username, emprendimiento.toDTO(), getPerfiles().stream().map(Perfil::toDTO).collect(Collectors.toList()));
 	}
 }
