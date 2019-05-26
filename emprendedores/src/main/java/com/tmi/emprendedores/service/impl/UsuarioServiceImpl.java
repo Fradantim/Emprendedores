@@ -29,6 +29,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario save(Usuario usuario) {
     	return usuarioRepo.save(usuario);
     }
+    
+    @Override
+    public Usuario saveAndEncodePassword(Usuario usuario) {
+    	usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
+    	return usuarioRepo.save(usuario);
+    }
 
     @Override
     public Usuario findByNick(String nick) {

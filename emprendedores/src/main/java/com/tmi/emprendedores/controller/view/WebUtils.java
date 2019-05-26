@@ -6,6 +6,7 @@ public interface WebUtils {
 	public final String MAPPING_PORTAL ="/portal";
 	public final String MAPPING_REGISTRO = "/registro";
 	public final String MAPPING_MODIFICAR_PERFIL = "/modificarPerfil";
+	public final String MAPPING_MODIFICAR_CLAVE = "/modificarClave";
 	public final String MAPPING_GET_USUARIO = "/getUsuario";
 	public final String MAPPING_LOGIN = "/login";
 	public final String MAPPING_LOGBOX = "/logBox";
@@ -20,6 +21,7 @@ public interface WebUtils {
 		LOGIN("login"),
 		LOGBOX("logBox"),
 		MODIFICAR_PERFIL("modificarPerfil"),
+		MODIFICAR_CLAVE("modificarClave"),
 		MI_PERFIL("miPerfil"),;
 		
 		private String file;

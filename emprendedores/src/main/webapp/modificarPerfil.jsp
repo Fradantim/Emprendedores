@@ -82,7 +82,6 @@
 				
 				<hr>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar perfil!</button>
-				(*) Confirmar la actualizacion requeríra que ingreses de nuevo a tu cuenta
 			</form:form>
 		</div>
 	</div>

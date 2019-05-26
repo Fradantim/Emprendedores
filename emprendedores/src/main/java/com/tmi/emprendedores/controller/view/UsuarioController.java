@@ -1,8 +1,16 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
@@ -123,11 +132,48 @@ public class UsuarioController extends WebController{
     		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
     	}
         
+        //persisto nuevo usuario
         userLogueado = usuarioService.save(userLogueado);
         addUsuarioLogueado(model, userLogueado);
         
-        //TODO hacer autologin?
-        securityService.autoLogin(userLogueado.getNick(), userLogueado.getPassword());
-    	return Page.MI_PERFIL.getFile();
+        //actualizo permisos del user logueado por si cambio nick o roles
+        List<GrantedAuthority> nowAuthorities = new ArrayList<GrantedAuthority>(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        
+        //actualizo los perfiles
+        nowAuthorities.addAll(userLogueado.getPerfiles().stream().map(Perfil::toGrantedAuthority).collect(Collectors.toList()));
+                
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userLogueado.getNick(), userLogueado.getPassword(), nowAuthorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        
+        return Page.MI_PERFIL.getFile();
+     }
+    
+    @GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
+    public String goToModificarClave(Model model, Principal principal) {
+    	model.addAttribute("userForm", new Usuario());
+    	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
+        return Page.MODIFICAR_CLAVE.getFile();
+    }
+    
+    @PostMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
+    public String modificarClave(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
+    	
+    	usuarioValidator.validateUpdatePassword(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+        	//si hubo errores vuelvo a la web de la que vine
+        	return Page.MODIFICAR_CLAVE.getFile();
+        }
+    	
+        
+        Usuario userLogueado = usuarioService.findByNick(principal.getName());
+        //si paso todas las validaciones actualizo el usuario
+        userLogueado.setPassword(userForm.getPassword());
+        
+        //persisto nuevo usuario
+        userLogueado = usuarioService.saveAndEncodePassword(userLogueado);
+        addUsuarioLogueado(model, userLogueado);
+        
+        return Page.MI_PERFIL.getFile();
      }
 }

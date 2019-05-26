@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.PerfilDTO;
 
@@ -35,5 +38,9 @@ public class Perfil extends AbsEntity implements DTOTransformable<PerfilDTO>{
 	@Override
 	public PerfilDTO toMiniDTO() {
 		return new PerfilDTO(id, nombre);
+	}
+	
+	public GrantedAuthority toGrantedAuthority() {
+		return new SimpleGrantedAuthority(getNombre());
 	}
 }

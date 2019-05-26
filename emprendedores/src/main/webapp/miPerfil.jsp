@@ -53,7 +53,7 @@
 				---<br>
 				<br>
 				
-				<security:authorize access="hasRole('CLIENTE')"	var="isCliente" />
+				<security:authorize access="hasAuthority('CLIENTE')"	var="isCliente" />
 				<c:choose>
 					<c:when test="${isCliente}">ES CLIENTE<br>
 					</c:when>
@@ -62,7 +62,7 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<security:authorize access="hasRole('EMPRENDEDOR')"	var="isEmprendedor" />
+				<security:authorize access="hasAuthority('EMPRENDEDOR')"	var="isEmprendedor" />
 				<c:choose>
 					<c:when test="${not isEmprendedor}">NO ES EMPRENDEDOR <br>
 					</c:when>
@@ -83,12 +83,12 @@
 				</c:forEach>	
 				---<br>
 				<br>
-				<security:authorize access="hasRole('CLIENTE')">
+				<security:authorize access="hasAuthority('CLIENTE')">
 					TIENE PERFIL CLIENTE<br>
 				</security:authorize>
 				<br>
 				<br>
-				<security:authorize access="hasRole('EMPRENDEDOR')" var="isEmprendedor" />
+				<security:authorize access="hasAuthority('EMPRENDEDOR')" var="isEmprendedor" />
 				<c:choose>
 				   <c:when test="${isEmprendedor}">(SI)  </c:when>
 				   <c:otherwise>(NO) </c:otherwise>
@@ -96,6 +96,7 @@
 				TIENE PERFIL EMPRENDEDOR <br>
 				
 				<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarPerfil';" value="Modificar Mi Perfil" />
+				<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarClave';" value="Modificar Mi Contraseña" />
 				
 			</c:otherwise>
 		</c:choose>
