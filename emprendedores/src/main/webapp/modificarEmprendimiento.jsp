@@ -10,60 +10,9 @@
 	<title>Modificar Mi Emprendimiento</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<script src="${contextPath}/assets/ckeditor/ckeditor.js"></script>
+	
 </head>
-<%--   
-<body>
-	<div class="container">
-		<jsp:include page="navBar.jsp" />
-
-		<div class="col-md-6">
-			<form:form method="POST" action="${contextPath}/modificarEmprendimiento" modelAttribute="emprendimientoForm" class="form-signin">
-				<h2 class="form-signin-heading">Modifica tu Emprendimiento</h2>
-				
-				<h3>Nombre</h3>
-					<spring:bind path="nombre">
-						<div class="form-group ${status.error ? 'has-error' : ''}">
-							<form:input type="text" path="nombre" class="form-control" placeholder="Nombre" value="${emprendimiento.nombre}"></form:input>
-							<form:errors path="nombre"></form:errors>
-						</div>
-					</spring:bind>
-				<h3>Descripcion</h3>
-				<spring:bind path="descripcion">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
-						<form:input type="text" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:input>
-						<form:errors path="descripcion"></form:errors>
-					</div>
-				</spring:bind>
-				<h3>Link</h3>
-				<spring:bind path="link">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
-						<form:input type="text" path="link" class="form-control" placeholder="Link" value="${emprendimiento.link}"></form:input>
-						<form:errors path="link"></form:errors>
-					</div>
-				</spring:bind>
-				<h3>Contacto</h3>
-				<spring:bind path="contacto">
-					<div class="form-group ${status.error ? 'has-error' : ''}">
-						<form:input type="text" path="contacto" class="form-control" placeholder="Contacto" value="${emprendimiento.contacto}"></form:input>
-						<form:errors path="contacto"></form:errors>
-					</div>
-				</spring:bind>
-				<spring:bind path="id">
-					<div class="form-group">
-						<form:input type="hidden" path="id" class="form-control" value="${emprendimiento.id}"></form:input>
-						<form:errors path="id"></form:errors>
-					</div>
-				</spring:bind>
-				
-				<hr>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar emprendimiento!</button>
-			</form:form>
-		</div>
-	</div>
-
-</body>
---%>
-
 <body class="homepage is-preload">
 		<div id="page-wrapper">
 
@@ -94,7 +43,7 @@
 				<div id="main-wrapper">
 					<div class="wrapper style1">
 						<div class="inner">
-
+<div class="container">
 							<div class="col-md-6">
 								<form:form method="POST" action="${contextPath}/modificarEmprendimiento" modelAttribute="emprendimientoForm" class="form-signin">
 									<h2 class="form-signin-heading">Modifica tu Emprendimiento</h2>
@@ -109,9 +58,10 @@
 									<h3>Descripcion</h3>
 									<spring:bind path="descripcion">
 										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:input>
+											<form:textarea name="editor1" id="editor1" rows="10" cols="80" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:textarea>
 											<form:errors path="descripcion"></form:errors>
 										</div>
+										
 									</spring:bind>
 									<h3>Link</h3>
 									<spring:bind path="link">
@@ -140,7 +90,7 @@
 </div>
 						</div>
 					</div>
-					
+					</div>
 				</div>
 
 			<!-- Footer Wrapper -->
@@ -158,6 +108,12 @@
 			<script src="${contextPath}/assets/js/util.js"></script>
 			<script src="${contextPath}/assets/js/main.js"></script>
 
+ 			<script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
+            
 	</body>
 
 
