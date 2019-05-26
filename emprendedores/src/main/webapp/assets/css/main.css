@@ -99,7 +99,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #303238 url("images/bg01.png");
+		background: #303238 url("/assets/css/images/bg01.png");
 	}
 
 		body.is-preload * {
@@ -1405,7 +1405,7 @@ input, select, textarea {
 			position: absolute;
 			left: 0;
 			top: 0;
-			background: url("images/bg01.png");
+			background: url("/assets/css/images/bg01.png");
 			width: 100%;
 			height: 100%;
 			opacity: 0.75;
@@ -1444,10 +1444,10 @@ input, select, textarea {
 	input[type="reset"],
 	button,
 	.button {
-		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("images/bg02.png");
-		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("images/bg02.png");
-		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("images/bg02.png");
-		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("images/bg02.png");
+		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("/assets/css/images/bg02.png");
+		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("/assets/css/images/bg02.png");
+		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("/assets/css/images/bg02.png");
+		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url("/assets/css/images/bg02.png");
 		-moz-transition: background-color 0.2s ease-in-out;
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
@@ -1744,10 +1744,10 @@ input, select, textarea {
 			}
 
 	.dropotron {
-		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("images/bg02.png");
-		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("images/bg02.png");
-		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("images/bg02.png");
-		background-image: linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("images/bg02.png");
+		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("/assets/css/images/bg02.png");
+		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("/assets/css/images/bg02.png");
+		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("/assets/css/images/bg02.png");
+		background-image: linear-gradient(top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)), url("/assets/css/images/bg02.png");
 		position: relative;
 		background-color: #3B3E45;
 		background-color: rgba(59, 62, 69, 0.9);
@@ -1849,7 +1849,7 @@ input, select, textarea {
 /* Wrappers */
 
 	#header-wrapper {
-		background: url("../css/images/bg01.png"), url("../css/images/header.jpg");
+		background: url("/assets/css/images/bg01.png"), url("/assets/css/images/header.jpg");
 		background-position: top left, center center;
 		background-size: auto, cover;
 		padding: 3em 0;
@@ -1860,10 +1860,10 @@ input, select, textarea {
 	}
 
 	#footer-wrapper {
-		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../css/images/images/bg03.png"), url("../css/images/images/bg02.png");
-		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../css/images/images/bg03.png"), url("../css/images/images/bg02.png");
-		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../css/images/images/bg03.png"), url("../css/images/images/bg02.png");
-		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("../css/images/images/bg03.png"), url("../css/images/images/bg02.png");
+		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/css/images/bg03.png"), url("/assets/css/images/bg02.png");
+		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/css/images/bg03.png"), url("/assets/css/images/bg02.png");
+		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/css/images/bg03.png"), url("/assets/css/images/bg02.png");
+		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("/assets/css/images/bg03.png"), url("/assets/css/images/bg02.png");
 		position: relative;
 		background-repeat: repeat-x, no-repeat, repeat;
 		background-size: 100% 100%, 100% 15em, auto auto;
@@ -1884,7 +1884,7 @@ input, select, textarea {
 			position: relative;
 			text-shadow: 1px 1px 0 #fff;
 			background-color: #fff;
-			background-image: url("images/bg03.png"), url("images/bg04.png"), url("images/bg02.png");
+			background-image: url("/assets/css/images/bg03.png"), url("/assets/css/images/bg04.png"), url("/assets/css/images/bg02.png");
 			background-repeat: no-repeat, no-repeat, repeat;
 			background-size: 100% 15em, 100% 15em, auto auto;
 			background-position: top center, bottom center, top left;
@@ -1894,7 +1894,7 @@ input, select, textarea {
 			position: relative;
 			text-shadow: 1px 1px 0 #fff;
 			background-color: #fff;
-			background-image: url("images/bg03.png"), url("images/bg02.png");
+			background-image: url("/assets/css/images/bg03.png"), url("/assets/css/images/bg02.png");
 			background-repeat: no-repeat, repeat;
 			background-size: 100% 15em, auto auto;
 			background-position: top center, top left;
@@ -1911,10 +1911,10 @@ input, select, textarea {
 	}
 
 		#header .inner {
-			background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-			background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-			background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-			background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
+			background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+			background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+			background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+			background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
 			position: relative;
 			height: 5.5em;
 			background-color: #3B3E45;
@@ -2088,10 +2088,10 @@ input, select, textarea {
 				-webkit-backface-visibility: hidden;
 				-ms-backface-visibility: hidden;
 				backface-visibility: hidden;
-				background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-				background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-				background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
-				background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg02.png");
+				background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+				background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+				background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
+				background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg02.png");
 				-moz-transition: -moz-transform 0.5s ease;
 				-webkit-transition: -webkit-transform 0.5s ease;
 				-ms-transition: -ms-transform 0.5s ease;
@@ -2154,10 +2154,10 @@ input, select, textarea {
 				-webkit-backface-visibility: hidden;
 				-ms-backface-visibility: hidden;
 				backface-visibility: hidden;
-				background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg01.png");
-				background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg01.png");
-				background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg01.png");
-				background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("images/bg01.png");
+				background-image: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg01.png");
+				background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg01.png");
+				background-image: -ms-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg01.png");
+				background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35)), url("/assets/css/images/bg01.png");
 				-moz-transform: translateX(-275px);
 				-webkit-transform: translateX(-275px);
 				-ms-transform: translateX(-275px);
@@ -2626,7 +2626,7 @@ padding: 5px; }
 	text-decoration: none;
 	color: inherit;
 	background-color: #e8e8e8;
-	background-image: url("images/bg02.png");
+	background-image: url("/assets/css/images/bg02.png");
 	color: #565656;
 	margin: 0 0.4em 0 0;
 	border-radius: 0.4em;
