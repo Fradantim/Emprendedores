@@ -32,11 +32,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario findByNick(String nick) {
-        return usuarioRepo.findByNick(nick);
+        return usuarioRepo.findByNickIgnoreCase(nick);
     }
 
 	@Override
 	public Usuario findByEmail(String email) {
-		 return usuarioRepo.findByEmail(email);
+		 return usuarioRepo.findByEmailIgnoreCase(email);
 	}
 }

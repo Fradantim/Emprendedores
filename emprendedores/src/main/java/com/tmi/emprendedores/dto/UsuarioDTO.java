@@ -16,15 +16,22 @@ public class UsuarioDTO extends DTO{
 	
 	private EmprendimientoDTO emprendimiento;
 	
-	private UbicacionDTO ubicacion;
+	private String pais;
 	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, List<PerfilDTO> perfiles) {
+	private String provincia;
+	
+	private String localidad;
+	
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, List<PerfilDTO> perfiles, String pais, String provincia, String localidad) {
 		super(id);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;
 		this.nick = nick;
 		this.perfiles = perfiles;
+		this.pais = pais;
+		this.provincia = provincia;
+		this.localidad = localidad;
 	}
 
 	public String getNombre() {
@@ -75,11 +82,27 @@ public class UsuarioDTO extends DTO{
 		this.emprendimiento = emprendimiento;
 	}
 
-	public UbicacionDTO getUbicacion() {
-		return ubicacion;
+	public String getPais() {
+		return pais;
 	}
 
-	public void setUbicacion(UbicacionDTO ubicacion) {
-		this.ubicacion = ubicacion;
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 }

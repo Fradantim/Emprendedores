@@ -1,13 +1,8 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
-import com.tmi.emprendedores.persistence.entities.Ubicacion;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
@@ -60,22 +54,15 @@ public class UsuarioController extends WebController{
     	model.addAttribute("usuarioLogueado", usuario.toDTO());
     }
     
-    
     @GetMapping(WebUtils.MAPPING_REGISTRO)
-    public String registration(Model model) {
+    public String goToRegistration(Model model) {
         model.addAttribute("userForm", new Usuario());
         return Page.REGISTRIO.getFile();
     }
     
-    @GetMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
-    public String goToModificarUsuario(Model model, Principal principal) {
-    	model.addAttribute("usuarioLogueado", usuarioService.findByNick(principal.getName()));
-        return Page.MODIFICAR_USUARIO.getFile();
-    }
-    
     @PostMapping(WebUtils.MAPPING_REGISTRO)
-    public String registration(@ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
-        usuarioValidator.validate(userForm, bindingResult);
+    public String registratiocn(@ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
+        usuarioValidator.validateNew(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
         	return Page.REGISTRIO.getFile();
@@ -90,65 +77,18 @@ public class UsuarioController extends WebController{
 
     @GetMapping(WebUtils.MAPPING_LOGIN)
     public String login(Model model, String error, String logout) {
-
-    	if (error != null)
-            model.addAttribute("error", "Usuario o contraseña incorrectos.");
-
-        if (logout != null) {
+    	if (logout != null) {
         	model.addAttribute("message", "Cerró su sesión correctamente.");
         	return Page.PORTAL.getFile();
-        }
-            
+        }   
+        
+        if (error != null)
+            model.addAttribute("error", "Usuario o contraseña incorrectos.");
 
         return Page.LOGIN.getFile();
     }
     
-    @PostMapping(WebUtils.MAPPING_MODIFICAR_USUARIO)
-    public ResponseEntity<?> registratsion(Model model, Principal principal, @RequestParam String nombre, @RequestParam String apellido,
-    		@RequestParam String nick, @RequestParam String email, @RequestParam String pais, @RequestParam String provincia, @RequestParam String localidad,
-    		@RequestParam(value = "emprendedor", required = false) String emprendedorCheckBox) {
-    	
-    	Map<String, String> parametrosNoVacios = new HashMap<>();
-    	parametrosNoVacios.put("nombre", nombre);
-    	parametrosNoVacios.put("apellido", apellido);
-    	parametrosNoVacios.put("nick", nick);
-    	parametrosNoVacios.put("email", email);
-    	parametrosNoVacios.put("pais", pais);
-    	parametrosNoVacios.put("provincia", provincia);
-    	parametrosNoVacios.put("localidad", localidad);
-    	
-    	List<String> errores = evaluarParametrosVacios(parametrosNoVacios);
-    	if(errores.size()>0) {
-    		return new ResponseEntity<>(jsonify(errores),HttpStatus.BAD_REQUEST);
-    	}
-    	
-    	Usuario usuario = usuarioService.findByNick(principal.getName());
-    	
-    	usuario.setApellido(apellido);
-    	usuario.setEmail(email);
-    	usuario.setNombre(nombre);
-    	usuario.setNick(nick);
-    	
-    	if(usuario.getUbicacion()==null) {
-    		usuario.setUbicacion(new Ubicacion());
-    	}
-    	
-    	usuario.getUbicacion().setLocalidad(localidad);
-    	usuario.getUbicacion().setPais(pais);
-    	usuario.getUbicacion().setProvincia(provincia);
-    	
-    	if(emprendedorCheckBox != null ) {
-    		usuario.addPerfil(PerfilService.EMPRENDEDOR);
-    	} else {
-    		usuario.removePerfil(PerfilService.EMPRENDEDOR);
-    	}
-    	
-    	usuario = usuarioService.save(usuario);
-    	addUsuarioLogueado(model, usuario);
-    	
-    	return new ResponseEntity<>(Page.PORTAL.getFile(),HttpStatus.OK);
-     }
- 
+    
     @GetMapping(WebUtils.MAPPING_MI_PERFIL)
     public String goToMiPerfil(Model model, Principal principal) {
     	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
@@ -156,5 +96,38 @@ public class UsuarioController extends WebController{
 
         return Page.MI_PERFIL.getFile();
     }
- 
+    
+    @GetMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
+    public String goToModificarPerfil(Model model, Principal principal) {
+    	model.addAttribute("userForm", new Usuario());
+    	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
+        return Page.MODIFICAR_PERFIL.getFile();
+    }
+    
+    @PostMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
+    public String modificarPerfil(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult, @RequestParam(value = "emprendedorCheckBox", required = false) String emprendedorCheckBox) {
+    	Usuario userLogueado = usuarioService.findByNick(principal.getName());
+    	usuarioValidator.validateUpdate(userLogueado, bindingResult, userForm);
+
+        if (bindingResult.hasErrors()) {
+        	//si hubo errores vuelvo a la web de la que vine
+        	return Page.MODIFICAR_PERFIL.getFile();
+        }
+    	
+        //si paso todas las validaciones actualizo el usuario
+        userLogueado.modificarPerfil(userForm);
+        
+        if(emprendedorCheckBox != null ) {
+        	userLogueado.addPerfil(PerfilService.EMPRENDEDOR);
+    	} else {
+    		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
+    	}
+        
+        userLogueado = usuarioService.save(userLogueado);
+        addUsuarioLogueado(model, userLogueado);
+        
+        //TODO hacer autologin?
+        securityService.autoLogin(userLogueado.getNick(), userLogueado.getPassword());
+    	return Page.MI_PERFIL.getFile();
+     }
 }

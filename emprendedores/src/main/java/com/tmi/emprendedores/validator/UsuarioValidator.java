@@ -9,6 +9,9 @@ import org.springframework.validation.Validator;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.UsuarioService;
 
+/**
+ * Objeto responsable de las validaciones de los campos al crear un usuario
+ */
 @Component
 public class UsuarioValidator implements Validator {
 	
@@ -22,34 +25,66 @@ public class UsuarioValidator implements Validator {
     public boolean supports(Class<?> aClass) {
         return Usuario.class.equals(aClass);
     }
+    
+    private String [] getCamposNoVacios() {
+    	return new String[] {"nick","nombre","apellido","email"/*,"pais","provincia","localidad"*/};
+    }
 
-    /**
-     * En este metodo se ejecutan las validaciones del registro de usuario
-     */
+    private void rejectIfEmptyOrWhitespace(Errors errors, String... fields) {
+    	for(String field : fields) {
+    		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "NotEmpty");
+    	}
+    }
+    
     @Override
-    public void validate(Object o, Errors errors) {
-    	Usuario user = (Usuario) o;
+    public void validate(Object o, Errors errors) { }
+    
+    public void validateNew(Usuario newUser, Errors errors) {
+    	//validacion de campos vacios
+    	rejectIfEmptyOrWhitespace(errors,getCamposNoVacios());
+    	rejectIfEmptyOrWhitespace(errors,"password","passwordConfirm");
+    	
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nick", "NotEmpty");
-        if (user.getNick().length() < LARGO_MIN_CAMPO || user.getNick().length() > LARGO_MAX_CAMPO) {
+    	if (newUser.getNick().length() < LARGO_MIN_CAMPO || newUser.getNick().length() > LARGO_MAX_CAMPO) {
             errors.rejectValue("nick", "Size.userForm.nick");
         }
         
-        if (userService.findByNick(user.getNick()) != null) {
+        if (userService.findByNick(newUser.getNick()) != null) {
             errors.rejectValue("nick", "Duplicate.userForm.nick");
         }
         
-        if (userService.findByNick(user.getNick()) != null) {
+        if (userService.findByNick(newUser.getNick()) != null) {
             errors.rejectValue("email", "Duplicate.userForm.email");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < LARGO_MIN_CAMPO || user.getPassword().length() > LARGO_MAX_CAMPO) {
+        if (newUser.getPassword().length() < LARGO_MIN_CAMPO || newUser.getPassword().length() > LARGO_MAX_CAMPO) {
             errors.rejectValue("password", "Size.userForm.password");
         }
 
-        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+        if (!newUser.getPasswordConfirm().equals(newUser.getPassword())) {
             errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
         }
+    }
+    
+    public void validateUpdate(Usuario userOrig, Errors errors, Usuario userMod) {
+    	//validacion de campos vacios
+    	rejectIfEmptyOrWhitespace(errors,getCamposNoVacios());
+        
+        if (userMod.getNick().length() < LARGO_MIN_CAMPO || userMod.getNick().length() > LARGO_MAX_CAMPO) {
+            errors.rejectValue("nick", "Size.userForm.nick");
+        }
+        
+        //si ya hay un usuario con el nick ingresado y no es el del usuario logueado
+        Usuario userConNuevoNick = userService.findByNick(userMod.getNick());
+        if (userConNuevoNick != null && !userOrig.equals(userConNuevoNick)) {
+            errors.rejectValue("nick", "Duplicate.userForm.nick");
+        }
+        
+        //si ya hay un usuario con el email ingresado y no es el del usuario logueado
+        Usuario userConNuevoEmail = userService.findByEmail(userMod.getEmail()); 
+        if (userConNuevoEmail != null && !userOrig.equals(userConNuevoEmail)) {
+            errors.rejectValue("email", "Duplicate.userForm.email");
+        }
+        
     }
 }

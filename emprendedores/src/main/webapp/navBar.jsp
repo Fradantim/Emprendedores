@@ -6,6 +6,19 @@
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
+	<div class="modal fade" id="modal-popUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"></h5>
+				</div>
+				<div class="modal-body"> ...  </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"	data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->

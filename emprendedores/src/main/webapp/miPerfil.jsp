@@ -16,11 +16,6 @@
 	<script	src="${contextPath}/resources/js/portal.js"></script>		
 </head>
 <body>
-	
-	<form id="logoutForm" method="POST" action="${contextPath}/logout">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	</form>
-				
 	<div class="modal fade" id="modal-popUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -52,21 +47,24 @@
 				email: ${usuarioLogueado.email} <br>
 				---<br>
 				<br>
-				<c:choose>
-					<c:when test="${empty usuarioLogueado.ubicacion}">
-				        Ubicacion no ingresada <br>
-					</c:when>
-					<c:otherwise>
-						Pais: ${usuarioLogueado.ubicacion.pais} <br>
-						Provincia: ${usuarioLogueado.ubicacion.provincia} <br>
-						Localidad: ${usuarioLogueado.ubicacion.localidad} <br>
-					</c:otherwise>
-				</c:choose>
+				Pais: ${usuarioLogueado.pais} <br>
+				Provincia: ${usuarioLogueado.provincia} <br>
+				Localidad: ${usuarioLogueado.localidad} <br>
 				---<br>
 				<br>
+				
+				<security:authorize access="hasRole('CLIENTE')"	var="isCliente" />
+				<c:choose>
+					<c:when test="${isCliente}">ES CLIENTE<br>
+					</c:when>
+					<c:otherwise>
+						NO ES CLIENTE<br>
+					</c:otherwise>
+				</c:choose>
+				
 				<security:authorize access="hasRole('EMPRENDEDOR')"	var="isEmprendedor" />
 				<c:choose>
-					<c:when test="${not isEmprendedor}">NO TIENE PERFIL EMPRENDEDOR <br>
+					<c:when test="${not isEmprendedor}">NO ES EMPRENDEDOR <br>
 					</c:when>
 					<c:otherwise>
 						ES EMPRENDEDOR: <br>
@@ -74,6 +72,7 @@
 						Descripcion: ${usuarioLogueado.emprendimiento.descripcion} <br>
 						Link: ${usuarioLogueado.emprendimiento.link} <br>
 						Contacto: ${usuarioLogueado.emprendimiento.contacto} <br>
+						<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarEmprendimiento';" value="Modificar Mi Emprendimiento" />
 					</c:otherwise>
 				</c:choose>
 				---<br>
@@ -87,13 +86,16 @@
 				<security:authorize access="hasRole('CLIENTE')">
 					TIENE PERFIL CLIENTE<br>
 				</security:authorize>
-				
+				<br>
+				<br>
 				<security:authorize access="hasRole('EMPRENDEDOR')" var="isEmprendedor" />
 				<c:choose>
-				   <c:when test="${isEmprendedor}">TIENE PERFIL EMPRENDEDOR <br> </c:when>
-				   <c:otherwise>NO TIENE PERFIL EMPRENDEDOR <br></c:otherwise>
+				   <c:when test="${isEmprendedor}">(SI)  </c:when>
+				   <c:otherwise>(NO) </c:otherwise>
 				</c:choose>
+				TIENE PERFIL EMPRENDEDOR <br>
 				
+				<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarPerfil';" value="Modificar Mi Perfil" />
 				
 			</c:otherwise>
 		</c:choose>

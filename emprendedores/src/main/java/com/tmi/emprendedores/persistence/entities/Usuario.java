@@ -50,10 +50,15 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
     @JoinColumn(name = "EMPRENDIMIENTO_ID", referencedColumnName = "ID")
 	private Emprendimiento emprendimiento;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "UBICACION_ID", referencedColumnName = "ID")
-	private Ubicacion ubicacion;
-
+	@Column (name="PAIS")
+	private String pais;
+	
+	@Column (name="PROVINCIA")
+	private String provincia;
+	
+	@Column (name="LOCALIDAD")
+	private String localidad;
+		
 	public Usuario() {
 		super();
 	}
@@ -138,13 +143,29 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	public void setEmprendimiento(Emprendimiento emprendimiento) {
 		this.emprendimiento = emprendimiento;
 	}
-	
-	public Ubicacion getUbicacion() {
-		return ubicacion;
+
+	public String getPais() {
+		return pais;
 	}
 
-	public void setUbicacion(Ubicacion ubicacion) {
-		this.ubicacion = ubicacion;
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 	
 	public void addPerfil(Perfil... nuevosPerfiles) {
@@ -170,6 +191,16 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		removePerfil(viejosPerfiles.stream().toArray(Perfil[]::new));
 	}
 
+	public void modificarPerfil(Usuario nuevo) {
+		this.nombre=nuevo.nombre;
+		this.apellido=nuevo.apellido;
+		this.nick=nuevo.nick;
+		this.email=nuevo.email;
+		this.pais=nuevo.pais;
+		this.provincia=nuevo.provincia;
+		this.localidad=nuevo.localidad;
+	}
+	
 	@Override
 	public UsuarioDTO toDTO() {
 		UsuarioDTO dto = toMiniDTO();
@@ -180,9 +211,7 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 
 	@Override
 	public UsuarioDTO toMiniDTO() {
-		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()));
-		if(ubicacion != null)
-			dto.setUbicacion(ubicacion.toMiniDTO());
+		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()),pais,provincia,localidad);
 		return dto;
 	}
 }

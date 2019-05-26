@@ -4,8 +4,8 @@ import com.tmi.emprendedores.persistence.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	public Usuario findByNick(String nick);
+	public Usuario findByNickIgnoreCase(String nick);
 	
-	public Usuario findByEmail(String email);
+	public Usuario findByEmailIgnoreCase(String email);
 	
 }
