@@ -27,7 +27,11 @@ public class EmprendimientoController extends WebController {
 	private EmprendimientoValidator emprendimientoValidator;
 
 	@GetMapping(WebUtils.MAPPING_MODIFICAR_EMPRENDIMIENTO)
-	public String goToModificarClave(Model model, @RequestParam(value = "idEmprendimiento", required = false) Integer idEmprendimiento) {
+	public String goToModificarClave(Model model, Principal principal, @RequestParam(value = "idEmprendimiento", required = false) Integer idEmprendimiento) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
 		Emprendimiento emprendimiento = emprendimientoService.findById(idEmprendimiento);
 
 		if (emprendimiento == null) {
@@ -42,8 +46,10 @@ public class EmprendimientoController extends WebController {
 	}
 
 	@PostMapping(WebUtils.MAPPING_MODIFICAR_EMPRENDIMIENTO)
-	public String modificarClave(Model model, Principal principal, @ModelAttribute("emprendimientoForm") Emprendimiento emprendimientoForm, BindingResult bindingResult) {
-
+	public String modificarEmprendimiento(Model model, Principal principal, @ModelAttribute("emprendimientoForm") Emprendimiento emprendimientoForm, BindingResult bindingResult) {
+		if(!isUsuarioLogueado(principal)) {
+			return goToDebeIniciarSesion(model).getFile();
+    	}
 		emprendimientoValidator.validateUpdate(emprendimientoForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
