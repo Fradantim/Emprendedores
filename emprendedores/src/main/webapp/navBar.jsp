@@ -5,12 +5,19 @@
 	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
 			<!-- Font Icon -->
 		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
 </head>
 <body>
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
-
+	<script>
+		<c:forEach var="m" items="${mensajes}">
+		    console.log('${m.tipo} -> ${m.detalle}');
+		    $.notify('${m.detalle}', '${m.tipo}');
+		</c:forEach>
+	</script>
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
