@@ -83,4 +83,11 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 		dto.setUsuario(usuario.toMiniDTO());
 		return dto;
 	}
+	
+	public void modificarEmprendimiento(Emprendimiento emprendimiento) {
+		this.nombre = emprendimiento.getNombre();
+		this.descripcion = emprendimiento.getDescripcion();
+		this.link = emprendimiento.getLink();
+		this.contacto = emprendimiento.getContacto();
+	}
 }

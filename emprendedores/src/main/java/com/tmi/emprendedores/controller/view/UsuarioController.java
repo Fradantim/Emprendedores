@@ -2,14 +2,12 @@ package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +22,11 @@ import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
-import com.tmi.emprendedores.service.UsuarioService;
 import com.tmi.emprendedores.validator.UsuarioValidator;
 
 @Controller
 public class UsuarioController extends WebController{
     
-	@Autowired
-    private UsuarioService usuarioService;
-
     @Autowired
     private SecurityService securityService;
 
@@ -49,18 +43,6 @@ public class UsuarioController extends WebController{
         model.addAttribute("userForm", new Usuario());
         
         return Page.LOGBOX.getFile();
-    }
-    
-    /**
-     * Agrega al model unicamente el usuario logueado.
-     */
-    @GetMapping(WebUtils.MAPPING_GET_USUARIO)
-    public void getUsuarioLogueado(Model model, Principal principal) {
-    	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
-    }
-    
-    private void addUsuarioLogueado(Model model, Usuario usuario) {
-    	model.addAttribute("usuarioLogueado", usuario.toDTO());
     }
     
     @GetMapping(WebUtils.MAPPING_REGISTRO)
@@ -151,7 +133,7 @@ public class UsuarioController extends WebController{
     @GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
     public String goToModificarClave(Model model, Principal principal) {
     	model.addAttribute("userForm", new Usuario());
-    	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
+    	addUsuarioLogueado(model, principal);
         return Page.MODIFICAR_CLAVE.getFile();
     }
     

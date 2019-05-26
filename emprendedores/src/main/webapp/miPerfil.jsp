@@ -72,7 +72,8 @@
 						Descripcion: ${usuarioLogueado.emprendimiento.descripcion} <br>
 						Link: ${usuarioLogueado.emprendimiento.link} <br>
 						Contacto: ${usuarioLogueado.emprendimiento.contacto} <br>
-						<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarEmprendimiento';" value="Modificar Mi Emprendimiento" />
+						<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarEmprendimiento?idEmprendimiento=${usuarioLogueado.emprendimiento.id}';" value="Modificar Mi Emprendimiento" />
+						<br>
 					</c:otherwise>
 				</c:choose>
 				---<br>

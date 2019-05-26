@@ -3,8 +3,6 @@ package com.tmi.emprendedores.validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.UsuarioService;
@@ -13,10 +11,7 @@ import com.tmi.emprendedores.service.UsuarioService;
  * Objeto responsable de las validaciones de los campos al crear un usuario
  */
 @Component
-public class UsuarioValidator implements Validator {
-
-	public static final int LARGO_MIN_CAMPO = 1;
-	public static final int LARGO_MAX_CAMPO = 32;
+public class UsuarioValidator extends MyValidator {
 
 	@Autowired
 	private UsuarioService userService;
@@ -28,12 +23,6 @@ public class UsuarioValidator implements Validator {
 
 	private String[] getCamposNoVacios() {
 		return new String[] { "nick", "nombre", "apellido", "email"/* ,"pais","provincia","localidad" */ };
-	}
-
-	private void rejectIfEmptyOrWhitespace(Errors errors, String... fields) {
-		for (String field : fields) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, "NotEmpty");
-		}
 	}
 
 	@Override
