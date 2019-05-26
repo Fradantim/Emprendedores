@@ -179,7 +179,7 @@
 
 		</div>
 		
-		<script>
+		<script src="${contextPath}/assets/js/jquery.min.js">		
 			$( function() {
 			  $( "#datepicker" ).datepicker();
 			} );

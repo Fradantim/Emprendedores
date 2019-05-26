@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.MensajeDTO;
+import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.PerfilService;
@@ -37,13 +39,6 @@ public class UsuarioController extends WebController{
     public String welcome(Model model) {
         return Page.PORTAL.getFile();
     }
-
-    @GetMapping(WebUtils.MAPPING_LOGBOX)
-    public String getLogBox(Model model) {
-        model.addAttribute("userForm", new Usuario());
-        
-        return Page.LOGBOX.getFile();
-    }
     
     @GetMapping(WebUtils.MAPPING_REGISTRO)
     public String goToRegistration(Model model) {
@@ -52,7 +47,10 @@ public class UsuarioController extends WebController{
     }
     
     @PostMapping(WebUtils.MAPPING_REGISTRO)
-    public String registratiocn(@ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
+    public String registratiocn(Model model, @ModelAttribute("userForm") Usuario userForm, Principal principal, BindingResult bindingResult) {
+    	if(isUsuarioLogueado(principal)) {
+    		return goToNoTienePermiso(model).getFile();
+    	}
         usuarioValidator.validateNew(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -63,6 +61,8 @@ public class UsuarioController extends WebController{
 
         securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
 
+        addMensajes(model, 
+        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
         return Page.PORTAL.redirect();
     }
 
@@ -82,14 +82,26 @@ public class UsuarioController extends WebController{
     
     @GetMapping(WebUtils.MAPPING_MI_PERFIL)
     public String goToMiPerfil(Model model, Principal principal) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
     	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
     	addUsuarioLogueado(model, usuerLogueado);
 
+        addMensajes(model, 
+        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+usuerLogueado.getNick()+"!"),
+        		new MensajeDTO(TipoMensaje.ERROR, "Mensaje Test"));
+        
         return Page.MI_PERFIL.getFile();
     }
     
     @GetMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
     public String goToModificarPerfil(Model model, Principal principal) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
     	model.addAttribute("userForm", new Usuario());
     	addUsuarioLogueado(model, usuarioService.findByNick(principal.getName()));
         return Page.MODIFICAR_PERFIL.getFile();
@@ -97,6 +109,10 @@ public class UsuarioController extends WebController{
     
     @PostMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
     public String modificarPerfil(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult, @RequestParam(value = "emprendedorCheckBox", required = false) String emprendedorCheckBox) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
     	Usuario userLogueado = usuarioService.findByNick(principal.getName());
     	usuarioValidator.validateUpdate(userLogueado, bindingResult, userForm);
 
@@ -132,6 +148,9 @@ public class UsuarioController extends WebController{
     
     @GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
     public String goToModificarClave(Model model, Principal principal) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
     	model.addAttribute("userForm", new Usuario());
     	addUsuarioLogueado(model, principal);
         return Page.MODIFICAR_CLAVE.getFile();
@@ -139,6 +158,9 @@ public class UsuarioController extends WebController{
     
     @PostMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
     public String modificarClave(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
     	
     	usuarioValidator.validateUpdatePassword(userForm, bindingResult);
 
