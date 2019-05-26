@@ -61,8 +61,8 @@ public class UsuarioController extends WebController{
 
         securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
 
-        addMensajes(model, 
-        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."));
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
         return Page.PORTAL.redirect();
     }
 
@@ -70,6 +70,7 @@ public class UsuarioController extends WebController{
     public String login(Model model, String error, String logout) {
     	if (logout != null) {
         	model.addAttribute("message", "Cerró su sesión correctamente.");
+        	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Cerro su sesion correctamente!"));
         	return Page.PORTAL.getFile();
         }   
         
@@ -89,10 +90,6 @@ public class UsuarioController extends WebController{
     	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
     	addUsuarioLogueado(model, usuerLogueado);
 
-        addMensajes(model, 
-        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+usuerLogueado.getNick()+"!"),
-        		new MensajeDTO(TipoMensaje.ERROR, "Mensaje Test"));
-        
         return Page.MI_PERFIL.getFile();
     }
     
@@ -143,6 +140,7 @@ public class UsuarioController extends WebController{
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userLogueado.getNick(), userLogueado.getPassword(), nowAuthorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Su Perfil se modifico con exito!"));
         return Page.MI_PERFIL.getFile();
      }
     
@@ -178,6 +176,7 @@ public class UsuarioController extends WebController{
         userLogueado = usuarioService.saveAndEncodePassword(userLogueado);
         addUsuarioLogueado(model, userLogueado);
         
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "La clave se modifico correctamente!"));
         return Page.MI_PERFIL.getFile();
      }
 }
