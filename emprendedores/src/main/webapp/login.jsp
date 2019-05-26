@@ -7,35 +7,19 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-      <title>Ingrese a su cuenta</title>
+  		<title>Ingrese a su cuenta</title>
       
-      <meta charset="utf-8" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- Scripts -->
+		<script src="${contextPath}/assets/js/jquery.min.js"></script>
+		<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+		<script src="${contextPath}/assets/js/browser.min.js"></script>
+		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+		<script src="${contextPath}/assets/js/util.js"></script>
+		<script src="${contextPath}/assets/js/main.js"></script>
   </head>
 
-<%-- 
-  <body>
-
-    <div class="container">
-      <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Ingreso</h2>
-
-        <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Nick"/>
-            <input name="password" type="password" class="form-control" placeholder="Contraseña"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
-            <h4 class="text-center"><a href="${contextPath}/registro">Crear una cuenta</a></h4>
-        </div>
-      </form>
-    </div>
-
-  </body>
-  
- --%>
   
 <body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -125,13 +109,7 @@
 
 		</div>
 
-		<!-- Scripts -->
-			<script src="${contextPath}/assets/js/jquery.min.js"></script>
-			<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-			<script src="${contextPath}/assets/js/browser.min.js"></script>
-			<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-			<script src="${contextPath}/assets/js/util.js"></script>
-			<script src="${contextPath}/assets/js/main.js"></script>
+		
 
 	</body>
 </html>

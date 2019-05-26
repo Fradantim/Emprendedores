@@ -12,6 +12,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<script src="${contextPath}/assets/ckeditor/ckeditor.js"></script>
 	
+	<!-- Scripts -->
+	<script src="${contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${contextPath}/assets/js/browser.min.js"></script>
+	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${contextPath}/assets/js/util.js"></script>
+	<script src="${contextPath}/assets/js/main.js"></script>
+	
+	
+	
 </head>
 <body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -35,7 +45,7 @@
 								<p>Does this statement make you want to click the big shiny button?</p>
 								<a href="#" class="button large icon fa-check-circle">Yes it does</a>
 							</div>
--->
+						-->
 					</div>
 				</div>
 
@@ -43,7 +53,7 @@
 				<div id="main-wrapper">
 					<div class="wrapper style1">
 						<div class="inner">
-<div class="container">
+							<div class="container">
 							<div class="col-md-6">
 								<form:form method="POST" action="${contextPath}/modificarEmprendimiento" modelAttribute="emprendimientoForm" class="form-signin">
 									<h2 class="form-signin-heading">Modifica tu Emprendimiento</h2>
@@ -61,7 +71,11 @@
 											<form:textarea name="editor1" id="editor1" rows="10" cols="80" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:textarea>
 											<form:errors path="descripcion"></form:errors>
 										</div>
-										
+										<script>
+											// Replace the <textarea id="editor1"> with a CKEditor
+											// instance, using default configuration.
+											CKEDITOR.replace( 'editor1' );
+										</script>
 									</spring:bind>
 									<h3>Link</h3>
 									<spring:bind path="link">
@@ -87,34 +101,15 @@
 									<hr>
 									<button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar emprendimiento!</button>
 								</form:form>
-</div>
+							</div>
 						</div>
 					</div>
 					</div>
 				</div>
-
 			<!-- Footer Wrapper -->
 				<div id="footer-wrapper">
 					<jsp:include page="footerNav.jsp"/>
 				</div>
-
 		</div>
-
-		<!-- Scripts -->
-			<script src="${contextPath}/assets/js/jquery.min.js"></script>
-			<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-			<script src="${contextPath}/assets/js/browser.min.js"></script>
-			<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-			<script src="${contextPath}/assets/js/util.js"></script>
-			<script src="${contextPath}/assets/js/main.js"></script>
-
- 			<script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' );
-            </script>
-            
 	</body>
-
-
 </html>

@@ -11,33 +11,18 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${contextPath}/assets/css/jquery-ui.css" />
+	
+	<!-- Scripts -->
+	<script src="${contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${contextPath}/assets/js/browser.min.js"></script>
+	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${contextPath}/assets/js/util.js"></script>
+	<script src="${contextPath}/assets/js/main.js"></script>
+	<script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
+	<script src="${contextPath}/assets/js/jquery-ui.js"></script>
+		
 </head>
-
-<%-- 
-<body>				
-	<div class="container">
-		<jsp:include page="navBar.jsp"/>
-		<c:choose>
-			<c:when test="${pageContext.request.userPrincipal.name != null}">
-				<h2> Bienvenido ${pageContext.request.userPrincipal.name} | <a	onclick="document.forms['logoutForm'].submit()">Logout</a>
-				</h2>
-			</c:when>
-			<c:otherwise>
-				<h2>Bienvenido Anónimo!</h2>
-			</c:otherwise>
-		</c:choose>
-		--%>
-		<%-- peligroso... 
-		<security:authorize access="isAuthenticated()">
-    		authenticated as <security:authentication property="principal.username" /> 
-		</security:authorize>
-		--%>
-		<%--
-	</div>
-
-</body>
-
---%>
 
 <body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -193,16 +178,6 @@
 				</div>
 
 		</div>
-
-		<!-- Scripts -->
-		<script src="${contextPath}/assets/js/jquery.min.js"></script>
-		<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-		<script src="${contextPath}/assets/js/browser.min.js"></script>
-		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-		<script src="${contextPath}/assets/js/util.js"></script>
-		<script src="${contextPath}/assets/js/main.js"></script>
-		<script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
-		<script src="${contextPath}/assets/js/jquery-ui.js"></script>
 		
 		<script>
 			$( function() {

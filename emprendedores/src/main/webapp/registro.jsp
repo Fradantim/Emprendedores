@@ -6,13 +6,22 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+		
+		<title>Crea tu cuenta</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<title>Crea tu cuenta</title>
+		
+		<!-- Scripts -->
+		<script src="${contextPath}/assets/js/jquery.min.js"></script>
+		<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+		<script src="${contextPath}/assets/js/browser.min.js"></script>
+		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+		<script src="${contextPath}/assets/js/util.js"></script>
+		<script src="${contextPath}/assets/js/main.js"></script>
 
   </head>
-
-  <body class="homepage is-preload">
+  
+ <body class="homepage is-preload">
 
 <div id="page-wrapper">
 
@@ -24,46 +33,6 @@
 							<header id="header">
 								<div class="inner">
 									<jsp:include page="navBar.jsp"/>
-									<!-- Logo 
-										<h1><a href="index.html" id="logo">ZeroFour</a></h1>
--->
-									<!-- Nav 
-										<nav id="nav">
-											<ul>
-												<li class="current_page_item"><a href="index.html">Home</a></li>
-												<li>
-													<a href="#">Dropdown</a>
-													<ul>
-														<li><a href="#">Lorem ipsum dolor</a></li>
-														<li><a href="#">Magna phasellus</a></li>
-														<li>
-															<a href="#">Phasellus consequat</a>
-															<ul>
-																<li><a href="#">Lorem ipsum dolor</a></li>
-																<li><a href="#">Phasellus consequat</a></li>
-																<li><a href="#">Magna phasellus</a></li>
-																<li><a href="#">Etiam dolore nisl</a></li>
-															</ul>
-														</li>
-														<li><a href="#">Veroeros feugiat</a></li>
-													</ul>
-												</li>
-												<li><a href="left-sidebar.html">Left Sidebar</a></li>
-												<li><a href="right-sidebar.html">Right Sidebar</a></li>
-												<li><a href="no-sidebar.html">No Sidebar</a></li>
-												<c:choose>
-													<c:when test="${pageContext.request.userPrincipal.name != null}">
-														<li><a href="${contextPath}/miPerfil">Mi Perfil</a></li>
-														<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
-														<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
-													</c:when>
-													<c:otherwise>
-														<li><a href="${contextPath}/login">Ingresar</a></li>
-													</c:otherwise>
-												</c:choose>
-											</ul>
-										</nav>
--->
 								</div>
 								
 							</header>
@@ -172,13 +141,7 @@
 
 		</div>
 
-		<!-- Scripts -->
-			<script src="${contextPath}/assets/js/jquery.min.js"></script>
-			<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-			<script src="${contextPath}/assets/js/browser.min.js"></script>
-			<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-			<script src="${contextPath}/assets/js/util.js"></script>
-			<script src="${contextPath}/assets/js/main.js"></script>
+		
 			
   </body>
 </html>

@@ -10,6 +10,14 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	
+	<!-- Scripts -->
+	<script src="${contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${contextPath}/assets/js/browser.min.js"></script>
+	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${contextPath}/assets/js/util.js"></script>
+	<script src="${contextPath}/assets/js/main.js"></script>
+	
 </head>
 <body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -123,12 +131,6 @@
 
 		</div>
 
-		<!-- Scripts -->
-			<script src="${contextPath}/assets/js/jquery.min.js"></script>
-			<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-			<script src="${contextPath}/assets/js/browser.min.js"></script>
-			<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-			<script src="${contextPath}/assets/js/util.js"></script>
-			<script src="${contextPath}/assets/js/main.js"></script>
+		
 </body>
 </html>
