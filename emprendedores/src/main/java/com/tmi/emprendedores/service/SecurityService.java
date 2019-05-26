@@ -1,7 +1,7 @@
 package com.tmi.emprendedores.service;
 
 public interface SecurityService {
-    String findLoggedInUsername();
+    String findLoggedInNick();
 
-    void autoLogin(String username, String password);
+    void autoLogin(String nick, String password);
 }

@@ -11,7 +11,7 @@ public interface UsuarioService {
 	 */
 	public Usuario saveNew(Usuario user);
 
-	public Usuario findByNick(String username);
+	public Usuario findByNick(String nick);
     
 	public Usuario findByEmail(String email);
 }

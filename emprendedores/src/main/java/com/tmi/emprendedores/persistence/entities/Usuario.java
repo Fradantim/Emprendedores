@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.tmi.emprendedores.dto.DTOTransformable;
-import com.tmi.emprendedores.dto.UbicacionDTO;
 import com.tmi.emprendedores.dto.UsuarioDTO;
 
 @Entity

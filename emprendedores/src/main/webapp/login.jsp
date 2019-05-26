@@ -22,7 +22,7 @@
 
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Usuario"/>
+            <input name="username" type="text" class="form-control" placeholder="Nick"/>
             <input name="password" type="password" class="form-control" placeholder="Contraseña"/>
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

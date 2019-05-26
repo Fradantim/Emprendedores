@@ -19,10 +19,10 @@
 
         <form:form method="POST" modelAttribute="userForm" class="form-signin">
             <h2 class="form-signin-heading">Crea tu cuenta</h2>
-            <spring:bind path="username">
+            <spring:bind path="nick">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="username" class="form-control" placeholder="NickName"></form:input>
-                    <form:errors path="username"></form:errors>
+                    <form:input type="text" path="nick" class="form-control" placeholder="NickName"></form:input>
+                    <form:errors path="nick"></form:errors>
                 </div>
             </spring:bind>
             
