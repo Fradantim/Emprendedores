@@ -6,6 +6,8 @@
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
+	
+		<%--
 	<div class="modal fade" id="modal-popUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -19,6 +21,8 @@
 			</div>
 		</div>
 	</div>
+	
+ 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -57,5 +61,47 @@
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
+	</nav>
+	--%>
+	
+	
+	<!-- Logo 
+		<h1><a href="index.html" id="logo">ZeroFour</a></h1>
+	-->
+	<!-- Nav -->
+	<nav id="nav">
+		<ul>
+			<li class="current_page_item"><a href="${contextPath}/portal">Home</a></li>
+			<li>
+				<a href="#">Dropdown</a>
+				<ul>
+					<li><a href="#">Lorem ipsum dolor</a></li>
+					<li><a href="#">Magna phasellus</a></li>
+					<li>
+						<a href="#">Phasellus consequat</a>
+						<ul>
+							<li><a href="#">Lorem ipsum dolor</a></li>
+							<li><a href="#">Phasellus consequat</a></li>
+							<li><a href="#">Magna phasellus</a></li>
+							<li><a href="#">Etiam dolore nisl</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Veroeros feugiat</a></li>
+				</ul>
+			</li>
+			<li><a href="left-sidebar.html">Left Sidebar</a></li>
+			<li><a href="right-sidebar.html">Right Sidebar</a></li>
+			<li><a href="no-sidebar.html">No Sidebar</a></li>
+			<c:choose>
+				<c:when test="${pageContext.request.userPrincipal.name != null}">
+					<li><a href="${contextPath}/miPerfil">Mi Perfil</a></li>
+					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
+					<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="${contextPath}/login">Ingresar</a></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
 	</nav>
 </body>

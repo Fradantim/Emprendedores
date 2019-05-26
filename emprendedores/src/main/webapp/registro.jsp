@@ -4,69 +4,181 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
-      <meta charset="utf-8">
-      <title>Crea tu cuenta</title>
-
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-      <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<title>Crea tu cuenta</title>
+		<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
+		<!-- Font Icon -->
+		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
   </head>
 
-  <body>
+  <body class="homepage is-preload">
 
-    <div class="container">
+<div id="page-wrapper">
 
-        <form:form method="POST" modelAttribute="userForm" class="form-signin">
-            <h2 class="form-signin-heading">Crea tu cuenta</h2>
-            <spring:bind path="nick">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="nick" class="form-control" placeholder="NickName"></form:input>
-                    <form:errors path="nick"></form:errors>
-                </div>
-            </spring:bind>
-            
-            <spring:bind path="nombre">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="nombre" class="form-control" placeholder="Nombres"></form:input>
-                    <form:errors path="nombre"></form:errors>
-                </div>
-            </spring:bind>
-            
-            <spring:bind path="apellido">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="apellido" class="form-control" placeholder="Apellidos"></form:input>
-                    <form:errors path="apellido"></form:errors>
-                </div>
-            </spring:bind>
-            
-            <spring:bind path="email">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="email" class="form-control" placeholder="E-Mail"></form:input>
-                    <form:errors path="email"></form:errors>
-                </div>
-            </spring:bind>
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div class="container">
 
-            <spring:bind path="password">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="password" path="password" class="form-control" placeholder="Contraseña"></form:input>
-                    <form:errors path="password"></form:errors>
-                </div>
-            </spring:bind>
+						<!-- Header -->
+							<header id="header">
+								<div class="inner">
+									<jsp:include page="navBar.jsp"/>
+									<!-- Logo 
+										<h1><a href="index.html" id="logo">ZeroFour</a></h1>
+-->
+									<!-- Nav 
+										<nav id="nav">
+											<ul>
+												<li class="current_page_item"><a href="index.html">Home</a></li>
+												<li>
+													<a href="#">Dropdown</a>
+													<ul>
+														<li><a href="#">Lorem ipsum dolor</a></li>
+														<li><a href="#">Magna phasellus</a></li>
+														<li>
+															<a href="#">Phasellus consequat</a>
+															<ul>
+																<li><a href="#">Lorem ipsum dolor</a></li>
+																<li><a href="#">Phasellus consequat</a></li>
+																<li><a href="#">Magna phasellus</a></li>
+																<li><a href="#">Etiam dolore nisl</a></li>
+															</ul>
+														</li>
+														<li><a href="#">Veroeros feugiat</a></li>
+													</ul>
+												</li>
+												<li><a href="left-sidebar.html">Left Sidebar</a></li>
+												<li><a href="right-sidebar.html">Right Sidebar</a></li>
+												<li><a href="no-sidebar.html">No Sidebar</a></li>
+												<c:choose>
+													<c:when test="${pageContext.request.userPrincipal.name != null}">
+														<li><a href="${contextPath}/miPerfil">Mi Perfil</a></li>
+														<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
+														<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
+													</c:when>
+													<c:otherwise>
+														<li><a href="${contextPath}/login">Ingresar</a></li>
+													</c:otherwise>
+												</c:choose>
+											</ul>
+										</nav>
+-->
+								</div>
+								
+							</header>
 
-            <spring:bind path="passwordConfirm">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="password" path="passwordConfirm" class="form-control" placeholder="Confirme su contraseña"></form:input>
-                    <form:errors path="passwordConfirm"></form:errors>
-                </div>
-            </spring:bind>
+						<!-- Banner 
+							<div id="banner">
+								<h2><strong>ZeroFour:</strong> A free responsive site template
+								<br />
+								built on HTML5 and CSS3 by <a href="http://html5up.net">HTML5 UP</a></h2>
+								<p>Does this statement make you want to click the big shiny button?</p>
+								<a href="#" class="button large icon fa-check-circle">Yes it does</a>
+							</div>
+-->
+					</div>
+				</div>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Crear cuenta!</button>
-        </form:form>
+			<!-- Main Wrapper -->
+				<div id="main-wrapper">
+					<div class="wrapper style1">
+						<div class="inner">
 
-    </div>
+							<!-- Sing in  Form -->
+							<section class="sign-in">
+								<div class="container">
+									<div class="signin-content">
+										<div class="signin-form">
+											<h2 class="form-title">Sign in</h2>
+											<form:form method="POST" modelAttribute="userForm" class="register-form" id="login-form">
+												<spring:bind path="nick">
+													<div class="form-group ${status.error ? 'has-error' : ''}">
+														<label for="nick"><i class="zmdi zmdi-account material-icons-name"></i></label>
+														<form:input type="text" path="nick" name="nick" id="nick" placeholder="NickName"></form:input>
+                    									<form:errors path="nick"></form:errors>
+													</div>
+												</spring:bind>
+												<spring:bind path="nombre">
+									                <div class="form-group ${status.error ? 'has-error' : ''}">
+									                	<label for="nombre"><i class="zmdi zmdi-account material-icons-name"></i></label>
+									                    <form:input type="text" path="nombre" class="form-control" placeholder="Nombres"></form:input>
+									                    <form:errors path="nombre"></form:errors>
+									                </div>
+									            </spring:bind>
+												<spring:bind path="apellido">
+													<div class="form-group ${status.error ? 'has-error' : ''}">
+														<label for="apellido"><i class="zmdi zmdi-account material-icons-name"></i></label>
+														<form:input type="text" path="apellido" name="apellido" id="apellido" placeholder="Apellidos"></form:input>
+                    									<form:errors path="apellido"></form:errors>
+													</div>
+												</spring:bind>
+												<spring:bind path="email">
+													<div class="form-group ${status.error ? 'has-error' : ''}">
+														<label for="email"><i class="zmdi zmdi-email"></i></label>
+														<form:input type="text" path="email" name="email" id="email" placeholder="E-Mail"></form:input>
+                    									<form:errors path="email"></form:errors>
+													</div>
+												</spring:bind>
+												<spring:bind path="password">
+													<div class="form-group ${status.error ? 'has-error' : ''}">
+														<label for="pass"><i class="zmdi zmdi-lock"></i></label>
+														<form:input type="password" path="password" name="pass" id="pass" placeholder="Contraseña"></form:input>
+                    									<form:errors path="password"></form:errors>
+													</div>
+												</spring:bind>
+												<spring:bind path="passwordConfirm">
+									                <div class="form-group ${status.error ? 'has-error' : ''}">
+									                	<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+									                    <form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseña"></form:input>
+									                    <form:errors path="passwordConfirm"></form:errors>
+									                </div>
+									            </spring:bind>
+												<br/>
+												<div class="form-group form-button">
+													<input type="submit" name="signup" id="signup" class="form-submit" value="Crear cuenta!"/>
+												</div>
+											</form:form>
+											<div class="social-login">
+												<span class="social-label">Or login with</span>
+												<ul class="socials">
+													<li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+													<li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+													<li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="signin-image">
+											<center>
+												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="sing up image"></figure>
+											</center>
+												<a href="signup.html" class="signup-image-link">Create an account</a>
+											</div>
+									</div>
+								</div>
+							</section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+						</div>
+					</div>
+					
+				</div>
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<jsp:include page="footerNav.jsp"/>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="${contextPath}/assets/js/jquery.min.js"></script>
+			<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+			<script src="${contextPath}/assets/js/browser.min.js"></script>
+			<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+			<script src="${contextPath}/assets/js/util.js"></script>
+			<script src="${contextPath}/assets/js/main.js"></script>
+			
   </body>
 </html>
