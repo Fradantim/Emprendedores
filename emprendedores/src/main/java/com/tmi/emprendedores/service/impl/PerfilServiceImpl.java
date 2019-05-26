@@ -16,13 +16,10 @@ public class PerfilServiceImpl implements PerfilService {
     @Override
 	public void save(Perfil perfil) {
 		perfilRepo.save(perfil);
-		
 	}
     
 	@Override
 	public Perfil findByNombre(String nombre) {
 		return perfilRepo.findByNombre(nombre);
 	}
-
-   
 }

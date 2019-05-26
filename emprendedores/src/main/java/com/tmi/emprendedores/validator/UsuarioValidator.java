@@ -42,7 +42,7 @@ public class UsuarioValidator extends MyValidator {
 			errors.rejectValue("nick", "Duplicate.userForm.nick");
 		}
 
-		if (userService.findByNick(newUser.getNick()) != null) {
+		if (userService.findByEmail(newUser.getEmail()) != null) {
 			errors.rejectValue("email", "Duplicate.userForm.email");
 		}
 
