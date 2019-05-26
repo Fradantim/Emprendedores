@@ -11,9 +11,6 @@
       
       <meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
-		<!-- Font Icon -->
-		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
   </head>
 
 <%-- 
@@ -108,9 +105,9 @@
 										</div>
 										<div class="signin-image">
 											<center>
-												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="sing up image"></figure>
+												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="Crear Cuenta"></figure>
 											</center>
-												<a href="${contextPath}/registro" class="signup-image-link">Create an account</a>
+												<a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a>
 											</div>
 									</div>
 								</div>

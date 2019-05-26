@@ -10,8 +10,7 @@
 	<title>Portal Emprendedores</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
-	
+	<link rel="stylesheet" href="${contextPath}/assets/css/jquery-ui.css" />
 </head>
 
 <%-- 
@@ -202,11 +201,9 @@
 		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
 		<script src="${contextPath}/assets/js/util.js"></script>
 		<script src="${contextPath}/assets/js/main.js"></script>
-
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
+		<script src="${contextPath}/assets/js/jquery-ui.js"></script>
+		
 		<script>
 			$( function() {
 			  $( "#datepicker" ).datepicker();

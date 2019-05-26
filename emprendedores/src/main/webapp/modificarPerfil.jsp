@@ -10,7 +10,7 @@
 	<title>Modificar Mi Perfil</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
+	
 </head>
 <class="homepage is-preload">
 		<div id="page-wrapper">
@@ -101,7 +101,7 @@
 										<security:authorize access="hasRole('EMPRENDEDOR')"	var="isEmprendedor" />
 										
 										<br/>
-										<input name="emprendedorCheckBox" class="myCheckbox" type="checkbox" ${isEmprendedor ? 'checked' : ''} />
+										<input name="emprendedorCheckBox" type="checkbox" ${isEmprendedor ? 'checked' : ''} />
 										Modo emprendedor
 										<hr>
 										<br/>

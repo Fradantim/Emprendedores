@@ -1,7 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<head/>
+<head>
+	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
+			<!-- Font Icon -->
+		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
+</head>
 <body>
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

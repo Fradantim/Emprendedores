@@ -1301,6 +1301,12 @@ input, select, textarea {
 		font-size: 0.8em;
 	}
 
+form input[type="checkbox"]{
+	-webkit-appearance:checkbox;
+	width: 20px;
+	height: 20px;
+}
+
 	form input[type="text"],
 	form input[type="email"],
 	form input[type="password"],
@@ -2466,7 +2472,7 @@ margin-bottom: 33px; }
 margin-top: 45px; }
 
 .signup-image-link {
-	font-size: 14px;
+	font-size: 24px;
 	color: #222;
 	display: block;
 	text-align: center; }

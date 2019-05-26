@@ -9,9 +9,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<title>Crea tu cuenta</title>
-		<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
-		<!-- Font Icon -->
-		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
+
   </head>
 
   <body class="homepage is-preload">
@@ -141,6 +139,7 @@
 													<input type="submit" name="signup" id="signup" class="form-submit" value="Crear cuenta!"/>
 												</div>
 											</form:form>
+											<!--  
 											<div class="social-login">
 												<span class="social-label">Or login with</span>
 												<ul class="socials">
@@ -149,12 +148,13 @@
 													<li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
 												</ul>
 											</div>
+											-->
 										</div>
 										<div class="signin-image">
 											<center>
-												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="sing up image"></figure>
+												<figure ><img src="${contextPath}/assets/css/images/signup-image.jpg" alt="Ingresar a Cuenta"></figure>
 											</center>
-												<a href="signup.html" class="signup-image-link">Create an account</a>
+												<a href="${contextPath}/login" class="signup-image-link">Ingresar a Cuenta</a>
 											</div>
 									</div>
 								</div>
