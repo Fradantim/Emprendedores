@@ -5,7 +5,6 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<html>
 <head>
 	<title>Portal Emprendedores</title>
 	<meta charset="utf-8" />
@@ -19,9 +18,7 @@
 	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
 	<script src="${contextPath}/assets/js/util.js"></script>
 	<script src="${contextPath}/assets/js/main.js"></script>
-	<script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
-	<script src="${contextPath}/assets/js/jquery-ui.js"></script>
-		
+	
 </head>
 
 <body class="homepage is-preload">
@@ -132,7 +129,6 @@
 														</header>
 													<center>
 														<div id="datepicker"></div>
-
 													</center>
 														<!--
 														<footer>
@@ -179,7 +175,9 @@
 
 		</div>
 		
-		<script src="${contextPath}/assets/js/jquery.min.js">		
+		<script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
+		<script src="${contextPath}/assets/js/jquery-ui.js"></script>
+		<script>		
 			$( function() {
 			  $( "#datepicker" ).datepicker();
 			} );

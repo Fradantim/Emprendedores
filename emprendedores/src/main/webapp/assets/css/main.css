@@ -1317,6 +1317,7 @@ form input[type="checkbox"]{
 		width: 100%;
 		border-radius: 8px;
 		border: solid 1px #eee;
+		border-style: groove;
 	}
 
 	form input[type="text"]:focus,
