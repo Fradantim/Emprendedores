@@ -86,11 +86,7 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 	
 	public void modificarEmprendimiento(Emprendimiento emprendimiento) {
 		this.nombre = emprendimiento.getNombre();
-		/*cuando el CKEDITOR manda el atributo descripcion modificado le mete espacios
-		y saltos del linea al fondo, si lo llevo asi de nuevo a la pantalla despues 
-		rompe el jsp y se va todo a la mierda, asi amortiguo las cosas
-		*/
-		this.descripcion = emprendimiento.getDescripcion().replace("\r", "").replace("\n", "").trim();
+		this.descripcion = emprendimiento.getDescripcion();
 		this.link = emprendimiento.getLink();
 		this.contacto = emprendimiento.getContacto();
 	}
