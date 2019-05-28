@@ -116,10 +116,8 @@
 									</div>
 								</div>
 							</section>
-
 						</div>
 					</div>
-					
 				</div>
 
 			<!-- Footer Wrapper -->

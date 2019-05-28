@@ -144,14 +144,7 @@
 															<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
 															<li><a href="#">Semper mod quisturpis nisi</a></li>
 														</ul>
-														<!--
-														<footer>
-															<a href="#" class="button icon fa-arrow-circle-o-right">Do Something</a>
-														</footer>
-
-														-->
 													</section>
-	
 											</div>
 										</div>
 								</div>

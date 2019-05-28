@@ -22,7 +22,6 @@
 	</script>
 	<!-- Logo -->
 										<h1><a href="${contextPath}/portal" id="logo"></a></h1>
-										
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
