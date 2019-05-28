@@ -111,6 +111,7 @@
 											</div>
 											-->
 										</div>
+										
 										<div class="signin-image">
 											<center>
 												<figure ><img src="${contextPath}/assets/css/images/signup-image.jpg" alt="Ingresar a Cuenta"></figure>
