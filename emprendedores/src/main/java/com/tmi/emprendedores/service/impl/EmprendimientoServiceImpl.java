@@ -1,7 +1,5 @@
 package com.tmi.emprendedores.service.impl;
 
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +24,4 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
 		return emprendimientoRepo.findById(id).get();
 				
 	}
-
-    
-
-    
 }

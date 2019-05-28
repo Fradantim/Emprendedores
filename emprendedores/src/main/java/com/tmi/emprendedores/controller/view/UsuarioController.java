@@ -3,6 +3,7 @@ package com.tmi.emprendedores.controller.view;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +62,8 @@ public class UsuarioController extends WebController{
 
         securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
 
-        addMensajes(model, 
-        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."));
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
         return Page.PORTAL.redirect();
     }
 
@@ -70,6 +71,7 @@ public class UsuarioController extends WebController{
     public String login(Model model, String error, String logout) {
     	if (logout != null) {
         	model.addAttribute("message", "Cerró su sesión correctamente.");
+        	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Cerro su sesion correctamente!"));
         	return Page.PORTAL.getFile();
         }   
         
@@ -89,10 +91,6 @@ public class UsuarioController extends WebController{
     	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
     	addUsuarioLogueado(model, usuerLogueado);
 
-        addMensajes(model, 
-        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+usuerLogueado.getNick()+"!"),
-        		new MensajeDTO(TipoMensaje.ERROR, "Mensaje Test"));
-        
         return Page.MI_PERFIL.getFile();
     }
     
@@ -124,25 +122,29 @@ public class UsuarioController extends WebController{
         //si paso todas las validaciones actualizo el usuario
         userLogueado.modificarPerfil(userForm);
         
+        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
+        
         if(emprendedorCheckBox != null ) {
         	userLogueado.addPerfil(PerfilService.EMPRENDEDOR);
     	} else {
     		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
     	}
         
+        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
+        
         //persisto nuevo usuario
         userLogueado = usuarioService.save(userLogueado);
         addUsuarioLogueado(model, userLogueado);
         
-        //actualizo permisos del user logueado por si cambio nick o roles
-        List<GrantedAuthority> nowAuthorities = new ArrayList<GrantedAuthority>(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
         
-        //actualizo los perfiles
-        nowAuthorities.addAll(userLogueado.getPerfiles().stream().map(Perfil::toGrantedAuthority).collect(Collectors.toList()));
-                
+        //actualizo permisos del user logueado por si cambio nick o roles
+        Set<GrantedAuthority> nowAuthorities = userLogueado.getPerfiles().stream().map(Perfil::toGrantedAuthority).collect(Collectors.toSet());
+
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userLogueado.getNick(), userLogueado.getPassword(), nowAuthorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Su Perfil se modifico con exito!"));
         return Page.MI_PERFIL.getFile();
      }
     
@@ -178,6 +180,7 @@ public class UsuarioController extends WebController{
         userLogueado = usuarioService.saveAndEncodePassword(userLogueado);
         addUsuarioLogueado(model, userLogueado);
         
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "La clave se modifico correctamente!"));
         return Page.MI_PERFIL.getFile();
      }
 }

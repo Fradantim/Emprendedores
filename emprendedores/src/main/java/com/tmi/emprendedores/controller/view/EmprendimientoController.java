@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.MensajeDTO;
+import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Emprendimiento;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.EmprendimientoService;
@@ -57,9 +59,16 @@ public class EmprendimientoController extends WebController {
 			return Page.MODIFICAR_EMPRENDIMIENTO.getFile();
 		}
 
+		/*cuando el CKEDITOR manda el atributo descripcion modificado le mete espacios
+		y saltos del linea al fondo, si lo llevo asi de nuevo a la pantalla despues 
+		rompe el jsp y se va todo a la mierda, asi amortiguo las cosas
+		*/
+		String descripcion = emprendimientoForm.getDescripcion().replace("\r", "").replace("\n", "").trim();;
+		emprendimientoForm.setDescripcion(descripcion);
+		
+		
 		Emprendimiento emprendimientoAPersistir = null;
 		if(emprendimientoForm.getId() == null) {
-			System.out.println("Nuevo EmP!!!");
 			//es un emprendimiento nuevo
 			emprendimientoAPersistir = emprendimientoForm;
 			Usuario usuarioLogueado = usuarioService.findByNick(principal.getName());
@@ -77,7 +86,7 @@ public class EmprendimientoController extends WebController {
 		
 		//actualizo la info del usuario atada al emprendimiento
 		addUsuarioLogueado(model, principal);
-
+		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Actualizo correctamente su emprendimiento!"));
 		return Page.MI_PERFIL.getFile();
 	}
 }

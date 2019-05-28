@@ -97,9 +97,8 @@
 												<form:errors path="localidad"></form:errors>
 											</div>
 										</spring:bind>
-										
-										<security:authorize access="hasRole('EMPRENDEDOR')"	var="isEmprendedor" />
-										
+										<security:authorize access="hasAuthority('EMPRENDEDOR')" var="isEmprendedor" />
+
 										<br/>
 										<input name="emprendedorCheckBox" type="checkbox" ${isEmprendedor ? 'checked' : ''} />
 										Modo emprendedor

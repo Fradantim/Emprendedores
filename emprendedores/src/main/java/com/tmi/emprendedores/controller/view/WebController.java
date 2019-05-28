@@ -59,7 +59,5 @@ public abstract class WebController {
     protected Page goToDebeIniciarSesion(Model model) {
     	addMensajeDebeIniciarSesion(model);
     	return Page.LOGIN;	
-    }
-    
-    
+    }   
 }

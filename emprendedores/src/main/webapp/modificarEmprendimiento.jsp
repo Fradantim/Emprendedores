@@ -75,6 +75,7 @@
 											// Replace the <textarea id="editor1"> with a CKEditor
 											// instance, using default configuration.
 											CKEDITOR.replace( 'editor1' );
+											CKEDITOR.instances['editor1'].setData('${emprendimiento.descripcion}');
 										</script>
 									</spring:bind>
 									<h3>Link</h3>
