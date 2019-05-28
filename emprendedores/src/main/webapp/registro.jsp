@@ -10,14 +10,6 @@
 		<title>Crea tu cuenta</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-		<!-- Scripts -->
-		<script src="${contextPath}/assets/js/jquery.min.js"></script>
-		<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-		<script src="${contextPath}/assets/js/browser.min.js"></script>
-		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-		<script src="${contextPath}/assets/js/util.js"></script>
-		<script src="${contextPath}/assets/js/main.js"></script>
 
   </head>
   
@@ -123,7 +115,9 @@
 											<center>
 												<figure ><img src="${contextPath}/assets/css/images/signup-image.jpg" alt="Ingresar a Cuenta"></figure>
 											</center>
+											<%-- 
 												<a href="${contextPath}/login" class="signup-image-link">Ingresar a Cuenta</a>
+												--%>
 											</div>
 									</div>
 								</div>

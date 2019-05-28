@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+ 
 <head>
 	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
 			<!-- Font Icon -->
@@ -8,6 +9,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
 </head>
+
 <body>
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -18,6 +20,9 @@
 		    $.notify('${m.detalle}', '${m.tipo}');
 		</c:forEach>
 	</script>
+	<!-- Logo -->
+										<h1><a href="${contextPath}/portal" id="logo"></a></h1>
+										
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
@@ -55,5 +60,5 @@
 				</c:otherwise>
 			</c:choose>
 		</ul>
-	</nav>
+   </nav>
 </body>

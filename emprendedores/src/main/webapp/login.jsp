@@ -11,13 +11,6 @@
       
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!-- Scripts -->
-		<script src="${contextPath}/assets/js/jquery.min.js"></script>
-		<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-		<script src="${contextPath}/assets/js/browser.min.js"></script>
-		<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-		<script src="${contextPath}/assets/js/util.js"></script>
-		<script src="${contextPath}/assets/js/main.js"></script>
   </head>
 
   
@@ -75,11 +68,35 @@
 													<label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
 												</div>
 												-->
+												
 												<div class="form-group form-button">
-													<input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
-													
+												<br/>
+													<table style="width:100%">
+														<tr align="center">
+															<td width="50%" align="center">
+																<input  type="submit" name="signin" id="signin" class="form-submit" value="Ingresar"/>
+															</td>
+															<td width="50%" align="center">
+																<a href="${contextPath}/registro">
+   																	<input type="button" class="form-submit" value="Crear Cuenta" />
+																</a>
+															</td>
+														</tr>
+													</table>	
 												</div>
+<%-- 												
+												<div class="create-account-link">
+												<br/>
+												<p class="create-account">
+												¿No tienes una cuenta? 
+												<a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a>
+												</p>
+												</div>
+												
+--%>
 											</form>
+											
+											<%-- 
 											<div class="social-login">
 												<span class="social-label">Or login with</span>
 												<ul class="socials">
@@ -88,12 +105,13 @@
 													<li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
 												</ul>
 											</div>
+											--%>
 										</div>
 										<div class="signin-image">
 											<center>
 												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="Crear Cuenta"></figure>
 											</center>
-												<a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a>
+												<!--  <a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a> -->
 											</div>
 									</div>
 								</div>
@@ -108,10 +126,6 @@
 				<div id="footer-wrapper">
 					<jsp:include page="footerNav.jsp"/>
 				</div>
-
 		</div>
-
-		
-
 	</body>
 </html>

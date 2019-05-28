@@ -12,5 +12,13 @@
 			</div>
 		</div>
 	</footer>
+	
+	<!-- Scripts -->
+	<script src="${contextPath}/assets/js/jquery.min.js"></script>
+	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${contextPath}/assets/js/browser.min.js"></script>
+	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+	<script src="${contextPath}/assets/js/util.js"></script>
+	<script src="${contextPath}/assets/js/main.js"></script>
 </body>
 </head>
