@@ -25,8 +25,9 @@
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
-			<li class="current_page_item"><a href="${contextPath}/portal">Home</a></li>
+			<li><a href="${contextPath}/portal">Home</a></li>
 			<!--  
+			<li class="current_page_item"><a href="${contextPath}/portal">Home</a></li>
 			<li>
 				<a href="#">Dropdown</a>
 				<ul>

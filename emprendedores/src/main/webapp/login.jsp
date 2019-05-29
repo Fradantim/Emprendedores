@@ -50,15 +50,15 @@
 								<div class="container">
 									<div class="signin-content">
 										<div class="signin-form">
-											<h2 class="form-title">Sign in</h2>
+											<h2 class="form-title">Ingresar</h2>
 											<form method="POST" action="${contextPath}/login" class="form-signin">
 												<div class="form-group" >
 													<label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-													<input type="text" name="username" id="username" placeholder="Your Name"/>
+													<input type="text" name="username" id="username" placeholder="Usuario"/>
 												</div>
 												<div class="form-group">
 													<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-													<input type="password" name="password" id="password" placeholder="Password"/>
+													<input type="password" name="password" id="password" placeholder="Contraseña"/>
 													<span>${error}</span>
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												</div>

@@ -51,7 +51,7 @@
 								<div class="container">
 									<div class="signin-content">
 										<div class="signin-form">
-											<h2 class="form-title">Sign in</h2>
+											<h2 class="form-title">Registrarse</h2>
 											<form:form method="POST" modelAttribute="userForm" class="register-form" id="login-form">
 												<spring:bind path="nick">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
