@@ -94,6 +94,18 @@ public class UsuarioController extends WebController{
         return Page.MI_PERFIL.getFile();
     }
     
+    @GetMapping(WebUtils.MAPPING_MI_PERFIL2)
+    public String goToMiPerfil2(Model model, Principal principal) {
+    	if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
+    	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
+    	addUsuarioLogueado(model, usuerLogueado);
+
+        return Page.MI_PERFIL2.getFile();
+    }
+    
     @GetMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
     public String goToModificarPerfil(Model model, Principal principal) {
     	if(!isUsuarioLogueado(principal)) {

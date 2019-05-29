@@ -52,6 +52,7 @@
 			<c:choose>
 				<c:when test="${pageContext.request.userPrincipal.name != null}">
 					<li><a href="${contextPath}/miPerfil">Mi Perfil</a></li>
+					<li><a href="${contextPath}/miPerfil2">Perfil Ejemplo</a></li>
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
 					<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
 				</c:when>

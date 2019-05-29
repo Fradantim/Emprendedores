@@ -12,6 +12,7 @@ public interface WebUtils {
 	public final String MAPPING_LOGIN = "/login";
 	public final String MAPPING_LOGBOX = "/logBox";
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
+	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
 
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
@@ -25,6 +26,7 @@ public interface WebUtils {
 		MODIFICAR_CLAVE("modificarClave"),
 		MODIFICAR_EMPRENDIMIENTO("modificarEmprendimiento"),
 		MI_PERFIL("miPerfil"),
+		MI_PERFIL2("miPerfil2"),
 		;
 		
 		private String file;
