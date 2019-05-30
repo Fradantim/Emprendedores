@@ -10,6 +10,13 @@
 		<title>Crea tu cuenta</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		<style>
+		.error-messages {
+  			color: red;
+  			font-size: 12px; }
+		
+		</style>
 
   </head>
   
@@ -57,47 +64,47 @@
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="nick"><i class="zmdi zmdi-account material-icons-name"></i></label>
 														<form:input type="text" path="nick" name="nick" id="nick" placeholder="NickName"></form:input>
-                    									<form:errors path="nick"></form:errors>
+                    									<form:errors class="error-messages" path="nick"></form:errors>
 													</div>
 												</spring:bind>
 												<spring:bind path="nombre">
 									                <div class="form-group ${status.error ? 'has-error' : ''}">
 									                	<label for="nombre"><i class="zmdi zmdi-account material-icons-name"></i></label>
 									                    <form:input type="text" path="nombre" class="form-control" placeholder="Nombres"></form:input>
-									                    <form:errors path="nombre"></form:errors>
+									                    <form:errors class="error-messages" path="nombre"></form:errors>
 									                </div>
 									            </spring:bind>
 												<spring:bind path="apellido">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="apellido"><i class="zmdi zmdi-account material-icons-name"></i></label>
 														<form:input type="text" path="apellido" name="apellido" id="apellido" placeholder="Apellidos"></form:input>
-                    									<form:errors path="apellido"></form:errors>
+                    									<form:errors class="error-messages" path="apellido"></form:errors>
 													</div>
 												</spring:bind>
 												<spring:bind path="email">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="email"><i class="zmdi zmdi-email"></i></label>
 														<form:input type="text" path="email" name="email" id="email" placeholder="E-Mail"></form:input>
-                    									<form:errors path="email"></form:errors>
+                    									<form:errors class="error-messages" path="email"></form:errors>
 													</div>
 												</spring:bind>
 												<spring:bind path="password">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="pass"><i class="zmdi zmdi-lock"></i></label>
 														<form:input type="password" path="password" name="pass" id="pass" placeholder="Contraseña"></form:input>
-                    									<form:errors path="password"></form:errors>
+                    									<form:errors class="error-messages" path="password"></form:errors>
 													</div>
 												</spring:bind>
 												<spring:bind path="passwordConfirm">
 									                <div class="form-group ${status.error ? 'has-error' : ''}">
 									                	<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
 									                    <form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseña"></form:input>
-									                    <form:errors path="passwordConfirm"></form:errors>
+									                    <form:errors class="error-messages" path="passwordConfirm"></form:errors>
 									                </div>
 									            </spring:bind>
 												<br/>
 												<div class="form-group form-button">
-													<input type="submit" name="signup" id="signup" class="form-submit" value="Crear cuenta!"/>
+													<input type="submit" id="submit" name="signup" id="signup" class="form-submit" value="Crear cuenta!"/>
 												</div>
 											</form:form>
 											<!--  
@@ -126,6 +133,31 @@
 						</div>
 					</div>
 				</div>
+
+				<script>
+				jQuery(function(){
+						
+				        $("#submit").click(function(){
+				        $(".error-messages").remove();
+				        $(".error").hide();
+				        var hasError = false;
+				        var passwordVal = $("#password").val();
+				        //var checkVal = $("#password-check").val();
+				        if (passwordVal == '') {
+				            $("#password").after('<span class="error-messages">Por favor ingrese una password</span>');
+				            hasError = true;
+				        } else if (passwordVal.length < 6) {
+				            $("#password").after('<span class="error-messages">El password es muy corto. Verifique.</span>');
+				            hasError = true;
+				        } else if (passwordVal.length > 12 ) {
+				            $("#password").after('<span class="error-messages">El password máximo es de 12 caracteres</span>');
+				            hasError = true;
+				        }
+				        if(hasError == true) {return false;}
+				    });
+				});
+				</script>
+
 
 			<!-- Footer Wrapper -->
 				<div id="footer-wrapper">
