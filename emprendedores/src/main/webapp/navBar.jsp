@@ -16,8 +16,8 @@
 	</form>
 	<script>
 		<c:forEach var="m" items="${mensajes}">
-		    console.log('${m.tipo} -> ${m.detalle}');
-		    $.notify('${m.detalle}', '${m.tipo}');
+		    console.log('${m.mensaje}');
+		    $.notify(${m.build});
 		</c:forEach>
 	</script>
 	<!-- Logo -->

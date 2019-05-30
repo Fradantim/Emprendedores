@@ -2,6 +2,8 @@ package com.tmi.emprendedores.dto;
 
 public class MensajeDTO extends DTO{
 	
+	private static final String POSITION = "bottom right";
+	
 	public enum TipoMensaje{
 		SUCCESS, INFO, WARN, ERROR;
 
@@ -12,16 +14,20 @@ public class MensajeDTO extends DTO{
 	
 	private TipoMensaje tipo;
 
-	private String detalle;
+	private String mensaje;
 
 	public MensajeDTO(Integer id, TipoMensaje tipo, String detalle) {
 		super(id);
 		this.tipo = tipo;
-		this.detalle = detalle;
+		this.mensaje = detalle;
 	}
 	
 	public MensajeDTO(TipoMensaje tipo, String detalle) {
 		this(null, tipo, detalle);
+	}
+	
+	public MensajeDTO(String detalle) {
+		this(null, TipoMensaje.INFO, detalle);
 	}
 	
 	public String getTipo() {
@@ -31,12 +37,16 @@ public class MensajeDTO extends DTO{
 	public void setTipo(TipoMensaje tipo) {
 		this.tipo = tipo;
 	}
-
-	public String getDetalle() {
-		return detalle;
+	
+	public String getMensaje() {
+		return mensaje;
 	}
 
-	public void setDetalle(String detalle) {
-		this.detalle = detalle;
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public String getBuild() {
+		return "'"+getMensaje()+"', {position:'"+POSITION+"', className:'"+getTipo()+"'}" ;
 	}
 }
