@@ -39,7 +39,10 @@ public class EmprendimientoController extends WebController {
 		if (emprendimiento == null) {
 			emprendimiento = new Emprendimiento();
 		} else {
-			// TODO evaluar si el usuario logueado esta queriendo editar su propio emprendimiento u otro? -> vulnerabilidad
+			//el emprendimiento existe, evaluo si el usuario logueado tiene permisos para editarlo
+			if(!getLoggedUser(principal).puedeEditar(emprendimiento)) {
+				return goToNoTienePermisoEdicion(model).getFile();
+			}
 		}
 
 		model.addAttribute("emprendimiento", emprendimiento.toMiniDTO());
@@ -71,7 +74,7 @@ public class EmprendimientoController extends WebController {
 		if(emprendimientoForm.getId() == null) {
 			//es un emprendimiento nuevo
 			emprendimientoAPersistir = emprendimientoForm;
-			Usuario usuarioLogueado = usuarioService.findByNick(principal.getName());
+			Usuario usuarioLogueado = getLoggedUser(principal);
 			usuarioLogueado.setEmprendimiento(emprendimientoAPersistir); //actualizo la relacion al emprendimiento
 			usuarioService.save(usuarioLogueado); 
 			emprendimientoAPersistir.setUsuario(usuarioLogueado); //actualizo la relacion al usuario creador

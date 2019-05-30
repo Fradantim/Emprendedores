@@ -5,13 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.EmprendimientoDTO;
 
 @Entity
 @Table(name="EMPRENDIMIENTO")
-public class Emprendimiento extends AbsEntity implements DTOTransformable<EmprendimientoDTO>{
-	
+public class Emprendimiento extends AbsEntity implements DTOTransformable<EmprendimientoDTO>, HasOwner<Usuario>{
 	
 	@Column (name="NOMBRE", nullable=false)
 	private String nombre;
@@ -89,5 +89,10 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 		this.descripcion = emprendimiento.getDescripcion();
 		this.link = emprendimiento.getLink();
 		this.contacto = emprendimiento.getContacto();
+	}
+
+	@Override
+	public Usuario getOwner() {
+		return usuario;
 	}
 }

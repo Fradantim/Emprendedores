@@ -1,8 +1,6 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,7 +48,7 @@ public class UsuarioController extends WebController{
     @PostMapping(WebUtils.MAPPING_REGISTRO)
     public String registratiocn(Model model, @ModelAttribute("userForm") Usuario userForm, Principal principal, BindingResult bindingResult) {
     	if(isUsuarioLogueado(principal)) {
-    		return goToNoTienePermiso(model).getFile();
+    		return goToNoTienePermisoAcceso(model).getFile();
     	}
         usuarioValidator.validateNew(userForm, bindingResult);
 
@@ -62,9 +60,11 @@ public class UsuarioController extends WebController{
 
         securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
 
-        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."));
-        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
-        return Page.PORTAL.redirect();
+        
+        addMensajes(model, 
+        		new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."),
+        		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
+        return Page.PORTAL.getFile();
     }
 
     @GetMapping(WebUtils.MAPPING_LOGIN)
@@ -88,7 +88,7 @@ public class UsuarioController extends WebController{
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
-    	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
+    	Usuario usuerLogueado = getLoggedUser(principal);
     	addUsuarioLogueado(model, usuerLogueado);
 
         return Page.MI_PERFIL.getFile();
@@ -100,7 +100,7 @@ public class UsuarioController extends WebController{
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
-    	Usuario usuerLogueado = usuarioService.findByNick(principal.getName());
+    	Usuario usuerLogueado = getLoggedUser(principal);
     	addUsuarioLogueado(model, usuerLogueado);
 
         return Page.MI_PERFIL2.getFile();
@@ -123,7 +123,7 @@ public class UsuarioController extends WebController{
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
-    	Usuario userLogueado = usuarioService.findByNick(principal.getName());
+    	Usuario userLogueado = getLoggedUser(principal);
     	usuarioValidator.validateUpdate(userLogueado, bindingResult, userForm);
 
         if (bindingResult.hasErrors()) {
@@ -178,7 +178,7 @@ public class UsuarioController extends WebController{
         }
     	
         
-        Usuario userLogueado = usuarioService.findByNick(principal.getName());
+        Usuario userLogueado = getLoggedUser(principal);
         //si paso todas las validaciones actualizo el usuario
         userLogueado.setPassword(userForm.getPassword());
         

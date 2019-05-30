@@ -18,6 +18,10 @@ public abstract class WebController {
 	@Autowired
 	protected UsuarioService usuarioService;
 	
+	protected Usuario getLoggedUser(Principal principal) {
+		return usuarioService.findByNick(principal.getName());
+	}
+	
 	/**
      * Agrega al model unicamente el usuario logueado.
      */
@@ -43,7 +47,7 @@ public abstract class WebController {
     	model.addAttribute("mensajes", mensajes);
     }
     
-    protected void addMensajeNoTienePermiso(Model model) {
+    protected void addMensajeNoTienePermisoAcceso(Model model) {
     	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No tiene permisos para ingresar aqui."));
     }
     
@@ -51,13 +55,22 @@ public abstract class WebController {
     	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "Debe iniciar sesion para ingresar aqui."));
     }
     
-    protected Page goToNoTienePermiso(Model model) {
-    	addMensajeNoTienePermiso(model);
+    protected void addMensajeNoTienePermisoEdicion(Model model) {
+    	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No tiene permisos para modificar este elemento."));
+    }
+    
+    protected Page goToNoTienePermisoAcceso(Model model) {
+    	addMensajeNoTienePermisoAcceso(model);
     	return Page.PORTAL;
     }
     
     protected Page goToDebeIniciarSesion(Model model) {
     	addMensajeDebeIniciarSesion(model);
     	return Page.LOGIN;	
-    }   
+    }
+    
+    protected Page goToNoTienePermisoEdicion(Model model) {
+    	addMensajeNoTienePermisoEdicion(model);
+    	return Page.PORTAL;
+    }
 }

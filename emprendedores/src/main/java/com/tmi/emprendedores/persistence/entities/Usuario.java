@@ -15,8 +15,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.UsuarioDTO;
+import com.tmi.emprendedores.service.PerfilService;
 
 @Entity
 @Table(name="USUARIO")
@@ -213,5 +215,14 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	public UsuarioDTO toMiniDTO() {
 		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()),pais,provincia,localidad);
 		return dto;
+	}
+	
+	public boolean puedeEditar(AbsEntity entity) {
+		if(poseePerfil(PerfilService.MODERADOR))
+			return true;
+		if(entity instanceof HasOwner<?>) {
+			return this.equals(((HasOwner<?>) entity).getOwner());
+		}
+		return false;
 	}
 }
