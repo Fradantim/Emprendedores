@@ -16,7 +16,7 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 	@Column (name="NOMBRE", nullable=false)
 	private String nombre;
 	
-	@Column (name="DESCRIPCION", nullable=false)
+	@Column (name="DESCRIPCION", nullable=false, length = 5000)
 	private String descripcion;
 	
 	@Column (name="LINK")
