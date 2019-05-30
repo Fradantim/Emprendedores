@@ -11,8 +11,8 @@ import org.springframework.validation.Validator;
 @Component
 public abstract class MyValidator implements Validator {
 
-	public static final int LARGO_MIN_CAMPO = 1;
-	public static final int LARGO_MAX_CAMPO = 32;
+	public static final int LARGO_MIN_CAMPO = 8;
+	public static final int LARGO_MAX_CAMPO = 12;
 
 	protected void rejectIfEmptyOrWhitespace(Errors errors, String... fields) {
 		for (String field : fields) {

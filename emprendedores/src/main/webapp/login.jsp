@@ -11,6 +11,13 @@
       
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		<style>
+		.error-messages {
+  			color: red;
+  			font-size: 12px; }
+		
+		</style>
   </head>
 
   
@@ -59,7 +66,7 @@
 												<div class="form-group">
 													<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
 													<input type="password" name="password" id="password" placeholder="Contraseña"/>
-													<span>${error}</span>
+													<span class="error-messages">${error}</span>
 													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 												</div>
 												<!--  
@@ -74,7 +81,7 @@
 													<table style="width:100%">
 														<tr align="center">
 															<td width="50%" align="center">
-																<input  type="submit" name="signin" id="signin" class="form-submit" value="Ingresar"/>
+																<input  type="submit" id="submit" name="signin" id="signin" class="form-submit" value="Ingresar"/>
 															</td>
 															<td width="50%" align="center">
 																<a href="${contextPath}/registro">
@@ -119,6 +126,29 @@
 						</div>
 					</div>
 				</div>
+				<script>
+				jQuery(function(){
+						
+				        $("#submit").click(function(){
+				        $(".error-messages").remove();
+				        $(".error").hide();
+				        var hasError = false;
+				        var passwordVal = $("#password").val();
+				        //var checkVal = $("#password-check").val();
+				        if (passwordVal == '') {
+				            $("#password").after('<span class="error-messages">Por favor ingrese un password</span>');
+				            hasError = true;
+				        } else if (passwordVal.length < 8) {
+				            $("#password").after('<span class="error-messages">El password no puede ser menor a 8 caracteres. Verifique.</span>');
+				            hasError = true;
+				        } else if (passwordVal.length > 12 ) {
+				            $("#password").after('<span class="error-messages">El password máximo es de 12 caracteres</span>');
+				            hasError = true;
+				        }
+				        if(hasError == true) {return false;}
+				    });
+				});
+				</script>
 
 			<!-- Footer Wrapper -->
 				<div id="footer-wrapper">
