@@ -133,23 +133,17 @@ public class UsuarioController extends WebController{
     	
         //si paso todas las validaciones actualizo el usuario
         userLogueado.modificarPerfil(userForm);
-        
-        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
-        
+
         if(emprendedorCheckBox != null ) {
         	userLogueado.addPerfil(PerfilService.EMPRENDEDOR);
     	} else {
     		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
     	}
-        
-        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
-        
+
         //persisto nuevo usuario
         userLogueado = usuarioService.save(userLogueado);
         addUsuarioLogueado(model, userLogueado);
-        
-        System.out.println("Perfiles >"+userLogueado.getPerfiles().size());
-        
+
         //actualizo permisos del user logueado por si cambio nick o roles
         Set<GrantedAuthority> nowAuthorities = userLogueado.getPerfiles().stream().map(Perfil::toGrantedAuthority).collect(Collectors.toSet());
 
