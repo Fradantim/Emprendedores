@@ -74,34 +74,8 @@
 		</div>
 	</div>
 	<br/>
-
-	<security:authorize access="hasAuthority('EMPRENDEDOR')" >
-	<div class="row">
-		<div class="col-md-12">
-			 <span class="badge badge-default">Mi Emprendimiento</span>
-			 <div class="card">
-				<h5 class="card-header">
-					${usuarioLogueado.emprendimiento.nombre}
-				</h5>
-				<div class="card-body">
-					<div class="card-text">
-						${usuarioLogueado.emprendimiento.descripcion}
-					</div>
-				</div>
-				<div class="card-footer">
-					${usuarioLogueado.emprendimiento.link} <br>
-					${usuarioLogueado.emprendimiento.contacto}
-				</div>
-			</div>
-			<input type="button" class="btn btn-default" onclick="location.href='${contextPath}/modificarEmprendimiento?idEmprendimiento=${usuarioLogueado.emprendimiento.id}';" value="Modificar Mi Emprendimiento" />
-		</div>
-	</div>	
-	</security:authorize>
-
 	
-	<br/>
-	
-	<div class="row">
+		<div class="row">
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-6">
@@ -120,6 +94,35 @@
 			<br/>
 		</div>
 	</div>
+
+	<security:authorize access="hasAuthority('EMPRENDEDOR')" >
+	<div class="row">
+		<div class="col-md-12">
+			 <span class="badge badge-default">Mi Emprendimiento</span>
+			 <input type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/modificarEmprendimiento?idEmprendimiento=${usuarioLogueado.emprendimiento.id}';" value="Modificar Mi Emprendimiento" />
+			 <div class="card">
+				<h5 class="card-header">
+					${usuarioLogueado.emprendimiento.nombre}
+				</h5>
+				<div class="card-body">
+					<div class="card-text">
+						${usuarioLogueado.emprendimiento.descripcion}
+					</div>
+				</div>
+				<div class="card-footer">
+					${usuarioLogueado.emprendimiento.link} <br>
+					${usuarioLogueado.emprendimiento.contacto}
+				</div>
+			</div>
+			
+		</div>
+	</div>	
+	</security:authorize>
+
+	
+	<br/>
+	
+
 </div>
 </div>
 </div>
