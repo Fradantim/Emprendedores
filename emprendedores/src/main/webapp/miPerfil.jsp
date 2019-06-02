@@ -9,7 +9,7 @@
 	<title>Mi Perfil</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${contextPath}/assets/bootstrap-4.2.1/css/bootstrap.css">
+	<link rel="stylesheet" href="${contextPath}/assets/bootstrap-4.0.0/css/bootstrap.css">
 </head>
 <body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -94,12 +94,17 @@
 			<br/>
 		</div>
 	</div>
-
+	
+	<%-- 
+	<br/>
 	<security:authorize access="hasAuthority('EMPRENDEDOR')" >
 	<div class="row">
 		<div class="col-md-12">
-			 <span class="badge badge-default">Mi Emprendimiento</span>
-			 <input type="button" class="btn btn-primary btn-sm" onclick="location.href='${contextPath}/modificarEmprendimiento?idEmprendimiento=${usuarioLogueado.emprendimiento.id}';" value="Modificar Mi Emprendimiento" />
+			 <h3><span class="badge badge-default">Mi Emprendimiento</span></h3>
+			 <button type="button" class="btn btn-block btn-primary" onclick="location.href='${contextPath}/modificarEmprendimiento?idEmprendimiento=${usuarioLogueado.emprendimiento.id}';">
+				Modificar Mi Emprendimiento
+			 </button>
+			 <br/>
 			 <div class="card">
 				<h5 class="card-header">
 					${usuarioLogueado.emprendimiento.nombre}
@@ -118,7 +123,7 @@
 		</div>
 	</div>	
 	</security:authorize>
-
+--%>
 	
 	<br/>
 	

@@ -1885,6 +1885,7 @@ form input[type="checkbox"]{
 		.wrapper > .inner {
 			position: relative;
 			z-index: 2;
+			
 		}
 
 		.wrapper.style1 {
@@ -1896,6 +1897,7 @@ form input[type="checkbox"]{
 			background-size: 100% 15em, 100% 15em, auto auto;
 			background-position: top center, bottom center, top left;
 		}
+		
 
 		.wrapper.style3 {
 			position: relative;
@@ -2462,7 +2464,7 @@ margin-bottom: 150px; }
 padding: 75px 0; }
 
 .signup-form, .signup-image, .signin-form, .signin-image {
-width: 50%;
+width: 100%;
 overflow: hidden; }
 
 .signup-image {
@@ -2699,4 +2701,12 @@ padding: 5px; }
 
 .myCheckbox input:checked + span {
     background: url("link_to_another_image");
+}
+
+.navShort {
+    display: inline-block;
+    float: right;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 1.0rem;
 }

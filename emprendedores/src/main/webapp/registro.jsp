@@ -54,86 +54,87 @@
 						<div class="inner">
 
 							<!-- Sing in  Form -->
-							<section class="sign-in">
-								<div class="container">
-									<div class="signin-content">
-										<div class="signin-form">
-											<h2 class="form-title">Registrarse</h2>
-											<form:form method="POST" modelAttribute="userForm" class="register-form" id="login-form">
-												<spring:bind path="nick">
-													<div class="form-group ${status.error ? 'has-error' : ''}">
-														<label for="nick"><i class="zmdi zmdi-account material-icons-name"></i></label>
-														<form:input type="text" path="nick" name="nick" id="nick" placeholder="NickName"></form:input>
-                    									<form:errors class="error-messages" path="nick"></form:errors>
-													</div>
-												</spring:bind>
-												<spring:bind path="nombre">
-									                <div class="form-group ${status.error ? 'has-error' : ''}">
-									                	<label for="nombre"><i class="zmdi zmdi-account material-icons-name"></i></label>
-									                    <form:input type="text" path="nombre" class="form-control" placeholder="Nombres"></form:input>
-									                    <form:errors class="error-messages" path="nombre"></form:errors>
-									                </div>
-									            </spring:bind>
-												<spring:bind path="apellido">
-													<div class="form-group ${status.error ? 'has-error' : ''}">
-														<label for="apellido"><i class="zmdi zmdi-account material-icons-name"></i></label>
-														<form:input type="text" path="apellido" name="apellido" id="apellido" placeholder="Apellidos"></form:input>
-                    									<form:errors class="error-messages" path="apellido"></form:errors>
-													</div>
-												</spring:bind>
-												<spring:bind path="email">
-													<div class="form-group ${status.error ? 'has-error' : ''}">
-														<label for="email"><i class="zmdi zmdi-email"></i></label>
-														<form:input type="text" path="email" name="email" id="email" placeholder="E-Mail"></form:input>
-                    									<form:errors class="error-messages" path="email"></form:errors>
-													</div>
-												</spring:bind>
-												<spring:bind path="password">
-													<div class="form-group ${status.error ? 'has-error' : ''}">
-														<label for="pass"><i class="zmdi zmdi-lock"></i></label>
-														<form:input type="password" path="password" name="pass" id="pass" placeholder="Contraseña"></form:input>
-                    									<form:errors class="error-messages" path="password"></form:errors>
-													</div>
-												</spring:bind>
-												<spring:bind path="passwordConfirm">
-									                <div class="form-group ${status.error ? 'has-error' : ''}">
-									                	<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-									                    <form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseña"></form:input>
-									                    <form:errors class="error-messages" path="passwordConfirm"></form:errors>
-									                </div>
-									            </spring:bind>
-												<br/>
-												<div class="form-group form-button">
-													<input type="submit" id="submit" name="signup" id="signup" class="form-submit" value="Crear cuenta!"/>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-6">
+											
+												<div class="signin-form">
+													<h2 class="form-title">Registrarse</h2>
+													<form:form method="POST" modelAttribute="userForm" class="register-form" id="login-form">
+														<spring:bind path="nick">
+															<div class="form-group ${status.error ? 'has-error' : ''}">
+																<label for="nick"><i class="zmdi zmdi-account material-icons-name"></i></label>
+																<form:input type="text" path="nick" name="nick" id="nick" placeholder="NickName"></form:input>
+		                    									<form:errors class="error-messages" path="nick"></form:errors>
+															</div>
+														</spring:bind>
+														<spring:bind path="nombre">
+											                <div class="form-group ${status.error ? 'has-error' : ''}">
+											                	<label for="nombre"><i class="zmdi zmdi-account material-icons-name"></i></label>
+											                    <form:input type="text" path="nombre" class="form-control" placeholder="Nombres"></form:input>
+											                    <form:errors class="error-messages" path="nombre"></form:errors>
+											                </div>
+											            </spring:bind>
+														<spring:bind path="apellido">
+															<div class="form-group ${status.error ? 'has-error' : ''}">
+																<label for="apellido"><i class="zmdi zmdi-account material-icons-name"></i></label>
+																<form:input type="text" path="apellido" name="apellido" id="apellido" placeholder="Apellidos"></form:input>
+		                    									<form:errors class="error-messages" path="apellido"></form:errors>
+															</div>
+														</spring:bind>
+														<spring:bind path="email">
+															<div class="form-group ${status.error ? 'has-error' : ''}">
+																<label for="email"><i class="zmdi zmdi-email"></i></label>
+																<form:input type="text" path="email" name="email" id="email" placeholder="E-Mail"></form:input>
+		                    									<form:errors class="error-messages" path="email"></form:errors>
+															</div>
+														</spring:bind>
+														<spring:bind path="password">
+															<div class="form-group ${status.error ? 'has-error' : ''}">
+																<label for="pass"><i class="zmdi zmdi-lock"></i></label>
+																<form:input type="password" path="password" name="pass" id="pass" placeholder="Contraseña"></form:input>
+		                    									<form:errors class="error-messages" path="password"></form:errors>
+															</div>
+														</spring:bind>
+														<spring:bind path="passwordConfirm">
+											                <div class="form-group ${status.error ? 'has-error' : ''}">
+											                	<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+											                    <form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseña"></form:input>
+											                    <form:errors class="error-messages" path="passwordConfirm"></form:errors>
+											                </div>
+											            </spring:bind>
+														<br/>
+														<div class="form-group form-button">
+														<button type="submit" class="btn btn-block btn-primary" class="form-submit">
+															Crear Cuenta
+														</button>
+
+														</div>
+													</form:form>
 												</div>
-											</form:form>
-											<!--  
-											<div class="social-login">
-												<span class="social-label">Or login with</span>
-												<ul class="socials">
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-												</ul>
+																					
 											</div>
-											-->
+											<div class="col-md-6">
+												<div class="signin-image">
+													<figure ><img src="${contextPath}/assets/css/images/signup-image.jpg" alt="Ingresar a Cuenta"></figure>
+												</div>
+											</div>
 										</div>
-										
-										<div class="signin-image">
-											<center>
-												<figure ><img src="${contextPath}/assets/css/images/signup-image.jpg" alt="Ingresar a Cuenta"></figure>
-											</center>
-											<%-- 
-												<a href="${contextPath}/login" class="signup-image-link">Ingresar a Cuenta</a>
-												--%>
-											</div>
 									</div>
 								</div>
-							</section>
+							</div>
+							
 						</div>
 					</div>
 				</div>
-
+			
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<jsp:include page="footerNav.jsp"/>
+				</div>
+				
 				<script>
 				jQuery(function(){
 						
@@ -158,15 +159,6 @@
 				});
 				</script>
 
-
-			<!-- Footer Wrapper -->
-				<div id="footer-wrapper">
-					<jsp:include page="footerNav.jsp"/>
-				</div>
-
 		</div>
-
-		
-			
   </body>
 </html>

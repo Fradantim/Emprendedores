@@ -43,7 +43,7 @@
 						<div class="inner">
 							<div class="container">
 						
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<form:form method="POST" action="${contextPath}/modificarPerfil" modelAttribute="userForm" class="form-signin">
 										<h2 class="form-signin-heading">Modifica tu Perfil</h2>
 										

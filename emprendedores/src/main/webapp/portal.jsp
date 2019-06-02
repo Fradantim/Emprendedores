@@ -47,7 +47,8 @@
 						<div class="inner">
 							<div class="container">
 								<div class="row">
-									<div class="col-8 col-12-medium">
+								
+									<div class="col-md-8">
 
 										<!-- Article list -->
 											<section class="box article-list">
@@ -97,20 +98,33 @@
 
 											</section>
 											<!-- Pagination -->
-						<div class="pagination">
-								<!--<a href="#" class="button previous">Previous Page</a>-->
-								<div class="pages">
-									<a href="#" class="active">1</a>
-									<a href="#">2</a>
-									<a href="#">3</a>
-									<a href="#">4</a>
-									<span>&hellip;</span>
-									<a href="#">20</a>
-								</div>
-								<a href="#" class="button next">Next Page</a>
-							</div>
+											<nav>
+											<ul class="pagination">
+												<li class="page-item">
+													<a class="page-link" href="#">Anterior</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">1</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">2</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">3</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">4</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">5</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link" href="#">Siguiente</a>
+												</li>
+											</ul>
+										</nav>
 									</div>
-									<div class="col-4 col-12-medium">
+									<div class="col-md-4">
 											<div id="sidebar">
 	
 												<!-- Sidebar -->

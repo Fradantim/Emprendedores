@@ -49,84 +49,65 @@
 
 			<!-- Main Wrapper -->
 				<div id="main-wrapper">
-					<div class="wrapper style1">
+					<div class="wrapper style1" >
 						<div class="inner">
-
-							<!-- Sing in  Form -->
-							<section class="sign-in">
-								<div class="container">
-									<div class="signin-content">
-										<div class="signin-form">
-											<h2 class="form-title">Ingresar</h2>
-											<form method="POST" action="${contextPath}/login" class="form-signin">
-												<div class="form-group" >
-													<label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-													<input type="text" name="username" id="username" placeholder="Usuario"/>
-												</div>
-												<div class="form-group">
-													<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-													<input type="password" name="password" id="password" placeholder="Contraseña"/>
-													<span class="error-messages">${error}</span>
-													<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-												</div>
-												<!--  
-												<div class="form-group">
-													<input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-													<label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
-												</div>
-												-->
-												
-												<div class="form-group form-button">
-												<br/>
-													<table style="width:100%">
-														<tr align="center">
-															<td width="50%" align="center">
-																<input  type="submit" id="submit" name="signin" id="signin" class="form-submit" value="Ingresar"/>
-															</td>
-															<td width="50%" align="center">
-																<a href="${contextPath}/registro">
-   																	<input type="button" class="form-submit" value="Crear Cuenta" />
-																</a>
-															</td>
-														</tr>
-													</table>	
-												</div>
-<%-- 												
-												<div class="create-account-link">
-												<br/>
-												<p class="create-account">
-												¿No tienes una cuenta? 
-												<a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a>
-												</p>
-												</div>
-												
---%>
-											</form>
-											
-											<%-- 
-											<div class="social-login">
-												<span class="social-label">Or login with</span>
-												<ul class="socials">
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-													<li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-												</ul>
-											</div>
-											--%>
+						<div class="container">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-6">
+												<h2 class="form-title">Ingresar</h2>
+												<form method="POST" action="${contextPath}/login" class="form-signin">
+													<div class="form-group" >
+														<label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+														<input type="text" name="username" id="username" placeholder="Usuario"/>
+													</div>
+													<div class="form-group">
+														<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+														<input type="password" name="password" id="password" placeholder="Contraseña"/>
+														<span class="error-messages">${error}</span>
+														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+													</div>
+													<div class="form-group form-button">
+													<br/>
+														<table style="width:100%">
+															<tr align="center">
+																<td width="50%" align="center">
+																	<button type="submit" class="btn btn-block btn-primary" id="submit" name="signin" id="signin" class="form-submit">
+																		Ingresar
+																	</button>
+																</td>
+																<td width="50%" align="center">
+																	<button type="button" class="btn btn-block btn-primary" class="form-submit" onclick="location.href='${contextPath}/registro';">
+																		Crear Cuenta
+																	</button>
+																</td>
+															</tr>
+														</table>	
+													</div>
+												</form>
 										</div>
-										<div class="signin-image">
-											<center>
-												<figure ><img src="${contextPath}/assets/css/images/signin-image.jpg" alt="Crear Cuenta"></figure>
-											</center>
-												<!--  <a href="${contextPath}/registro" class="signup-image-link">Crear Cuenta</a> -->
-											</div>
+										<div class="col-md-6">
+												<img class="rounded mx-auto d-block" src="${contextPath}/assets/css/images/signin-image.jpg" alt="Crear Cuenta">
+										</div>
 									</div>
 								</div>
-							</section>
+							</div>
+						</div>
+						</div>
+						
 						</div>
 					</div>
 				</div>
-				<script>
+				
+
+			<!-- Footer Wrapper -->
+				<div id="footer-wrapper">
+					<jsp:include page="footerNav.jsp"/>
+				</div>
+				
+			<script>
 				jQuery(function(){
 						
 				        $("#submit").click(function(){
@@ -149,11 +130,6 @@
 				    });
 				});
 				</script>
-
-			<!-- Footer Wrapper -->
-				<div id="footer-wrapper">
-					<jsp:include page="footerNav.jsp"/>
-				</div>
 		</div>
 	</body>
 </html>

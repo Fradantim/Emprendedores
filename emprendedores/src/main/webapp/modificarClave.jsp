@@ -75,7 +75,7 @@
 					<div class="wrapper style1">
 						<div class="inner">
 							<div class="container">
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<form:form method="POST" action="${contextPath}/modificarClave" modelAttribute="userForm" class="form-signin">
 										<h2 class="form-signin-heading">Modifica tu Contraseña</h2>
 										

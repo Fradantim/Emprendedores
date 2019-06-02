@@ -1,9 +1,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
  
 <head>
+
+	<link rel="stylesheet" href="${contextPath}/assets/bootstrap-4.0.0/css/bootstrap.css" />
 	<link rel="stylesheet" href="${contextPath}/assets/css/main.css" />
+	
 			<!-- Font Icon -->
 		<link rel="stylesheet" href="${contextPath}/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -21,7 +25,7 @@
 		</c:forEach>
 	</script>
 	<!-- Logo -->
-										<h1><a href="${contextPath}/portal" id="logo"></a></h1>
+		<h1><a href="${contextPath}/portal" id="logo"></a></h1>
 	<!-- Nav -->
 	<nav id="nav">
 		<ul>
@@ -51,12 +55,25 @@
 			-->
 			<c:choose>
 				<c:when test="${pageContext.request.userPrincipal.name != null}">
-					<li><a href="${contextPath}/miPerfil">Mi Perfil</a></li>
-					<%--<li><a href="${contextPath}/miPerfil2">Perfil Ejemplo</a></li>  --%>
+					<li>
+						<a href="#">Mi Perfil</a>
+						<ul>
+							<li>
+								<a href="${contextPath}/miPerfil">Usuario</a>
+							</li>
+							<security:authorize access="hasAuthority('EMPRENDEDOR')" >
+							<li>
+								<a href="${contextPath}/miPerfil2">Emprendedor</a>
+							</li>
+							</security:authorize>
+						</ul>
+					</li>
+					<li><a href="${contextPath}/miPerfil2">Perfil Ejemplo</a></li> 
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
-					<li><p class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
+					<li><p id="usuarioLogueado" class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
 				</c:when>
 				<c:otherwise>
+					<li><p id="usuarioLogueado" class="navbar-text"></p> </li>
 					<li><a href="${contextPath}/login">Ingresar</a></li>
 				</c:otherwise>
 			</c:choose>
