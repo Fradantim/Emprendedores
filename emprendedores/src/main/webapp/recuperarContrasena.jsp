@@ -34,7 +34,7 @@
 							<div class="container">
 								<div class="col-md-12">
 									<form:form method="POST" action="${contextPath}/modificarClave" modelAttribute="userForm" class="form-signin">
-										<h2 class="form-signin-heading">Modifica tu Contraseña</h2>
+										<h2 class="form-signin-heading">Recuperar Contraseña</h2>
 										
 										<spring:bind path="password">
 											<div class="form-group ${status.error ? 'has-error' : ''}">
@@ -43,12 +43,6 @@
 											</div>
 										</spring:bind>
 										<br/>
-										<spring:bind path="passwordConfirm">
-											<div class="form-group ${status.error ? 'has-error' : ''}">
-												<form:input type="password" path="passwordConfirm" class="form-control" placeholder="Confirme su contraseña"></form:input>
-												<form:errors path="passwordConfirm"></form:errors>
-											</div>
-										</spring:bind>
 										
 										<hr>
 										<button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar Contraseña!</button>

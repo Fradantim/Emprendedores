@@ -54,7 +54,11 @@
 					<div class="wrapper style1">
 						<div class="inner">
 							<div class="container">
-							<div class="col-md-6">
+							<!-- Comienzo de página -->
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-12">
+
 								<form:form method="POST" action="${contextPath}/modificarEmprendimiento" modelAttribute="emprendimientoForm" class="form-signin">
 									<h2 class="form-signin-heading">Modifica tu Emprendimiento</h2>
 									
@@ -103,6 +107,12 @@
 									<button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar emprendimiento!</button>
 								</form:form>
 							</div>
+							
+								</div>
+							</div>
+						</div>
+					<!-- Fin de página -->							
+							
 						</div>
 					</div>
 					</div>

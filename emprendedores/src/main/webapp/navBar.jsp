@@ -68,7 +68,6 @@
 							</security:authorize>
 						</ul>
 					</li>
-					<li><a href="${contextPath}/miPerfil2">Perfil Ejemplo</a></li> 
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
 					<li><p id="usuarioLogueado" class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
 				</c:when>

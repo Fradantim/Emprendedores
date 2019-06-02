@@ -9,6 +9,15 @@
 	<title>Portal Emprendedores</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	
+	<style>
+        .scroll-box {
+            overflow-x: scroll;
+            /*height: 100px;*/
+            padding: 1rem
+        }
+</style>
+
 </head>
 <body class="homepage is-preload">
 	<div id="page-wrapper">
@@ -34,6 +43,17 @@
 							<div class="row">
 								<div class="col-md-12">
 
+<p>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseProductos" aria-expanded="false" aria-controls="collapseProductos">
+    Datos de Mis Productos
+  </button>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseEventos" aria-expanded="false" aria-controls="collapseEventos">
+    Mis Eventos
+  </button>
+</p>
+<div class="collapse" id="collapseProductos">
+  <div class="card card-body">
+    
 												<div class="row">
 													<div class="col-md-12">
 														 <h3><span>Mi Emprendimiento</span></h3>
@@ -47,7 +67,9 @@
 															</h5>
 															<div class="card-body">
 																<div class="card-text">
+																<div class="scroll-box">
 																	${usuarioLogueado.emprendimiento.descripcion}
+																</div>
 																</div>
 															</div>
 															<div class="card-footer">
@@ -57,7 +79,11 @@
 														</div>
 													</div>
 												</div>
+  </div>
+</div>
 <br/>
+<div class="collapse" id="collapseEventos">
+  <div class="card card-body">
 												<div class="row">
 													<div class="col-md-12">
 														<table class="table table-bordered table-sm">
@@ -152,7 +178,8 @@
 														</table>
 													</div>
 												</div>	
-												
+  </div>
+</div>												
 
 								</div>
 							</div>
