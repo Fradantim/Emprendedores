@@ -22,6 +22,5 @@ public class EmprendimientoServiceImpl implements EmprendimientoService {
 	public Emprendimiento findById(Integer id) {
 		if(id == null) return null;
 		return emprendimientoRepo.findById(id).get();
-				
 	}
 }

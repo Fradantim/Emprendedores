@@ -17,4 +17,14 @@ public class DTO {
 	public DTO(Integer id) {
 		this.id=id;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null) return false;
+	    if (other == this) return true;
+	    if (!(other.getClass() ==  this.getClass()))return false;
+	    DTO otherMyClass = (DTO)other;
+	    if(otherMyClass.getId().equals(this.getId())) return true;
+	    return false;
+	}
 }

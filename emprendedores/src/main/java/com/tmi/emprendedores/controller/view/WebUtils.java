@@ -8,11 +8,13 @@ public interface WebUtils {
 	public final String MAPPING_MODIFICAR_PERFIL = "/modificarPerfil";
 	public final String MAPPING_MODIFICAR_CLAVE = "/modificarClave";
 	public final String MAPPING_MODIFICAR_EMPRENDIMIENTO = "/modificarEmprendimiento";
-	public final String MAPPING_GET_USUARIO = "/getUsuario";
 	public final String MAPPING_LOGIN = "/login";
 	public final String MAPPING_LOGBOX = "/logBox";
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
 	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
+	public final String MAPPING_GET_PAISES = "/getPaises";
+	public final String MAPPING_GET_PROVINCIAS = "/getProvincia";
+	public final String MAPPING_GET_LOCALIDADES = "/getLocalidades";
 
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
