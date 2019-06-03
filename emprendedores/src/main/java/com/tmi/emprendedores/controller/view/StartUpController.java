@@ -132,10 +132,7 @@ public class StartUpController implements InitializingBean {
 				
 				logger.info("Ubicaciones persistidas.");
 				
-				/*
-				//TODO: corregir manejo de transacciones
 				logger.info("Recupero Info de BBDD");
-				
 				for(Pais pais: paisService.findAll()) {
 					Pais paisE = paisService.findById(pais.getId());
 					logger.info(pais+" "+pais.getNombre()+" ("+paisE.getProvincias().size()+" provs)");
@@ -148,7 +145,7 @@ public class StartUpController implements InitializingBean {
 						logger.info("\t\t"+locs);
 					}
 				}
-				*/
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
