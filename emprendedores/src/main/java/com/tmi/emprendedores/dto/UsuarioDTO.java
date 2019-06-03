@@ -2,6 +2,8 @@ package com.tmi.emprendedores.dto;
 
 import java.util.List;
 
+import com.tmi.emprendedores.dto.ubicacion.LocalidadDTO;
+
 public class UsuarioDTO extends DTO{
 	
 	private String nombre;
@@ -16,22 +18,14 @@ public class UsuarioDTO extends DTO{
 	
 	private EmprendimientoDTO emprendimiento;
 	
-	private String pais;
+	private LocalidadDTO localidad;
 	
-	private String provincia;
-	
-	private String localidad;
-	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick, List<PerfilDTO> perfiles, String pais, String provincia, String localidad) {
+	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick) {
 		super(id);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;
 		this.nick = nick;
-		this.perfiles = perfiles;
-		this.pais = pais;
-		this.provincia = provincia;
-		this.localidad = localidad;
 	}
 
 	public String getNombre() {
@@ -82,27 +76,11 @@ public class UsuarioDTO extends DTO{
 		this.emprendimiento = emprendimiento;
 	}
 
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getLocalidad() {
+	public LocalidadDTO getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(String localidad) {
+	public void setLocalidad(LocalidadDTO localidad) {
 		this.localidad = localidad;
 	}
 }

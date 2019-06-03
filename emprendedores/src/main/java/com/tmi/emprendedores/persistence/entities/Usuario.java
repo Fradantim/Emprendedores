@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,6 +19,7 @@ import javax.persistence.Transient;
 import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.UsuarioDTO;
+import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
 import com.tmi.emprendedores.service.PerfilService;
 
 @Entity
@@ -52,14 +54,9 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
     @JoinColumn(name = "EMPRENDIMIENTO_ID", referencedColumnName = "ID")
 	private Emprendimiento emprendimiento;
 	
-	@Column (name="PAIS")
-	private String pais;
-	
-	@Column (name="PROVINCIA")
-	private String provincia;
-	
-	@Column (name="LOCALIDAD")
-	private String localidad;
+	@ManyToOne
+	@JoinColumn(name="LOCALIDAD_ID")
+	private Localidad localidad;
 		
 	public Usuario() {
 		super();
@@ -146,27 +143,11 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		this.emprendimiento = emprendimiento;
 	}
 
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getLocalidad() {
+	public Localidad getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(String localidad) {
+	public void setLocalidad(Localidad localidad) {
 		this.localidad = localidad;
 	}
 	
@@ -198,22 +179,22 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		this.apellido=nuevo.apellido;
 		this.nick=nuevo.nick;
 		this.email=nuevo.email;
-		this.pais=nuevo.pais;
-		this.provincia=nuevo.provincia;
-		this.localidad=nuevo.localidad;
 	}
 	
 	@Override
 	public UsuarioDTO toDTO() {
 		UsuarioDTO dto = toMiniDTO();
+		dto.setPerfiles(getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()));
 		if(emprendimiento != null)
 			dto.setEmprendimiento(emprendimiento.toMiniDTO());
+		if(localidad != null)
+			dto.setLocalidad(localidad.toMiniDTO());
 		return dto;
 	}
 
 	@Override
 	public UsuarioDTO toMiniDTO() {
-		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick, getPerfiles().stream().map(Perfil::toMiniDTO).collect(Collectors.toList()),pais,provincia,localidad);
+		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick);
 		return dto;
 	}
 	

@@ -13,6 +13,7 @@ import com.tmi.emprendedores.service.LocalidadService;
 @Service
 public class LocalidadServiceImpl implements LocalidadService {
    
+		
     @Autowired
     private LocalidadRepository locRepo;
 
@@ -29,6 +30,6 @@ public class LocalidadServiceImpl implements LocalidadService {
 
 	@Override
 	public List<Localidad> findByProvincia(Provincia provincia) {
-		return locRepo.findByProvincia(provincia);
+		return locRepo.findByProvinciaOrderByNombreAsc(provincia);
 	}
 }

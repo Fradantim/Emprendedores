@@ -1,6 +1,6 @@
 package com.tmi.emprendedores.dto;
 
-public class DTO {
+public class DTO implements Comparable<DTO>{
 	
 	protected Integer id;
 
@@ -26,5 +26,10 @@ public class DTO {
 	    DTO otherMyClass = (DTO)other;
 	    if(otherMyClass.getId().equals(this.getId())) return true;
 	    return false;
+	}
+	
+	@Override
+	public int compareTo(DTO o) {
+		return id.compareTo(o.getId());
 	}
 }

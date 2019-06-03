@@ -8,5 +8,5 @@ import com.tmi.emprendedores.persistence.entities.ubicacion.Pais;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Provincia;
 
 public interface ProvinciaRepository extends JpaRepository<Provincia, Integer> {
-	public List<Provincia> findByPais(Pais pais);
+	public List<Provincia> findByPaisOrderByNombreAsc(Pais pais);
 }

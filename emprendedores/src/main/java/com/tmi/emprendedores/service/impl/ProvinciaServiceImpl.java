@@ -29,6 +29,6 @@ public class ProvinciaServiceImpl implements ProvinciaService {
 
 	@Override
 	public List<Provincia> findByPais(Pais pais) {
-		return provRepo.findByPais(pais);
+		return provRepo.findByPaisOrderByNombreAsc(pais);
 	}
 }

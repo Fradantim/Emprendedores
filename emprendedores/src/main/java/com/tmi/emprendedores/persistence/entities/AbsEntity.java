@@ -8,8 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.tmi.emprendedores.dto.DTO;
+
 @MappedSuperclass
-public abstract class AbsEntity {
+public abstract class AbsEntity implements Comparable<AbsEntity>{
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +60,11 @@ public abstract class AbsEntity {
 	    AbsEntity otherMyClass = (AbsEntity)other;
 	    if(otherMyClass.getId().equals(this.getId())) return true;
 	    return false;
+	}
+	
+	@Override
+	public int compareTo(AbsEntity o) {
+		return id.compareTo(o.getId());
 	}
 	
 	public boolean isBorrado() {

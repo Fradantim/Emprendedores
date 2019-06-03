@@ -12,9 +12,9 @@ public interface WebUtils {
 	public final String MAPPING_LOGBOX = "/logBox";
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
 	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
-	public final String MAPPING_GET_PAISES = "/getPaises";
-	public final String MAPPING_GET_PROVINCIAS = "/getProvincia";
-	public final String MAPPING_GET_LOCALIDADES = "/getLocalidades";
+	public final String MAPPING_GET_SELECT_PAIS = "/getSelectPais";
+	public final String MAPPING_GET_SELECT_PROVINCIA = "/getSelectProvincia";
+	public final String MAPPING_GET_SELECT_LOCALIDAD = "/getSelectLocalidad";
 
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
@@ -29,6 +29,9 @@ public interface WebUtils {
 		MODIFICAR_EMPRENDIMIENTO("modificarEmprendimiento"),
 		MI_PERFIL("miPerfil"),
 		MI_PERFIL2("miPerfil2"),
+		SELECT_PAIS ("ubicacionSelectPais"),
+		SELECT_PROVINCIA ("ubicacionSelectProvincia"),
+		SELECT_LOCALIDAD ("ubicacionSelectLocalidad"),
 		;
 		
 		private String file;

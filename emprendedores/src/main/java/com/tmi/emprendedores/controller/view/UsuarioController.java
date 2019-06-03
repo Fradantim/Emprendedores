@@ -21,6 +21,8 @@ import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
+import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
+import com.tmi.emprendedores.service.LocalidadService;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
 import com.tmi.emprendedores.validator.UsuarioValidator;
@@ -30,6 +32,9 @@ public class UsuarioController extends WebController{
     
     @Autowired
     private SecurityService securityService;
+    
+    @Autowired
+    private LocalidadService locService;
 
     @Autowired
     private UsuarioValidator usuarioValidator;
@@ -118,8 +123,11 @@ public class UsuarioController extends WebController{
     }
     
     @PostMapping(WebUtils.MAPPING_MODIFICAR_PERFIL)
-    public String modificarPerfil(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult, @RequestParam(value = "emprendedorCheckBox", required = false) String emprendedorCheckBox) {
-    	if(!isUsuarioLogueado(principal)) {
+    public String modificarPerfil(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult,
+    		@RequestParam(value = "emprendedorCheckBox", required = false) String emprendedorCheckBox,
+    		@RequestParam(value = "localidadId", required = false) Integer localidadId) {
+    	
+     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
@@ -139,6 +147,15 @@ public class UsuarioController extends WebController{
     	} else {
     		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
     	}
+        
+        if(localidadId != null) {
+        	Localidad localidad = locService.findById(localidadId);
+        	if (localidad == null) {
+        		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro una localidad con id "+localidadId));
+        		return Page.MODIFICAR_PERFIL.getFile();
+        	}
+        	userLogueado.setLocalidad(localidad);
+        }
 
         //persisto nuevo usuario
         userLogueado = usuarioService.save(userLogueado);

@@ -54,7 +54,7 @@
 						</div>
 					</div>
 				</div>
-				<c:if test="${(not empty usuarioLogueado.pais) || (not empty usuarioLogueado.provincia) || (not empty usuarioLogueado.localidad)}">
+				<c:if test="${(not empty usuarioLogueado.localidad)}">
 					<div class="col-md-6">
 						<div class="card">
 							<h5 class="card-header">
@@ -62,9 +62,9 @@
 							</h5>
 							<div class="card-body">
 								<p class="card-text">
-									Pais: ${usuarioLogueado.pais} <br>
-									Provincia: ${usuarioLogueado.provincia} <br>
-									Localidad: ${usuarioLogueado.localidad} <br>
+									Pais: ${usuarioLogueado.localidad.paisNombre} <br>
+									Provincia: ${usuarioLogueado.localidad.provinciaNombre} <br>
+									Localidad: ${usuarioLogueado.localidad.nombre} <br>
 								</p>
 							</div>
 						</div>
