@@ -74,7 +74,7 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 
 	@Override
 	public EmprendimientoDTO toMiniDTO() {
-		return new EmprendimientoDTO(id, nombre, descripcion, link, contacto);
+		return new EmprendimientoDTO(id, fechaCreacion, nombre, descripcion, link, contacto);
 	}
 	
 	@Override

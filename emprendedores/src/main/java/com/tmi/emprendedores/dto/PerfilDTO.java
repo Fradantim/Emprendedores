@@ -1,11 +1,13 @@
 package com.tmi.emprendedores.dto;
 
+import java.util.Date;
+
 public class PerfilDTO extends DTO{
 	
 	private String nombre;
 
-	public PerfilDTO(Integer id, String nombre) {
-		super(id);
+	public PerfilDTO(Integer id, Date fechaCreacion, String nombre) {
+		super(id, fechaCreacion);
 		this.nombre = nombre;
 	}
 

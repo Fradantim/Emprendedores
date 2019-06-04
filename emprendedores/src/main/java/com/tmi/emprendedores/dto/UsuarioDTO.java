@@ -1,5 +1,6 @@
 package com.tmi.emprendedores.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.tmi.emprendedores.dto.ubicacion.LocalidadDTO;
@@ -20,8 +21,8 @@ public class UsuarioDTO extends DTO{
 	
 	private LocalidadDTO localidad;
 	
-	public UsuarioDTO(Integer id, String nombre, String apellido, String email, String nick) {
-		super(id);
+	public UsuarioDTO(Integer id, Date fechaCreacion,  String nombre, String apellido, String email, String nick) {
+		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email= email;

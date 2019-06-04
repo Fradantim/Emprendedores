@@ -1,5 +1,7 @@
 package com.tmi.emprendedores.dto;
 
+import java.util.Date;
+
 public class MensajeDTO extends DTO{
 	
 	private static final String POSITION = "bottom right";
@@ -16,18 +18,18 @@ public class MensajeDTO extends DTO{
 
 	private String mensaje;
 
-	public MensajeDTO(Integer id, TipoMensaje tipo, String detalle) {
-		super(id);
+	public MensajeDTO(Integer id, Date fechaCreacion, TipoMensaje tipo, String detalle) {
+		super(id, fechaCreacion);
 		this.tipo = tipo;
 		this.mensaje = detalle;
 	}
 	
 	public MensajeDTO(TipoMensaje tipo, String detalle) {
-		this(null, tipo, detalle);
+		this(null, null, tipo, detalle);
 	}
 	
 	public MensajeDTO(String detalle) {
-		this(null, TipoMensaje.INFO, detalle);
+		this(null, null, TipoMensaje.INFO, detalle);
 	}
 	
 	public String getTipo() {

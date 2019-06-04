@@ -56,6 +56,11 @@
 			<c:choose>
 				<c:when test="${pageContext.request.userPrincipal.name != null}">
 					<li>
+						<security:authorize access="hasAuthority('EMPRENDEDOR')" >
+							<a href="${contextPath}/crearEvento">Crear Evento</a>
+						</security:authorize>
+					</li>
+					<li>
 						<a href="#">Mi Perfil</a>
 						<ul>
 							<li>

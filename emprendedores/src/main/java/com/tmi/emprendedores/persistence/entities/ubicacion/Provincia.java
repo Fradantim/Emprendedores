@@ -66,6 +66,6 @@ public class Provincia extends AbsEntity implements DTOTransformable<ProvinciaDT
 
 	@Override
 	public ProvinciaDTO toMiniDTO() {
-		return new ProvinciaDTO(id, nombre, pais.toMiniDTO());
+		return new ProvinciaDTO(id, fechaCreacion, nombre, pais.toMiniDTO());
 	}
 }

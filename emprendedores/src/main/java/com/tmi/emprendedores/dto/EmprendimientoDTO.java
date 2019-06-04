@@ -1,5 +1,7 @@
 package com.tmi.emprendedores.dto;
 
+import java.util.Date;
+
 public class EmprendimientoDTO extends DTO{
 	
 	private String nombre;
@@ -12,16 +14,16 @@ public class EmprendimientoDTO extends DTO{
 	
 	private UsuarioDTO usuario;	
 	
-	public EmprendimientoDTO(Integer id, String nombre, String descripcion, String link, String contacto) {
-		super(id);
+	public EmprendimientoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, String link, String contacto) {
+		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.link = link;
 		this.contacto = contacto;
 	}
 	
-	public EmprendimientoDTO(Integer id, String nombre, String descripcion, String link, String contacto, UsuarioDTO usuario) {
-		this(id, nombre, descripcion, link, contacto);
+	public EmprendimientoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, String link, String contacto, UsuarioDTO usuario) {
+		this(id, fechaCreacion, nombre, descripcion, link, contacto);
 		this.usuario=usuario;
 	}	
 

@@ -2,7 +2,7 @@
 
 window.onload=buscarPaises;
 
-var delay=50;
+var delay=100;
 
 function buscarPaises() {
 	var url='/getSelectPais';

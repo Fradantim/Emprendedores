@@ -52,6 +52,6 @@ public class Pais extends AbsEntity implements DTOTransformable<PaisDTO>{
 
 	@Override
 	public PaisDTO toMiniDTO() {
-		return new PaisDTO(id, nombre);
+		return new PaisDTO(id, fechaCreacion, nombre);
 	}
 }

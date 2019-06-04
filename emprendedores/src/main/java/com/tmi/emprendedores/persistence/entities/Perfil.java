@@ -37,7 +37,7 @@ public class Perfil extends AbsEntity implements DTOTransformable<PerfilDTO>{
 
 	@Override
 	public PerfilDTO toMiniDTO() {
-		return new PerfilDTO(id, nombre);
+		return new PerfilDTO(id, fechaCreacion, nombre);
 	}
 	
 	public GrantedAuthority toGrantedAuthority() {

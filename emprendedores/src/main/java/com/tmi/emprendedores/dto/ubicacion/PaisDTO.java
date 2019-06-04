@@ -1,5 +1,6 @@
 package com.tmi.emprendedores.dto.ubicacion;
 
+import java.util.Date;
 import java.util.Set;
 
 import com.tmi.emprendedores.dto.DTO;
@@ -10,8 +11,8 @@ public class PaisDTO extends DTO {
 	
 	private Set<ProvinciaDTO> provincias;
 	
-	public PaisDTO(Integer id, String nombre) {
-		super(id);
+	public PaisDTO(Integer id, Date fechaCreacion,  String nombre) {
+		super(id, fechaCreacion);
 		this.nombre = nombre;
 	}
 		

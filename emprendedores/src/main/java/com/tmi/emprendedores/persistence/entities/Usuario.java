@@ -1,6 +1,5 @@
 package com.tmi.emprendedores.persistence.entities;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,10 +7,12 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -57,6 +58,12 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	@ManyToOne
 	@JoinColumn(name="LOCALIDAD_ID")
 	private Localidad localidad;
+	
+	@OneToMany(mappedBy = "creador", fetch= FetchType.LAZY)
+	private Set<Evento> eventosCreados;
+	
+	@ManyToMany(mappedBy = "emprendedores", fetch= FetchType.LAZY)
+	private Set<Evento> eventosInscriptos;
 		
 	public Usuario() {
 		super();
@@ -87,14 +94,6 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		return false;
 	}
 	
-	public void agregarPerfil(Perfil perfil) {
-		perfiles.add(perfil);
-	}
-	
-	public void removerPerfil(Perfil perfil) {
-		perfiles.remove(perfil);
-	}
-
 	public String getApellido() {
 		return apellido;
 	}
@@ -166,12 +165,20 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 				perfiles.remove(perfil);
 	}
 	
-	public void addPerfiles(Collection<Perfil> nuevosPerfiles) {
-		addPerfil(nuevosPerfiles.stream().toArray(Perfil[]::new));
+	public Set<Evento> getEventosCreados() {
+		return eventosCreados;
 	}
-	
-	public void removePerfiles(Collection<Perfil> viejosPerfiles) {
-		removePerfil(viejosPerfiles.stream().toArray(Perfil[]::new));
+
+	public void setEventosCreados(Set<Evento> eventosCreados) {
+		this.eventosCreados = eventosCreados;
+	}
+
+	public Set<Evento> getEventosInscriptos() {
+		return eventosInscriptos;
+	}
+
+	public void setEventosInscriptos(Set<Evento> eventosInscriptos) {
+		this.eventosInscriptos = eventosInscriptos;
 	}
 
 	public void modificarPerfil(Usuario nuevo) {
@@ -194,12 +201,12 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 
 	@Override
 	public UsuarioDTO toMiniDTO() {
-		UsuarioDTO dto = new UsuarioDTO(id, nombre, apellido, email, nick);
+		UsuarioDTO dto = new UsuarioDTO(id, fechaCreacion, nombre, apellido, email, nick);
 		return dto;
 	}
 	
 	public boolean puedeEditar(AbsEntity entity) {
-		if(poseePerfil(PerfilService.MODERADOR))
+		if(poseePerfil(PerfilService.MODERADOR) || poseePerfil(PerfilService.ADMINISTADOR) )
 			return true;
 		if(entity instanceof HasOwner<?>) {
 			return this.equals(((HasOwner<?>) entity).getOwner());

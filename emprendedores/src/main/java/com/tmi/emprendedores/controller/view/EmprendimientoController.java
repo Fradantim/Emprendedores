@@ -29,7 +29,7 @@ public class EmprendimientoController extends WebController {
 	private EmprendimientoValidator emprendimientoValidator;
 
 	@GetMapping(WebUtils.MAPPING_MODIFICAR_EMPRENDIMIENTO)
-	public String goToModificarClave(Model model, Principal principal, @RequestParam(value = "idEmprendimiento", required = false) Integer idEmprendimiento) {
+	public String goToModificarEmprendimiento(Model model, Principal principal, @RequestParam(value = "idEmprendimiento", required = false) Integer idEmprendimiento) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
@@ -41,7 +41,7 @@ public class EmprendimientoController extends WebController {
 		} else {
 			//el emprendimiento existe, evaluo si el usuario logueado tiene permisos para editarlo
 			if(!getLoggedUser(principal).puedeEditar(emprendimiento)) {
-				return goToNoTienePermisoEdicion(model).getFile();
+				return goToNoTienePermisoEdicion(model, principal);
 			}
 		}
 
@@ -61,14 +61,13 @@ public class EmprendimientoController extends WebController {
 			// si hubo errores vuelvo a la web de la que vine
 			return Page.MODIFICAR_EMPRENDIMIENTO.getFile();
 		}
-
+		
 		/*cuando el CKEDITOR manda el atributo descripcion modificado le mete espacios
 		y saltos del linea al fondo, si lo llevo asi de nuevo a la pantalla despues 
 		rompe el jsp y se va todo a la mierda, asi amortiguo las cosas
 		*/
 		String descripcion = emprendimientoForm.getDescripcion().replace("\r", "").replace("\n", "").trim();;
 		emprendimientoForm.setDescripcion(descripcion);
-		
 		
 		Emprendimiento emprendimientoAPersistir = null;
 		if(emprendimientoForm.getId() == null) {
@@ -80,8 +79,10 @@ public class EmprendimientoController extends WebController {
 			emprendimientoAPersistir.setUsuario(usuarioLogueado); //actualizo la relacion al usuario creador
 		} else {
 			//es un emprendimiento existente
-			// TODO evaluar si el usuario logueado esta queriendo editar su propio emprendimiento u otro? -> vulnerabilidad
 			emprendimientoAPersistir = emprendimientoService.findById(emprendimientoForm.getId());
+			if(!getLoggedUser(principal).puedeEditar(emprendimientoAPersistir)) {
+				return goToNoTienePermisoEdicion(model, principal);
+			}
 			emprendimientoAPersistir.modificarEmprendimiento(emprendimientoForm);
 		}
 		

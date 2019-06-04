@@ -1,21 +1,18 @@
 package com.tmi.emprendedores.dto;
 
+import java.util.Date;
+
 public class DTO implements Comparable<DTO>{
 	
 	protected Integer id;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
+	protected Date fechaCreacion;
+
 	public DTO() {	}
 	
-	public DTO(Integer id) {
+	public DTO(Integer id, Date fechaCreacion) {
 		this.id=id;
+		this.fechaCreacion=fechaCreacion;
 	}
 	
 	@Override
@@ -32,4 +29,22 @@ public class DTO implements Comparable<DTO>{
 	public int compareTo(DTO o) {
 		return id.compareTo(o.getId());
 	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	
+	
 }

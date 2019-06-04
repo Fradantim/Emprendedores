@@ -48,6 +48,6 @@ public class Localidad extends AbsEntity implements DTOTransformable<LocalidadDT
 
 	@Override
 	public LocalidadDTO toMiniDTO() {
-		return new LocalidadDTO(id, nombre, provincia.toMiniDTO());
+		return new LocalidadDTO(id, fechaCreacion, nombre, provincia.toMiniDTO());
 	}
 }

@@ -1,6 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -41,8 +43,6 @@
 
 			<!-- Main Wrapper -->
 				<div id="main-wrapper">
-
-					
 					<div class="wrapper style3">
 						<div class="inner">
 							<div class="container">
@@ -53,20 +53,43 @@
 										<!-- Article list -->
 											<section class="box article-list">
 												<h2 class="icon fa-file-text-o">Eventos recientes</h2>
-
-												<!-- Excerpt -->
-													<article class="box excerpt">
-														<a href="#" class="image left"><img src="../assets/css/images/pic04.jpg" alt="" /></a>
-														<div>
-															<header>
-																<span class="date">July 24</span>
-																<h3><a href="#">Repairing a hyperspace window</a></h3>
-															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-														</div>
-													</article>
+													<security:authorize access="hasAuthority('EMPRENDEDOR')" var="isEmp" />
+													<security:authorize access="hasAuthority('MODERADOR')" var="isMod" />
+													<security:authorize access="hasAuthority('ADMINISTRADOR')" var="isAdmin" />
+													<c:forEach items="${eventos}" var="e">
+														<!-- Excerpt -->
+														<article class="box excerpt">
+															<a href="#" class="image left"><img src="../assets/css/images/pic06.jpg" alt="" /></a>
+															<div>
+																<header>
+																	<span class="date">
+																		 <fmt:formatDate pattern = "MMMMMMMMM dd" value = "${e.fechaCreacion}" />
+																	</span>
+																	<h3><a href="${contextPath}/detalleEvento?idEvento=${e.id}">${e.nombre}</a></h3>
+																</header>
+																Creador: ${e.creador.nick} <br>
+																Cuando: <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${e.fecha}" /> <br>
+																Donde: ${e.localidad.nombre}, ${e.localidad.provinciaNombre} - ${e.localidad.paisNombre}
+																<p>${e.descripcion}</p>
+															</div>
+															<c:if test="${pageContext.request.userPrincipal.name != null}">
+																<c:if test="${(e.creador.id == usuarioLogueado.id || isMod || isAdmin) && ! e.finalizado}">
+																	<button type="button" class="btn btn-outline-warning btn-sm text-dark" onclick="location.href='${contextPath}/modificarEvento?idEvento=${e.id}';">Modificar</button>
+																	<button type="button" class="btn btn-outline-danger btn-sm text-dark" onclick="location.href='${contextPath}/borrarEvento?idEvento=${e.id}';">Borrar</button>
+																</c:if>
+																<c:if test="${(e.creador.id != usuarioLogueado.id) && isEmp}">
+																	<c:choose>
+																		<c:when test="${e.inscripto}">
+																			<button type="button" class="btn btn-outline-secondary btn-sm text-dark" onclick="location.href='${contextPath}/desinscribirmeEvento?idEvento=${e.id}';">Desinscribirme</button>
+																		</c:when>
+																		<c:otherwise>
+																			<button type="button" class="btn btn-outline-secondary btn-sm text-dark" onclick="location.href='${contextPath}/inscribirmeEvento?idEvento=${e.id}';">Inscribirme</button>
+																		</c:otherwise>
+																	</c:choose>
+																</c:if>
+															</c:if>
+														</article>
+													</c:forEach>
 
 												<!-- Excerpt -->
 													<article class="box excerpt">

@@ -1,5 +1,6 @@
 package com.tmi.emprendedores.dto.ubicacion;
 
+import java.util.Date;
 import java.util.Set;
 
 import com.tmi.emprendedores.dto.DTO;
@@ -12,8 +13,8 @@ public class ProvinciaDTO extends DTO {
 	
 	private Set<LocalidadDTO> localidades;
 	
-	public ProvinciaDTO(Integer id, String nombre, PaisDTO pais) {
-		super(id);
+	public ProvinciaDTO(Integer id, Date fechaCreacion, String nombre, PaisDTO pais) {
+		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.pais = pais;
 	}

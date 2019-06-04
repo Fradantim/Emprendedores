@@ -35,13 +35,13 @@ public class UsuarioController extends WebController{
     
     @Autowired
     private LocalidadService locService;
-
+    
     @Autowired
     private UsuarioValidator usuarioValidator;
     
     @GetMapping({WebUtils.MAPPING_ROOT, WebUtils.MAPPING_PORTAL})
-    public String welcome(Model model) {
-        return Page.PORTAL.getFile();
+    public String welcome(Model model, Principal principal) {
+    	return super.welcome(model, principal);
     }
     
     @GetMapping(WebUtils.MAPPING_REGISTRO)
@@ -53,7 +53,7 @@ public class UsuarioController extends WebController{
     @PostMapping(WebUtils.MAPPING_REGISTRO)
     public String registratiocn(Model model, @ModelAttribute("userForm") Usuario userForm, Principal principal, BindingResult bindingResult) {
     	if(isUsuarioLogueado(principal)) {
-    		return goToNoTienePermisoAcceso(model).getFile();
+    		return goToNoTienePermisoAcceso(model, principal);
     	}
         usuarioValidator.validateNew(userForm, bindingResult);
 
@@ -69,15 +69,15 @@ public class UsuarioController extends WebController{
         addMensajes(model, 
         		new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."),
         		new MensajeDTO(TipoMensaje.SUCCESS, "Bienvenido "+userForm.getNick()+"!"));
-        return Page.PORTAL.getFile();
+        return welcome(model, principal);
     }
 
     @GetMapping(WebUtils.MAPPING_LOGIN)
-    public String login(Model model, String error, String logout) {
+    public String login(Model model, Principal principal, String error, String logout) {
     	if (logout != null) {
         	model.addAttribute("message", "Cerró su sesión correctamente.");
         	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Cerro su sesion correctamente!"));
-        	return Page.PORTAL.getFile();
+        	return welcome(model, principal);
         }   
         
         if (error != null)

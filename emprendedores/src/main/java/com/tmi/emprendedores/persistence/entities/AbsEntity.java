@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import com.tmi.emprendedores.dto.DTO;
-
 @MappedSuperclass
 public abstract class AbsEntity implements Comparable<AbsEntity>{
 	
