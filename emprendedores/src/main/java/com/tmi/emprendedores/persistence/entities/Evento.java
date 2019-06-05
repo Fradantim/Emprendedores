@@ -126,6 +126,10 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	public boolean isFinalizado() {
 		return getEstado()== Estado.FINALIZADO;
 	}
+	
+	public boolean isAbierto() {
+		return getTipoInscripcion().equals(TipoInscripcion.ABIERTA);
+	}
 
 	public TipoInscripcion getTipoInscripcion() {
 		return tipoInscripcion;
