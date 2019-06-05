@@ -65,11 +65,12 @@
 																	<span class="date">
 																		 <fmt:formatDate pattern = "MMMMMMMMM dd" value = "${e.fechaCreacion}" />
 																	</span>
-																	<h3><a href="${contextPath}/detalleEvento?idEvento=${e.id}">${e.nombre}</a></h3>
+																	<h3><a href="${contextPath}/detalleEvento?idEvento=${e.id}">#${e.id} - ${e.nombre}</a></h3>
 																</header>
 																Creador: ${e.creador.nick} <br>
-																Cuando: <fmt:formatDate pattern = "yyyy-MM-dd HH:mm" value = "${e.fecha}" /> <br>
-																Donde: ${e.localidad.nombre}, ${e.localidad.provinciaNombre} - ${e.localidad.paisNombre}
+																Cuando: ${e.fecha} <br>
+																Donde: ${e.localidad.nombre}, ${e.localidad.provinciaNombre} - ${e.localidad.paisNombre} <br>
+																Inscripcion: ${e.tipoInscripcion} <br>
 																<p>${e.descripcion}</p>
 															</div>
 															<c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -77,7 +78,7 @@
 																	<button type="button" class="btn btn-outline-warning btn-sm text-dark" onclick="location.href='${contextPath}/modificarEvento?idEvento=${e.id}';">Modificar</button>
 																	<button type="button" class="btn btn-outline-danger btn-sm text-dark" onclick="location.href='${contextPath}/borrarEvento?idEvento=${e.id}';">Borrar</button>
 																</c:if>
-																<c:if test="${(e.creador.id != usuarioLogueado.id) && isEmp}">
+																<c:if test="${isEmp && e.abierto && !e.finalizado && (e.creador.id != usuarioLogueado.id)}">
 																	<c:choose>
 																		<c:when test="${e.inscripto}">
 																			<button type="button" class="btn btn-outline-secondary btn-sm text-dark" onclick="location.href='${contextPath}/desinscribirmeEvento?idEvento=${e.id}';">Desinscribirme</button>

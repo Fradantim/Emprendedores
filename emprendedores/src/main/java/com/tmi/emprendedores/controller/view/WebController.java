@@ -103,4 +103,9 @@ public abstract class WebController {
     	addMensajeNoTienePermisoEdicion(model);
     	return welcome(model, principal);
     }
+    
+    protected String goToNoSeEncontroObjeto(Model model, Principal principal, String objeto, Integer id) {
+    	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+objeto+" con id:"+id));
+		return welcome(model, principal);
+    }
 }

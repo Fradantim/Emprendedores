@@ -155,6 +155,8 @@ public class UsuarioController extends WebController{
         		return Page.MODIFICAR_PERFIL.getFile();
         	}
         	userLogueado.setLocalidad(localidad);
+        } else {
+        	userLogueado.setLocalidad(null);
         }
 
         //persisto nuevo usuario

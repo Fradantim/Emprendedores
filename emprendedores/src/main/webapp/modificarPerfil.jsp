@@ -94,6 +94,11 @@
 			<jsp:include page="footerNav.jsp"/>
 		</div>
 	</div>
+	<script>
+		var myPaisId ="${usuarioLogueado.localidad.paisId}";
+		var myProvinciaId ="${usuarioLogueado.localidad.provinciaId}";
+		var myLocalidadId ="${usuarioLogueado.localidad.id}";
+	</script>
 	<script src="${contextPath}/assets/js/ubicacion.js"></script>
 </body>
 </html>

@@ -2,7 +2,6 @@ package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
-import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.EventoDTO.TipoInscripcion;
 import com.tmi.emprendedores.dto.EventoDTO.TipoVisibilidad;
+import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Evento;
 import com.tmi.emprendedores.persistence.entities.Usuario;
@@ -27,14 +26,13 @@ import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
 import com.tmi.emprendedores.service.EventoService;
 import com.tmi.emprendedores.service.LocalidadService;
 import com.tmi.emprendedores.service.PerfilService;
+import com.tmi.emprendedores.util.DatePickerUtil;
 import com.tmi.emprendedores.validator.EventoValidator;
 
 @Controller
 public class EventoController extends WebController {
 
-	private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
-	
-	private final SimpleDateFormat dateFormater =new SimpleDateFormat(DATE_FORMAT);
+	private final static String OBJETO = Evento.class.getSimpleName();
 	
 	@Autowired
 	private EventoService eventoService;
@@ -45,9 +43,9 @@ public class EventoController extends WebController {
 	@Autowired
 	private EventoValidator eventoValidator;
 
-	private Page noPuedeInteractuarEventoFinalizado(Model model) {
+	private String noPuedeInteractuarEventoFinalizado(Model model, Principal principal) {
 		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No puede interactuar con un evento Finalizado."));
-		return Page.MIS_EVENTOS;
+		return welcome(model, principal);
 	}
 	
 	
@@ -81,6 +79,7 @@ public class EventoController extends WebController {
     	model.addAttribute("tiposInscripcion", TipoInscripcion.values());
     	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
     	
+    	addUsuarioLogueado(model, principal);//unicamente por su localidad
 		model.addAttribute("eventoForm", new Evento());
 		return Page.CREAR_EVENTO.getFile();
 	}
@@ -103,7 +102,7 @@ public class EventoController extends WebController {
 		List<MensajeDTO> errores = new ArrayList<>();
 		
 		if(localidadId == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se encontro una localidad con id:"+localidadId));
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar una localidad."));
 		} else {
 			Localidad localidad = localidadService.findById(localidadId);
 			if (localidad == null) {
@@ -117,7 +116,7 @@ public class EventoController extends WebController {
 			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar una fecha."));
 		} else {
 			try {
-				Date fechaDate = dateFormater.parse(fecha);
+				Date fechaDate = DatePickerUtil.getDateformater().parse(fecha);
 				if(new Date().compareTo(fechaDate)>0) {
 					errores.add(new MensajeDTO(TipoMensaje.ERROR,"Great Scott! No puede ingresar una fecha del pasado."));
 				} else {
@@ -167,19 +166,18 @@ public class EventoController extends WebController {
 	}
 	
 	@GetMapping(WebUtils.MAPPING_BORRAR_EVENTO)
-	public String goToBorrarEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+	public String borrarEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
     	Evento eventoGuardado = eventoService.findById(idEvento);
     	if(eventoGuardado==null) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
-    		return welcome(model, principal);
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
     	}  
     	
     	if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    		return noPuedeInteractuarEventoFinalizado(model,principal);
     	}
     	
     	if(!getLoggedUser(principal).puedeEditar(eventoGuardado)) {
@@ -195,73 +193,127 @@ public class EventoController extends WebController {
 	
 	@GetMapping(WebUtils.MAPPING_MODIFICAR_EVENTO)
 	public String goToModificarEvento(Model model, Principal principal,@RequestParam(value = "idEvento", required = false) Integer idEvento) {
-    	if(!isUsuarioLogueado(principal)) {
+		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
+    	}
+		
+		if(!getLoggedUser(principal).poseePerfil(PerfilService.EMPRENDEDOR)) {
+    		return goToNoTienePermisoAcceso(model, principal);
     	}
     	
     	Evento eventoGuardado = eventoService.findById(idEvento);
     	if(eventoGuardado==null) {
     		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
-    		return Page.MIS_EVENTOS.getFile();
+    		return welcome(model, principal);
     	}  
     	
     	if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    		return noPuedeInteractuarEventoFinalizado(model, principal);
     	}
     	
     	if(!getLoggedUser(principal).puedeEditar(eventoGuardado)) {
     		return goToNoTienePermisoEdicion(model, principal);
     	}
     	
+    	model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+    	
 		model.addAttribute("eventoForm", new Evento());
-		model.addAttribute("eventoGuardado", eventoGuardado);
+		model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
 		
 		return Page.MODIFICAR_EVENTO.getFile();
 	}
-
+	
 	@PostMapping(WebUtils.MAPPING_MODIFICAR_EVENTO)
-	public String modificarEvento(Model model, Principal principal, @ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult) {
-		if(!isUsuarioLogueado(principal)) {
-			return goToDebeIniciarSesion(model).getFile();
-    	}
+	public String modificarEvento(Model model, Principal principal,@RequestParam(value = "idEvento", required = false) Integer idEvento,
+			@ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
+			@RequestParam(value = "localidadId", required = false) Integer localidadId,
+			@RequestParam(value = "fecha", required = false) String fecha,
+			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
+			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad) {
 		
-		eventoValidator.validateUpdate(eventoForm, bindingResult);
-
-		if (bindingResult.hasErrors()) {
+		if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
+    	Usuario usuarioLogueado = getLoggedUser(principal); 
+    	if(!usuarioLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
+    		return goToNoTienePermisoAcceso(model, principal);
+    	}
+    	
+    	Evento eventoGuardado = eventoService.findById(idEvento);
+    	
+    	if(eventoGuardado==null) {
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
+    	}
+    	
+    	if(!usuarioLogueado.puedeEditar(eventoGuardado)) {
+    		return goToNoTienePermisoEdicion(model, principal);
+    	}
+    	
+		List<MensajeDTO> errores = new ArrayList<>();
+		
+		if(localidadId == null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar una localidad"));
+		} else {
+			Localidad localidad = localidadService.findById(localidadId);
+			if (localidad == null) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se encontro una localidad con id:"+localidadId));
+			} else {
+				eventoForm.setLocalidad(localidad);
+			}
+		}
+		
+		if(fecha == null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar una fecha."));
+		} else {
+			try {
+				Date fechaDate = DatePickerUtil.getDateformater().parse(fecha);
+				if(new Date().compareTo(fechaDate)>0) {
+					errores.add(new MensajeDTO(TipoMensaje.ERROR,"Great Scott! No puede ingresar una fecha del pasado."));
+				} else {
+					eventoForm.setFecha(fechaDate);
+				}
+			} catch (ParseException e) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se pudo interpretar la fecha:"+fecha));
+			}
+		}
+		
+		if(tipoInscripcion == null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de inscripcion."));
+		} else {
+			try {
+				eventoForm.setTipoInscripcion(tipoInscripcion);
+			} catch (IllegalArgumentException e) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de inscripcion:"+tipoInscripcion));
+			}
+		}
+		
+		if(tipoVisibilidad == null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de visibilidad."));
+		} else {
+			try {
+				eventoForm.setTipoVisibilidad(tipoVisibilidad);
+			} catch (IllegalArgumentException e) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de visibilidad:"+tipoVisibilidad));
+			}
+		}
+		
+		eventoValidator.validateInsert(eventoForm, bindingResult);
+		if (bindingResult.hasErrors() || errores.size()>0) {
 			// si hubo errores vuelvo a la web de la que vine
+			addMensajes(model, errores);
 			return Page.MODIFICAR_EVENTO.getFile();
 		}
-		/* TODO HACEME
-		
-		if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
-    	}
-		String descripcion = emprendimientoForm.getDescripcion().replace("\r", "").replace("\n", "").trim();;
-		emprendimientoForm.setDescripcion(descripcion);
 		
 		
-		Emprendimiento emprendimientoAPersistir = null;
-		if(emprendimientoForm.getId() == null) {
-			//es un emprendimiento nuevo
-			emprendimientoAPersistir = emprendimientoForm;
-			Usuario usuarioLogueado = getLoggedUser(principal);
-			usuarioLogueado.setEmprendimiento(emprendimientoAPersistir); //actualizo la relacion al emprendimiento
-			usuarioService.save(usuarioLogueado); 
-			emprendimientoAPersistir.setUsuario(usuarioLogueado); //actualizo la relacion al usuario creador
-		} else {
-			//es un emprendimiento existente
-			// TODO evaluar si el usuario logueado esta queriendo editar su propio emprendimiento u otro? -> vulnerabilidad
-			//emprendimientoAPersistir = emprendimientoService.findById(emprendimientoForm.getId());
-			emprendimientoAPersistir.modificarEmprendimiento(emprendimientoForm);
-		}
+		//si todo sale ok....
+		eventoGuardado.modificarEvento(eventoForm);
 		
-		//emprendimientoAPersistir = emprendimientoService.save(emprendimientoAPersistir);
+		eventoService.save(eventoGuardado);
 		
-		//actualizo la info del usuario atada al emprendimiento
-		addUsuarioLogueado(model, principal);
-		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Actualizo correctamente su emprendimiento!"));
-		*/
-		return goToMisEventos(model, principal);
+		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Creo su evento con exito!"));
+		return welcome(model, principal);
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
@@ -277,17 +329,21 @@ public class EventoController extends WebController {
     	
     	Evento eventoGuardado = eventoService.findById(idEvento);
     	if(eventoGuardado==null) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
-    		return Page.MIS_EVENTOS.getFile();
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
     	}
     	
     	if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    		return noPuedeInteractuarEventoFinalizado(model,principal);
     	}
     	
     	if(eventoGuardado.getEmprendedores().contains(usuarioLogueado)) {
     		addMensajes(model, new MensajeDTO("Ud ya se encuentra inscripto a este evento."));
-    		return Page.MIS_EVENTOS.getFile();
+    		return welcome(model, principal);
+    	}
+    	
+    	if(eventoGuardado.getTipoInscripcion().equals(TipoInscripcion.CERRADA)) {
+    		addMensajes(model, new MensajeDTO("No puede inscribirse a un evento con inscripcion cerrada."));
+    		return welcome(model, principal);
     	}
     	
     	eventoGuardado.addEmprendedor(usuarioLogueado);
@@ -311,12 +367,11 @@ public class EventoController extends WebController {
     	
     	Evento eventoGuardado = eventoService.findById(idEvento);
     	if(eventoGuardado==null) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
-    		return welcome(model, principal);
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
     	}
     	
     	if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    		return noPuedeInteractuarEventoFinalizado(model,principal);
     	}
     	
     	if(!eventoGuardado.getEmprendedores().contains(usuarioLogueado)) {

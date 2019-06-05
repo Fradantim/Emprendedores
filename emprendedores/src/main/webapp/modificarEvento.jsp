@@ -35,6 +35,7 @@
 						<div class="col-md-12">
 							<form:form method="POST" action="${contextPath}/modificarEvento" modelAttribute="eventoForm" class="form-signin" >
 								<h2 class="form-signin-heading">Modifica tu Evento</h2>
+								<input id="fecha" name="idEvento" type="hidden" value="${eventoGuardado.id}">
 								<jsp:include page="plantillaEvento.jsp"/>
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Modificar Evento!</button>
 							</form:form>
@@ -48,6 +49,11 @@
 			<jsp:include page="footerNav.jsp"/>
 		</div>
 	</div>
+	<script>
+		var myPaisId ="${eventoGuardado.localidad.paisId}";
+		var myProvinciaId ="${eventoGuardado.localidad.provinciaId}";
+		var myLocalidadId ="${eventoGuardado.localidad.id}";
+	</script>
 	<script src="${contextPath}/assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="${contextPath}/assets/js/ubicacion.js"></script>
 	<script src="${contextPath}/assets/js/fecha.js"></script>

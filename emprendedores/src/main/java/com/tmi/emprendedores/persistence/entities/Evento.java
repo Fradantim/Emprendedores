@@ -190,6 +190,15 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		cantidadEmprendedores= emprendedores.size();
 	}
 
+	public void modificarEvento(Evento nuevo) {
+		this.nombre=nuevo.nombre;
+		this.descripcion=nuevo.descripcion;
+		this.fecha=nuevo.fecha;
+		this.localidad=nuevo.localidad;
+		this.tipoInscripcion= nuevo.tipoInscripcion;
+		this.tipoVisibilidad= nuevo.tipoVisibilidad;
+	}
+	
 	@Override
 	public EventoDTO toDTO() {
 		EventoDTO dto = toMiniDTO();
