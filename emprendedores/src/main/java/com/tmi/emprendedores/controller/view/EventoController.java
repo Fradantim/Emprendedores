@@ -337,4 +337,49 @@ public class EventoController extends WebController {
     	return welcome(model, principal);
 	}
 	
+	@GetMapping(WebUtils.MAPPING_DETALLE_EVENTO)
+	public String detalleEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+    	/*
+		if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
+    	}
+    	
+    	Usuario usuarioLogueado = getLoggedUser(principal);
+    	if(!usuarioLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
+    		return goToNoTienePermisoAcceso(model, principal);
+    	}
+    	*/
+    	
+    	Evento eventoGuardado = eventoService.findById(idEvento);
+    	if(eventoGuardado==null) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
+    		return welcome(model, principal);
+    	}
+    	
+    	if(eventoGuardado.isFinalizado()) {
+    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    	}
+    	
+    	/*
+    	if(!eventoGuardado.getEmprendedores().contains(usuarioLogueado)) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"Ud no se encuentra inscripto a este evento."));
+    		return welcome(model, principal);
+    	}
+    	
+    	if(eventoGuardado.getCreador().equals(usuarioLogueado)) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"Ud no puede desincribirse a su propio evento."));
+    		return welcome(model, principal);
+    	}
+    	   	
+    	eventoGuardado.removeEmprendedor(usuarioLogueado);
+
+    	eventoService.save(eventoGuardado);
+    	
+    	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se desinscribio al evento con exito!"));
+    	*/
+    	//return welcome(model, principal);
+    	
+    	return Page.DETALLE_EVENTO.getFile();
+	}
+	
 }

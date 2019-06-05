@@ -30,6 +30,7 @@ public interface WebUtils {
 	public final String MAPPING_BORRAR_EVENTO = "/borrarEvento";
 	public final String MAPPING_INSCRIBIRME_EVENTO = "/inscribirmeEvento";
 	public final String MAPPING_DESINSCRIBIRME_EVENTO = "/desinscribirmeEvento";
+	public final String MAPPING_DETALLE_EVENTO = "/detalleEvento";
 	
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
@@ -59,6 +60,8 @@ public interface WebUtils {
 		CREAR_EVENTO ("crearEvento"),
 		MODIFICAR_EVENTO ("modificarEvento"),
 		MIS_EVENTOS ("misEventos"),
+		DETALLE_EVENTO("detalleEvento")
+		
 		;
 		
 		private String file;
