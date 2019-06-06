@@ -48,6 +48,11 @@
 			<jsp:include page="footerNav.jsp"/>
 		</div>
 	</div>
+	<script>
+		var myPaisId ="${usuarioLogueado.localidad.paisId}";
+		var myProvinciaId ="${usuarioLogueado.localidad.provinciaId}";
+		var myLocalidadId ="${usuarioLogueado.localidad.id}";
+	</script>
 	<script src="${contextPath}/assets/js/jquery.datetimepicker.full.min.js"></script>
 	<script src="${contextPath}/assets/js/ubicacion.js"></script>
 	<script src="${contextPath}/assets/js/fecha.js"></script>

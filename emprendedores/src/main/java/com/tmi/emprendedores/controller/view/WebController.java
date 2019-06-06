@@ -32,7 +32,7 @@ public abstract class WebController {
     		Usuario usuarioLogueado = getLoggedUser(principal);
     		addUsuarioLogueado(model, principal);
     		for(Evento evento: eventos) {
-    			if(!evento.getCreador().equals(usuarioLogueado)) {
+    			if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
     				evento.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
     			} else {
     				evento.setInscripto(false);
@@ -102,5 +102,10 @@ public abstract class WebController {
     protected String goToNoTienePermisoEdicion(Model model, Principal principal) {
     	addMensajeNoTienePermisoEdicion(model);
     	return welcome(model, principal);
+    }
+    
+    protected String goToNoSeEncontroObjeto(Model model, Principal principal, String objeto, Integer id) {
+    	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+objeto+" con id:"+id));
+		return welcome(model, principal);
     }
 }

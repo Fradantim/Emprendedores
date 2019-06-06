@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
-import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Pais;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Provincia;
@@ -29,24 +28,10 @@ public class UbicacionController extends WebController {
 	
 	@Autowired
 	private LocalidadService locService;
-
-	private void addUbicacion(Model model, Principal principal) {
-		Usuario userLogueado = getLoggedUser(principal);
-		if(userLogueado.getLocalidad()!=null) {
-			model.addAttribute("myLocalidadId",userLogueado.getLocalidad().getId());
-			model.addAttribute("myProvinciaId",userLogueado.getLocalidad().getProvincia().getId());
-			model.addAttribute("myPaisId",userLogueado.getLocalidad().getProvincia().getPais().getId());
-		}
-	}
-	
 	
 	@GetMapping(WebUtils.MAPPING_GET_SELECT_PAIS)
 	public String getPaises(Model model, Principal principal) {
 		model.addAttribute("paises", paisService.findAll().stream().map(Pais::toMiniDTO).collect(Collectors.toList()));
-		
-		if(isUsuarioLogueado(principal)) {
-			addUbicacion(model, principal);
-		}
 		
 		return Page.SELECT_PAIS.getFile();
 	}
@@ -56,10 +41,6 @@ public class UbicacionController extends WebController {
 		Pais pais = paisService.findById(paisId);
 		model.addAttribute("provincias", provService.findByPais(pais).stream().map(Provincia::toMiniDTO).collect(Collectors.toList()));
 		
-		if(isUsuarioLogueado(principal)) {
-			addUbicacion(model, principal);
-		}
-		
 		return Page.SELECT_PROVINCIA.getFile();
 	}
 	
@@ -67,10 +48,6 @@ public class UbicacionController extends WebController {
 	public String getLocalidades(Model model, Principal principal, @RequestParam(value = "provinciaId", required = false) Integer provinciaId) {
 		Provincia provincia = provService.findById(provinciaId);
 		model.addAttribute("localidades", locService.findByProvincia(provincia).stream().map(Localidad::toMiniDTO).collect(Collectors.toList()));
-		
-		if(isUsuarioLogueado(principal)) {
-			addUbicacion(model, principal);
-		}
 		
 		return Page.SELECT_LOCALIDAD.getFile();
 	}

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import com.tmi.emprendedores.dto.ubicacion.LocalidadDTO;
+import com.tmi.emprendedores.util.DatePickerUtil;
 
 public class EventoDTO extends DTO{
 	
@@ -82,8 +83,8 @@ public class EventoDTO extends DTO{
 		this.creador = creador;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public String getFecha() {
+		return DatePickerUtil.getDateformater().format(fecha);
 	}
 
 	public void setFecha(Date fecha) {
@@ -136,5 +137,9 @@ public class EventoDTO extends DTO{
 	
 	public boolean isFinalizado() {
 		return getEstado().equals(Estado.FINALIZADO.name());
+	}
+	
+	public boolean isAbierto() {
+		return getTipoInscripcion().equals(TipoInscripcion.ABIERTA.name());
 	}
 }
