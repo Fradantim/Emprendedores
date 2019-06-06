@@ -61,11 +61,13 @@
 						</security:authorize>
 					</li>
 					<li>
-						<a href="#">Mi Perfil</a>
+						<a href="${contextPath}/miPerfil">Mi Perfil</a>
 						<ul>
+						<!--  
 							<li>
 								<a href="${contextPath}/miPerfil">Usuario</a>
 							</li>
+						-->
 							<security:authorize access="hasAuthority('EMPRENDEDOR')" >
 							<li>
 								<a href="${contextPath}/miPerfil2">Emprendedor</a>

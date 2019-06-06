@@ -61,7 +61,7 @@
 									<h2>Creador: ${eventoRecuperado.creador.nick} <br></h2>
 									<p>Sidebars are not welcome here</p>
 								</header>
-							
+							__
 								<!--  <span class="image featured"><img src="../assets/css/images/pic08.jpg" alt="" /></span>-->
 							
 								<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
