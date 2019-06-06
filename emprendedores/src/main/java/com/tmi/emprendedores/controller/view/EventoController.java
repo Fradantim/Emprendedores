@@ -394,6 +394,7 @@ public class EventoController extends WebController {
 	
 	@GetMapping(WebUtils.MAPPING_DETALLE_EVENTO)
 	public String detalleEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+		
     	/*
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -411,11 +412,15 @@ public class EventoController extends WebController {
     		return welcome(model, principal);
     	}
     	
+    	model.addAttribute("eventoRecuperado", eventoGuardado.toDTO());
+    	
+    	/*
+    	 * 
     	if(eventoGuardado.isFinalizado()) {
     		return noPuedeInteractuarEventoFinalizado(model).getFile();
     	}
     	
-    	/*
+    	
     	if(!eventoGuardado.getEmprendedores().contains(usuarioLogueado)) {
     		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"Ud no se encuentra inscripto a este evento."));
     		return welcome(model, principal);
