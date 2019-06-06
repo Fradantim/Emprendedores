@@ -62,18 +62,20 @@
 					</li>
 					<li>
 						<a href="${contextPath}/miPerfil">Mi Perfil</a>
-						<ul>
+						
 						<!--  
 							<li>
 								<a href="${contextPath}/miPerfil">Usuario</a>
 							</li>
 						-->
-							<security:authorize access="hasAuthority('EMPRENDEDOR')" >
-							<li>
-								<a href="${contextPath}/miPerfil2">Emprendedor</a>
-							</li>
-							</security:authorize>
-						</ul>
+						<security:authorize access="hasAuthority('EMPRENDEDOR')" >
+							<ul>
+								<li>
+									<a href="${contextPath}/miPerfil2">Emprendedor</a>
+								</li>
+							</ul>
+						</security:authorize>
+						
 					</li>
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
 					<li><p id="usuarioLogueado" class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
