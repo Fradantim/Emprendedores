@@ -14,22 +14,21 @@
 	<link rel="stylesheet" href="${contextPath}/assets/css/jquery.datetimepicker.min.css" />
 	
 	<style>
-	.map-container-2
-	{
-	overflow:hidden;
-	padding-bottom:50%;
-	position:relative;
-	height:0;
-	}
-	.map-container-2 iframe
-	{
-	left:0;
-	top:0;
-	height:100%;
-	width:100%;
-	position:absolute;
-	}
-	
+		.map-container-2
+		{
+			overflow:hidden;
+			padding-bottom:50%;
+			position:relative;
+			height:0;
+		}
+		.map-container-2 iframe
+		{
+			left:0;
+			top:0;
+			height:100%;
+			width:100%;
+			position:absolute;
+		}
 	</style>
 	
 </head>
@@ -45,52 +44,36 @@
 				</header>
 			</div>
 		</div>
-		
 		<!-- Main Wrapper -->
 		<div id="main-wrapper">
 			<div class="wrapper style1">
 				<div class="inner">
 					<div class="container">
 						<div class="col-md-12">
-							
-							
-							
 							<article>
 								<header class="major">
 									<h2>Evento: ${eventoRecuperado.nombre} </h2>
-									<h2>Creador: ${eventoRecuperado.creador.nick} <br></h2>
-									<p>Sidebars are not welcome here</p>
+									<h2>Creador: ${eventoRecuperado.creador.nick} </h2><br>
 								</header>
-							
+								
+								<h3>Cuando: ${e.fecha} </h3><br>
+								<h3>Donde: ${e.localidad.nombre}, ${e.localidad.provinciaNombre} - ${e.localidad.paisNombre}</h3> <br>
+								
+								<hr>
 								<!--  <span class="image featured"><img src="../assets/css/images/pic08.jpg" alt="" /></span>-->
 							
+								<h2>Descripción del evento<br></h2>
+								<p>${eventoRecuperado.descripcionLarga}</p>
 								
-								<p>${eventoRecuperado.descripcion}</p>
-							
-								<h3>Descripcion</h3>
-								${eventoRecuperado.descripcionLarga}
-							
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-								vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus sed feugiat lorem ipsum
-								dolor nullam blandit tempus.</p>
+								<hr>
+								
+								<h2>Mapa</h2>
+								<!--Google map-->
+								<div id="map-container-google-2" class="z-depth-1-half map-container-2">
+								  ${eventoRecuperado.mapa}
+								</div>
+								<!--Google Maps-->
 							</article>
-							
-							<!--Google map-->
-							<div id="map-container-google-2" class="z-depth-1-half map-container-2">
-							  ${eventoRecuperado.mapa}
-							</div>
-							
-							<!--Google Maps-->
-
-
 						</div>
 					</div>
 				</div>
