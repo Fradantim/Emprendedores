@@ -19,7 +19,7 @@ public class EventoValidator extends MyValidator {
 	}
 
 	private String[] getCamposNoVacios() {
-		return new String[] { "nombre", "descripcion"/* ,"link","contacto","localidad" */ };
+		return new String[] { "nombre", "descripcion", "descripcionLarga"/* ,"link","contacto","localidad" */ };
 	}
 
 	@Override

@@ -36,8 +36,12 @@ public class EventoDTO extends DTO{
 	
 	private Boolean inscripto;
 	
+	private String descripcionLarga;
+	
+	private String mapa;
+	
 	public EventoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, LocalidadDTO localidad, UsuarioDTO creador,
-			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, Boolean inscripto) {
+			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, Boolean inscripto, String descripcionLarga, String mapa) {
 		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -49,6 +53,8 @@ public class EventoDTO extends DTO{
 		this.estado = estado.name();
 		this.cantidadEmprendedores=cantidadEmprendedores;
 		this.inscripto=inscripto;
+		this.descripcionLarga=descripcionLarga;
+		this.mapa=mapa;
 	}
 
 	public String getNombre() {
@@ -141,5 +147,21 @@ public class EventoDTO extends DTO{
 	
 	public boolean isAbierto() {
 		return getTipoInscripcion().equals(TipoInscripcion.ABIERTA.name());
+	}
+
+	public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+
+	public String getMapa() {
+		return mapa;
+	}
+
+	public void setMapa(String mapa) {
+		this.mapa = mapa;
 	}
 }

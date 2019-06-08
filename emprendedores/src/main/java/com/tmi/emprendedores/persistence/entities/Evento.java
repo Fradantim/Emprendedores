@@ -32,7 +32,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Column (name="NOMBRE", nullable=false)
 	private String nombre;
 	
-	@Column (name="DESCRIPCION", nullable=false, length = 5000)
+	@Column (name="DESCRIPCION", nullable=false)
 	private String descripcion;
 	
 	@ManyToOne
@@ -60,6 +60,12 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	
 	@Column (name="CANTIDAD_EMPRENDEDORES", nullable=false)
 	private Integer cantidadEmprendedores;
+	
+	@Column (name="DESCRIPCION_LARGA", length = LARGO_COLUMNA_CKEDITOR)
+	private String descripcionLarga;
+	
+	@Column (name="MAPA" , length = 512)
+	private String mapa;
 	
 	/**
 	* Atributo usado para determinar si el usuario logueado está inscripto a este evento.
@@ -175,6 +181,22 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		this.inscripto = inscripto;
 	}
 
+	public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+
+	public String getMapa() {
+		return mapa;
+	}
+
+	public void setMapa(String mapa) {
+		this.mapa = mapa;
+	}
+
 	public void setEmprendedores(Set<Usuario> emprendedores) {
 		this.emprendedores = emprendedores;
 		cantidadEmprendedores= emprendedores.size();
@@ -201,6 +223,8 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		this.localidad=nuevo.localidad;
 		this.tipoInscripcion= nuevo.tipoInscripcion;
 		this.tipoVisibilidad= nuevo.tipoVisibilidad;
+		this.descripcionLarga= nuevo.descripcionLarga;
+		this.mapa= nuevo.mapa;
 	}
 	
 	@Override
@@ -212,6 +236,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 
 	@Override
 	public EventoDTO toMiniDTO() {
-		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),cantidadEmprendedores, inscripto);
+		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),
+				cantidadEmprendedores, inscripto, descripcionLarga, mapa);
 	}
 }

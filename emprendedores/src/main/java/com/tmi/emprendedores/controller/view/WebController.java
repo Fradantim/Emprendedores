@@ -108,4 +108,12 @@ public abstract class WebController {
     	addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+objeto+" con id:"+id));
 		return welcome(model, principal);
     }
+    
+    /**
+    * Cuando el CKEDITOR manda el atributo le mete espacios y saltos del linea al fondo, si lo llevo asi de
+    * nuevo a la pantalla rompe el jsp y se va todo a la mierda, asi amortiguo las cosas.
+	*/
+    protected String amortiguarCKEditor(String value) {
+    	return value.replace("\r", "").replace("\n", "").trim();
+    }
 }

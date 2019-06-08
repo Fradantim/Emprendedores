@@ -154,8 +154,11 @@ public class EventoController extends WebController {
 			return Page.CREAR_EVENTO.getFile();
 		}
 		
-		
 		//si todo sale ok....
+		eventoForm.setDescripcionLarga(amortiguarCKEditor(eventoForm.getDescripcionLarga()));
+		if(eventoForm.getMapa()!=null)
+			eventoForm.setMapa(amortiguarCKEditor(eventoForm.getMapa()));
+		
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
 		
@@ -306,8 +309,11 @@ public class EventoController extends WebController {
 			return Page.MODIFICAR_EVENTO.getFile();
 		}
 		
-		
 		//si todo sale ok....
+
+		eventoForm.setDescripcionLarga(amortiguarCKEditor(eventoForm.getDescripcionLarga()));
+		if(eventoForm.getMapa()!=null)
+			eventoForm.setMapa(amortiguarCKEditor(eventoForm.getMapa()));
 		eventoGuardado.modificarEvento(eventoForm);
 		
 		eventoService.save(eventoGuardado);

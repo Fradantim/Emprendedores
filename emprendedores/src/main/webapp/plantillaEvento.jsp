@@ -43,14 +43,14 @@
 		
 		<h3>Descripcion Larga</h3>
 		<div class="form-group ${status.error ? 'has-error' : ''}">
-			<form:textarea name="editor1" id="editor1" rows="10" cols="80" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:textarea>
-			<form:errors path="descripcion"></form:errors>
+			<form:textarea name="editor1" id="editor1" rows="10" cols="80" path="descripcionLarga" class="form-control" placeholder="Descripcion" value="${eventoGuardado.descripcionLarga}"></form:textarea>
+			<form:errors path="descripcionLarga"></form:errors>
 		</div>
 		<script>
 			// Replace the <textarea id="editor1"> with a CKEditor
 			// instance, using default configuration.
 			CKEDITOR.replace( 'editor1' );
-			CKEDITOR.instances['editor1'].setData('${emprendimiento.descripcion}');
+			CKEDITOR.instances['editor1'].setData('${eventoGuardado.descripcionLarga}');
 		</script>
 		
 		<h3>Inscripcion</h3>
@@ -77,16 +77,13 @@
 		</div>
 		
 		<h3>Mapa del lugar</h3>
-		<div class="form-group" id="fechaDiv">
-			<input id="fecha" name="fecha" type="text" class="form-control" value="${eventoGuardado.fecha}">
+		<div class="form-group" id="mapaDiv">
+			<input id="mapa" name="mapa" type="text" class="form-control" value="${eventoGuardado.mapa}">
 		</div>
+		<a data-toggle="modal" data-target="#myModal">
+		  (Haz click aqui para saber como agregar un mapa a tu evento)
+		</a>
 		<!-- Button HTML (to Trigger Modal) -->
-        
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		  Launch demo modal
-		</button>
-		
 		
 	</div>	
 </body>

@@ -62,12 +62,7 @@ public class EmprendimientoController extends WebController {
 			return Page.MODIFICAR_EMPRENDIMIENTO.getFile();
 		}
 		
-		/*cuando el CKEDITOR manda el atributo descripcion modificado le mete espacios
-		y saltos del linea al fondo, si lo llevo asi de nuevo a la pantalla despues 
-		rompe el jsp y se va todo a la mierda, asi amortiguo las cosas
-		*/
-		String descripcion = emprendimientoForm.getDescripcion().replace("\r", "").replace("\n", "").trim();;
-		emprendimientoForm.setDescripcion(descripcion);
+		emprendimientoForm.setDescripcion(amortiguarCKEditor(emprendimientoForm.getDescripcion()));
 		
 		Emprendimiento emprendimientoAPersistir = null;
 		if(emprendimientoForm.getId() == null) {

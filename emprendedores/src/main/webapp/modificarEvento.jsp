@@ -44,6 +44,10 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal -->
+		<jsp:include page="${contextPath}/modalTutoEventoMapa.jsp"/>
+		
 		<!-- Footer Wrapper -->
 		<div id="footer-wrapper">
 			<jsp:include page="footerNav.jsp"/>
