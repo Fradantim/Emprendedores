@@ -2,10 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <head>
 
 <script src="${contextPath}/assets/ckeditor/ckeditor.js"></script>
+<script src="${contextPath}/assets/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -80,6 +82,12 @@
 		</div>
 		<!-- Button HTML (to Trigger Modal) -->
         
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		  Launch demo modal
+		</button>
+		
+		
 	</div>	
 </body>
 </html>
