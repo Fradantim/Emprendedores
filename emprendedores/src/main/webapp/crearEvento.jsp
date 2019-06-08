@@ -13,6 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${contextPath}/assets/css/jquery.datetimepicker.min.css" />
 	
+	
 </head>
 <body class="homepage is-preload">
 	<div id="page-wrapper">
@@ -43,6 +44,9 @@
 				</div>
 			</div>
 		</div>
+		
+	
+ 	
 		<!-- Footer Wrapper -->
 		<div id="footer-wrapper">
 			<jsp:include page="footerNav.jsp"/>

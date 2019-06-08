@@ -57,7 +57,7 @@
 							
 							<article>
 								<header class="major">
-									<h2 class="form-signin-heading">Evento</h2>
+									<h2>Evento: ${eventoRecuperado.nombre} </h2>
 									<h2>Creador: ${eventoRecuperado.creador.nick} <br></h2>
 									<p>Sidebars are not welcome here</p>
 								</header>

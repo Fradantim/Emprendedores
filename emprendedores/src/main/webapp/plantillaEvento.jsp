@@ -3,7 +3,11 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<head></head>
+<head>
+
+<script src="${contextPath}/assets/ckeditor/ckeditor.js"></script>
+
+</head>
 <body>
 	<div class="form-group" id="plantillaEventoDiv">
 		<h3>Nombre</h3>
@@ -14,10 +18,10 @@
 			</div>
 		</spring:bind>
 
-		<h3>Descripcion</h3>
+		<h3>Descripcion Corta</h3>
 		<spring:bind path="descripcion">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<form:input type="text" path="descripcion" class="form-control" placeholder="Descripcion" value="${eventoGuardado.descripcion}"></form:input>
+				<form:input type="text" maxlength="254" path="descripcion" class="form-control" placeholder="Descripcion" value="${eventoGuardado.descripcion}"></form:input>
 				<form:errors path="descripcion"></form:errors>
 			</div>
 		</spring:bind>
@@ -34,6 +38,18 @@
 		<div class="form-group" id="localidadDiv">
 			Aguarde ...
 		</div>
+		
+		<h3>Descripcion Larga</h3>
+		<div class="form-group ${status.error ? 'has-error' : ''}">
+			<form:textarea name="editor1" id="editor1" rows="10" cols="80" path="descripcion" class="form-control" placeholder="Descripcion" value="${emprendimiento.descripcion}"></form:textarea>
+			<form:errors path="descripcion"></form:errors>
+		</div>
+		<script>
+			// Replace the <textarea id="editor1"> with a CKEditor
+			// instance, using default configuration.
+			CKEDITOR.replace( 'editor1' );
+			CKEDITOR.instances['editor1'].setData('${emprendimiento.descripcion}');
+		</script>
 		
 		<h3>Inscripcion</h3>
 		<div class="form-group" id="VisibilidadDiv">
@@ -57,6 +73,13 @@
 		<div class="form-group" id="fechaDiv">
 			<input id="fecha" name="fecha" type="text" class="form-control" value="${eventoGuardado.fecha}">
 		</div>
-	</div>
+		
+		<h3>Mapa del lugar</h3>
+		<div class="form-group" id="fechaDiv">
+			<input id="fecha" name="fecha" type="text" class="form-control" value="${eventoGuardado.fecha}">
+		</div>
+		<!-- Button HTML (to Trigger Modal) -->
+        
+	</div>	
 </body>
 </html>
