@@ -1,8 +1,9 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,20 +59,27 @@ public class UsuarioController extends WebController{
     }
     
     @PostMapping(WebUtils.MAPPING_REGISTRO)
-    public String registratiocn(Model model, @ModelAttribute("userForm") Usuario userForm, Principal principal, BindingResult bindingResult) {
+    public String registracion(Model model
+    		, @ModelAttribute("userForm") Usuario userForm, Principal principal, BindingResult bindingResult
+    		, @RequestParam(value = "aceptaTyCCheckBox", required = false) String aceptaTyCCheckBox) {
     	if(isUsuarioLogueado(principal)) {
     		return goToNoTienePermisoAcceso(model, principal);
     	}
         usuarioValidator.validateNew(userForm, bindingResult);
 
-        if (bindingResult.hasErrors()) {
+        List<MensajeDTO> errores = new ArrayList<>();
+        if(aceptaTyCCheckBox == null) {
+        	errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe aceptar los terminos y condiciones para crear su usuario."));
+        }
+        
+        if (bindingResult.hasErrors() || errores.size()>0) {
+        	addMensajes(model, errores);
         	return Page.REGISTRIO.getFile();
         }
 
         usuarioService.saveNew(userForm);
 
         securityService.autoLogin(userForm.getNick(), userForm.getPasswordConfirm());
-
         
         addMensajes(model, 
         		new MensajeDTO(TipoMensaje.SUCCESS, "Su nueva cuenta fue creada correctamente."),
