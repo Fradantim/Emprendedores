@@ -1,34 +1,23 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<head/>
-<body>
-	<footer id="footer" class="container">
-		<div class="col-12">
-			<div id="copyright">
-				<ul class="menu">
-					<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</div>
+
+<footer id="footer" class="container">
+	<div class="col-12">
+		<div id="copyright">
+			<ul class="menu">
+				<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
 		</div>
-	</footer>
-	
-	<!-- Scripts -->
-	<script src="${contextPath}/assets/js/jquery.min.js"></script>
-	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-	<script src="${contextPath}/assets/js/browser.min.js"></script>
-	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-	<script src="${contextPath}/assets/js/util.js"></script>
-	<script src="${contextPath}/assets/js/main.js"></script>
-	<script src="${contextPath}/assets/bootstrap-4.0.0/js/bootstrap.min.js"></script>
-	<%-- 
-	
-    <script src="${contextPath}/assets/bootstrap-4.0.0/js/bootstrap.bundle.min.js"></script>
-	<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
-	<script src="${contextPath}/assets/js/browser.min.js"></script>
-	<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
-	<script src="${contextPath}/assets/js/util.js"></script>
-	<script src="${contextPath}/assets/js/main.js"></script>
-    --%>
-</body>
-</head>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="${contextPath}/assets/js/jquery.min.js"></script>
+<script src="${contextPath}/assets/js/jquery.dropotron.min.js"></script>
+<script src="${contextPath}/assets/js/browser.min.js"></script>
+<script src="${contextPath}/assets/js/breakpoints.min.js"></script>
+<script src="${contextPath}/assets/js/util.js"></script>
+<script src="${contextPath}/assets/js/main.js"></script>
+<script src="${contextPath}/assets/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+
