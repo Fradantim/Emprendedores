@@ -56,6 +56,7 @@
 		</c:forEach>											
 	</section>
 	<!-- Pagination -->
+	<!--
 	<nav>
 		<ul class="pagination">
 			<li class="page-item">
@@ -81,7 +82,7 @@
 			</li>
 		</ul>
 	</nav>
-	
+	-->
 </body>
 
 </html>
