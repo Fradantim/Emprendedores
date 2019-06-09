@@ -281,7 +281,13 @@ public class EventoController extends WebController {
     	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
     	
 		model.addAttribute("eventoForm", new Evento());
+		
+		//&le;
+		if(eventoGuardado.getMapa()!= null)
+			eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
 		model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
+		
+		System.out.println("Map: "+eventoGuardado.getMapa());
 		
 		return Page.MODIFICAR_EVENTO.getFile();
 	}
@@ -380,7 +386,8 @@ public class EventoController extends WebController {
 		eventoGuardado = eventoService.save(eventoGuardado);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
-		return detalleEvento(model, principal, idEvento);
+		return welcome(model, principal);//"redirect:/"+
+		//detalleEvento(model, principal, idEvento);
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
