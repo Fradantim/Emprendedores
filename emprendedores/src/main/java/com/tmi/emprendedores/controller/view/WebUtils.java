@@ -24,13 +24,18 @@ public interface WebUtils {
 	public final String MAPPING_GET_SELECT_LOCALIDAD = "/getSelectLocalidad";
 
 	/*EVENTOS*/
-	public final String MAPPING_MIS_EVENTOS = "/misEventos";
 	public final String MAPPING_CREAR_EVENTO = "/crearEvento";
 	public final String MAPPING_MODIFICAR_EVENTO = "/modificarEvento";
 	public final String MAPPING_BORRAR_EVENTO = "/borrarEvento";
 	public final String MAPPING_INSCRIBIRME_EVENTO = "/inscribirmeEvento";
 	public final String MAPPING_DESINSCRIBIRME_EVENTO = "/desinscribirmeEvento";
 	public final String MAPPING_DETALLE_EVENTO = "/detalleEvento";
+	public final String MAPPING_ASISTIR_EVENTO = "/asistirEvento";
+	public final String MAPPING_DESASISTIR_EVENTO = "/desasistirEvento";
+	public final String MAPPING_GET_EVENTOS_PUBLICOS = "/getEventosPublicos";
+	public final String MAPPING_GET_EVENTOS_CREADOS = "/getEventosCreados";
+	public final String MAPPING_GET_EVENTOS_INSCRIPTOS = "/getEventosInscriptos";
+	public final String MAPPING_GET_EVENTOS_ASISTENCIA = "/getEventosAsistencia";
 	
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
@@ -60,7 +65,8 @@ public interface WebUtils {
 		CREAR_EVENTO ("crearEvento"),
 		MODIFICAR_EVENTO ("modificarEvento"),
 		MIS_EVENTOS ("misEventos"),
-		DETALLE_EVENTO("detalleEvento")
+		DETALLE_EVENTO("detalleEvento"),
+		LISTA_EVENTOS("listaEventos"),
 		
 		;
 		

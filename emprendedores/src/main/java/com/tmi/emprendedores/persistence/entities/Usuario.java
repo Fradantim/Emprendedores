@@ -25,7 +25,7 @@ import com.tmi.emprendedores.service.PerfilService;
 
 @Entity
 @Table(name="USUARIO")
-public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
+public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>, HasOwner<Usuario>{
 	
 	@Column (name="NOMBRE")
 	private String nombre;
@@ -64,7 +64,10 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 	
 	@ManyToMany(mappedBy = "emprendedores", fetch= FetchType.LAZY)
 	private Set<Evento> eventosInscriptos;
-		
+
+	@ManyToMany(mappedBy = "asistencia", fetch= FetchType.LAZY)
+	private Set<Evento> eventosAsistencia;
+	
 	public Usuario() {
 		super();
 	}
@@ -181,6 +184,14 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 		this.eventosInscriptos = eventosInscriptos;
 	}
 
+	public Set<Evento> getEventosAsistencia() {
+		return eventosAsistencia;
+	}
+
+	public void setEventosAsistencia(Set<Evento> eventosAsistencia) {
+		this.eventosAsistencia = eventosAsistencia;
+	}
+	
 	public void modificarPerfil(Usuario nuevo) {
 		this.nombre=nuevo.nombre;
 		this.apellido=nuevo.apellido;
@@ -212,5 +223,10 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>{
 			return this.equals(((HasOwner<?>) entity).getOwner());
 		}
 		return false;
+	}
+
+	@Override
+	public Usuario getOwner() {
+		return this;
 	}
 }

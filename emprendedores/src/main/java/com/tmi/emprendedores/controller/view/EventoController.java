@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,24 +47,6 @@ public class EventoController extends WebController {
 	private String noPuedeInteractuarEventoFinalizado(Model model, Principal principal) {
 		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No puede interactuar con un evento Finalizado."));
 		return welcome(model, principal);
-	}
-	
-	
-	@GetMapping(WebUtils.MAPPING_MIS_EVENTOS)
-	public String goToMisEventos(Model model, Principal principal) {
-    	if(!isUsuarioLogueado(principal)) {
-    		return goToDebeIniciarSesion(model).getFile();
-    	}
-    	
-    	
-    	if(isUsuarioLogueado(principal)) {
-    		//Usuario usuarioLogueado = getLoggedUser(principal);
-    		//TODO evaluar si el usuario logueado ya esta inscripto!
-    	}
-		//TODO agregar eventos
-    	
-    	
-		return Page.MIS_EVENTOS.getFile();
 	}
 	
 	@GetMapping(WebUtils.MAPPING_CREAR_EVENTO)
@@ -162,10 +145,72 @@ public class EventoController extends WebController {
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
 		
-		eventoService.save(eventoForm);
+		eventoForm = eventoService.save(eventoForm);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Creo su evento con exito!"));
-		return welcome(model, principal);
+		return detalleEvento(model, principal, eventoForm.getId());
+	}
+
+	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_PUBLICOS)
+	public String getEventosPublicos(Model model, Principal principal, @RequestParam(value = "jsp", required = false) String jsp) {
+		List<Evento> eventos = eventoService.findPublicos();
+    	if(isUsuarioLogueado(principal)) {
+    		Usuario usuarioLogueado = getLoggedUser(principal);
+    		addUsuarioLogueado(model, principal);
+    		for(Evento evento: eventos) {
+    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+    				evento.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+    			} else {
+    				evento.setInscripto(false);
+    			}
+    		}
+    	}
+    	
+    	model.addAttribute("eventos", eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+    	return choice(jsp,Page.LISTA_EVENTOS.getFile());
+	}
+	
+	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_INSCRIPTOS)
+	public String getEventosInscriptos(Model model, Principal principal, @RequestParam(value = "idUsuario", required = false) Integer idUsuario
+			, @RequestParam(value = "jsp", required = false) String jsp) {
+		Usuario usuario = usuarioService.findById(idUsuario);
+		
+		if(usuario == null) {
+			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+Usuario.class.getSimpleName()+" con id:"+idUsuario));
+			return null;
+		}
+		
+		model.addAttribute("eventos", usuario.getEventosInscriptos().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		return choice(jsp,Page.LISTA_EVENTOS.getFile());
+	}
+	
+	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_CREADOS)
+	public String getEventosCreados(Model model, Principal principal,@RequestParam(value = "idUsuario", required = false) Integer idUsuario
+			, @RequestParam(value = "jsp", required = false) String jsp) {
+		Usuario usuario = usuarioService.findById(idUsuario);
+		
+		if(usuario == null) {
+			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+Usuario.class.getSimpleName()+" con id:"+idUsuario));
+			return null;
+		}
+		
+		model.addAttribute("eventos", usuario.getEventosCreados().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		return choice(jsp,Page.LISTA_EVENTOS.getFile());
+	}
+	
+	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_ASISTENCIA)
+	public String getEventosAsustencia(Model model, Principal principal,@RequestParam(value = "idUsuario", required = false) Integer idUsuario
+			, @RequestParam(value = "jsp", required = false) String jsp) {
+		Usuario usuario = usuarioService.findById(idUsuario);
+		
+		if(usuario == null) {
+			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"No se encontro "+Usuario.class.getSimpleName()+" con id:"+idUsuario));
+			return null;
+		}
+		
+		addUsuarioLogueado(model, principal);
+		model.addAttribute("eventos", usuario.getEventosAsistencia().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
 	
 	@GetMapping(WebUtils.MAPPING_BORRAR_EVENTO)
@@ -233,7 +278,8 @@ public class EventoController extends WebController {
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
 			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad) {
+			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
+			@RequestParam(value = "jsp", required = false) String jsp) {
 		
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -318,8 +364,8 @@ public class EventoController extends WebController {
 		
 		eventoService.save(eventoGuardado);
 		
-		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Creo su evento con exito!"));
-		return welcome(model, principal);
+		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
+		return detalleEvento(model, principal, eventoGuardado.getId());
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
@@ -399,53 +445,108 @@ public class EventoController extends WebController {
 	}
 	
 	@GetMapping(WebUtils.MAPPING_DETALLE_EVENTO)
-	public String detalleEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
-		
-    	/*
+	public String detalleEvento(Model model, Principal principal
+			, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+    	Evento evento = eventoService.findById(idEvento);
+    	if(evento==null) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
+    		return welcome(model, principal);
+    	}
+    	
+    	if(isUsuarioLogueado(principal)) {
+    		Usuario usuarioLogueado = getLoggedUser(principal);
+        	
+        	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+        		evento.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+    		} else {
+    			evento.setAsiste(false);
+    		}
+        	
+        	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+        		evento.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
+        	} else {
+        		evento.setInscripto(false);
+        	}
+        	addUsuarioLogueado(model, usuarioLogueado);
+    	}
+    	
+    	model.addAttribute("evento", evento.toDTO());
+    	
+    	return Page.DETALLE_EVENTO.getFile();
+	}
+
+	
+	@GetMapping(WebUtils.MAPPING_ASISTIR_EVENTO)
+	public String asistirEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento
+			, @RequestParam(value = "idUsuario", required = false) Integer idUsuario
+			, @RequestParam(value = "jsp", required = false) String jsp) {
+    	
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
     	Usuario usuarioLogueado = getLoggedUser(principal);
-    	if(!usuarioLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
-    		return goToNoTienePermisoAcceso(model, principal);
+    	
+    	Usuario usuarioQueAsistira = usuarioService.findById(idUsuario);
+    	if(usuarioQueAsistira==null) {
+    		return goToNoSeEncontroObjeto(model, principal, Usuario.class.getSimpleName(), idUsuario);
     	}
-    	*/
     	
     	Evento eventoGuardado = eventoService.findById(idEvento);
     	if(eventoGuardado==null) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
-    		return welcome(model, principal);
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
     	}
     	
-    	model.addAttribute("eventoRecuperado", eventoGuardado.toDTO());
-    	
-    	/*
-    	 * 
     	if(eventoGuardado.isFinalizado()) {
-    		return noPuedeInteractuarEventoFinalizado(model).getFile();
+    		return noPuedeInteractuarEventoFinalizado(model,principal);
     	}
     	
-    	
-    	if(!eventoGuardado.getEmprendedores().contains(usuarioLogueado)) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"Ud no se encuentra inscripto a este evento."));
-    		return welcome(model, principal);
+    	if(!usuarioLogueado.puedeEditar(usuarioQueAsistira)) {
+    		return goToNoTienePermisoEdicion(model, principal);
     	}
     	
-    	if(eventoGuardado.getCreador().equals(usuarioLogueado)) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR,"Ud no puede desincribirse a su propio evento."));
-    		return welcome(model, principal);
+    	eventoGuardado.addAsistencia(usuarioQueAsistira);
+
+    	eventoService.save(eventoGuardado);
+    	
+    	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se inscribio al evento con exito!"));
+    	return choice(jsp, welcome(model, principal));
+	}
+	
+	@GetMapping(WebUtils.MAPPING_DESASISTIR_EVENTO)
+	public String desasistirEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento
+			, @RequestParam(value = "idUsuario", required = false) Integer idUsuario
+			, @RequestParam(value = "jsp", required = false) String jsp) {
+		
+		if(!isUsuarioLogueado(principal)) {
+    		return goToDebeIniciarSesion(model).getFile();
     	}
-    	   	
-    	eventoGuardado.removeEmprendedor(usuarioLogueado);
+    	
+    	Usuario usuarioLogueado = getLoggedUser(principal);
+    	
+    	Usuario usuarioQueNoAsistira = usuarioService.findById(idUsuario);
+    	if(usuarioQueNoAsistira==null) {
+    		return goToNoSeEncontroObjeto(model, principal, Usuario.class.getSimpleName(), idUsuario);
+    	}
+    	
+    	Evento eventoGuardado = eventoService.findById(idEvento);
+    	if(eventoGuardado==null) {
+    		return goToNoSeEncontroObjeto(model, principal, OBJETO, idEvento);
+    	}
+    	
+    	if(eventoGuardado.isFinalizado()) {
+    		return noPuedeInteractuarEventoFinalizado(model,principal);
+    	}
+    	
+    	if(!usuarioLogueado.puedeEditar(usuarioQueNoAsistira)) {
+    		return goToNoTienePermisoEdicion(model, principal);
+    	}
+    	
+    	eventoGuardado.removeAsistencia(usuarioQueNoAsistira);
 
     	eventoService.save(eventoGuardado);
     	
     	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se desinscribio al evento con exito!"));
-    	*/
-    	//return welcome(model, principal);
-    	
-    	return Page.DETALLE_EVENTO.getFile();
+    	return choice(jsp, welcome(model, principal));
 	}
-	
 }

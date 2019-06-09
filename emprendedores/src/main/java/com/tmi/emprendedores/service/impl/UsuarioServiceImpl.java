@@ -45,4 +45,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario findByEmail(String email) {
 		 return usuarioRepo.findByEmailIgnoreCase(email);
 	}
+
+	@Override
+	public Usuario findById(Integer id) {
+		if (id == null) return null;
+		return usuarioRepo.findById(id).get();
+	}
 }

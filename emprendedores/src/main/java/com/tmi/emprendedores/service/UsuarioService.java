@@ -14,6 +14,8 @@ public interface UsuarioService {
 	public Usuario findByNick(String nick);
     
 	public Usuario findByEmail(String email);
+	
+	public Usuario findById(Integer id);
 
 	public Usuario saveAndEncodePassword(Usuario usuario);
 }

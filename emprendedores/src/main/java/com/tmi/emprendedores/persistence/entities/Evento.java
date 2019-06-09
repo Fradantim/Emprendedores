@@ -12,10 +12,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Where;
 
 import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
@@ -27,6 +30,7 @@ import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
 
 @Entity
 @Table(name="EVENTO")
+@Where(clause = "borrado = false")
 public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransformable<EventoDTO>{
 	
 	@Column (name="NOMBRE", nullable=false)
@@ -53,7 +57,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	private TipoVisibilidad tipoVisibilidad;
 	
 	@ManyToMany (fetch= FetchType.LAZY)
-	@JoinTable(name = "EMPRENDIMIENTO_EVENTO",
+	@JoinTable(name = "EMPRENDEDOR_EVENTO",
 		joinColumns = @JoinColumn(name = "EMPRENDEDOR_ID"),
 		inverseJoinColumns = @JoinColumn(name = "EVENTO_ID"))
 	private Set<Usuario> emprendedores;
@@ -61,17 +65,33 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Column (name="CANTIDAD_EMPRENDEDORES", nullable=false)
 	private Integer cantidadEmprendedores;
 	
-	@Column (name="DESCRIPCION_LARGA", length = LARGO_COLUMNA_CKEDITOR)
+	@ManyToMany (fetch= FetchType.LAZY)
+	@JoinTable(name = "USUARIO_EVENTO",
+		joinColumns = @JoinColumn(name = "ASISTENTE_ID"),
+		inverseJoinColumns = @JoinColumn(name = "EVENTO_ID"))
+	private Set<Usuario> asistencia;
+
+	@Column (name="CANTIDAD_ASISTENCIA")
+	private Integer cantidadAsistencia;
+	
+	@Lob
+	@Column (name="DESCRIPCION_LARGA")
 	private String descripcionLarga;
 	
 	@Column (name="MAPA" , length = 512)
 	private String mapa;
 	
 	/**
-	* Atributo usado para determinar si el usuario logueado está inscripto a este evento.
+	* Atributo usado para determinar si el usuario logueado esta inscripto a este evento.
 	*/
 	@Transient
 	private Boolean inscripto;
+	
+	/**
+	* Atributo usado para determinar si el usuario logueado indico que asistira a este evento.
+	*/
+	@Transient
+	private Boolean asiste;
 	
 	public Evento() {
 		super();
@@ -196,6 +216,14 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
 	}
+	
+	public Boolean getAsiste() {
+		return asiste;
+	}
+
+	public void setAsiste(Boolean asiste) {
+		this.asiste = asiste;
+	}
 
 	public void setEmprendedores(Set<Usuario> emprendedores) {
 		this.emprendedores = emprendedores;
@@ -215,6 +243,37 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		emprendedores.remove(emprendedor);
 		cantidadEmprendedores= emprendedores.size();
 	}
+	
+	public Set<Usuario> getAsistencia() {
+		return asistencia;
+	}
+
+	public void setAsistencia(Set<Usuario> asistencia) {
+		this.asistencia = asistencia;
+		cantidadAsistencia= asistencia.size();
+	}
+
+	public void addAsistencia(Usuario usuario) {
+		if(asistencia == null)
+			asistencia = new HashSet<>();
+		asistencia.add(usuario);
+		cantidadAsistencia= asistencia.size();
+	}
+	
+	public void removeAsistencia(Usuario usuario) {
+		if(asistencia == null)
+			asistencia = new HashSet<>();
+		asistencia.remove(usuario);
+		cantidadAsistencia= asistencia.size();
+	}
+	
+	public Integer getCantidadAsistencia() {
+		return cantidadAsistencia;
+	}
+
+	public void setCantidadAsistencia(Integer cantidadAsistencia) {
+		this.cantidadAsistencia = cantidadAsistencia;
+	}
 
 	public void modificarEvento(Evento nuevo) {
 		this.nombre=nuevo.nombre;
@@ -231,12 +290,22 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	public EventoDTO toDTO() {
 		EventoDTO dto = toMiniDTO();
 		dto.setEmprendedores(emprendedores.stream().map(Usuario::toMiniDTO).collect(Collectors.toSet()));
+		dto.setDescripcionLarga(descripcionLarga);
+		dto.setMapa(mapa);
 		return dto;
 	}
 
 	@Override
 	public EventoDTO toMiniDTO() {
 		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),
-				cantidadEmprendedores, inscripto, descripcionLarga, mapa);
+				cantidadEmprendedores, inscripto, asiste);
+	}
+	
+	/**
+	 * Borra todas las relaciones a inscripciones o asistencias
+	 */
+	public void empty() {
+		emprendedores.clear();
+		asistencia.clear();
 	}
 }

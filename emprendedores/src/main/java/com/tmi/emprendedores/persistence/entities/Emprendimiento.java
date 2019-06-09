@@ -2,6 +2,7 @@ package com.tmi.emprendedores.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,7 +17,8 @@ public class Emprendimiento extends AbsEntity implements DTOTransformable<Empren
 	@Column (name="NOMBRE", nullable=false)
 	private String nombre;
 	
-	@Column (name="DESCRIPCION", nullable=false, length = LARGO_COLUMNA_CKEDITOR)
+	@Lob
+	@Column (name="DESCRIPCION", nullable=false)
 	private String descripcion;
 	
 	@Column (name="LINK")

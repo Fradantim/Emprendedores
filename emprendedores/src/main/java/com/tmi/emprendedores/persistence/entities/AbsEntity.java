@@ -11,8 +11,6 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbsEntity implements Comparable<AbsEntity>{
 	
-	public static final int LARGO_COLUMNA_CKEDITOR = 5000;
-	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name="ID")

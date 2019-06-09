@@ -1,6 +1,8 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
+import com.tmi.emprendedores.persistence.entities.Evento;
 import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
+import com.tmi.emprendedores.service.EventoService;
 import com.tmi.emprendedores.service.LocalidadService;
 import com.tmi.emprendedores.service.PerfilService;
 import com.tmi.emprendedores.service.SecurityService;
@@ -35,6 +39,9 @@ public class UsuarioController extends WebController{
     
     @Autowired
     private LocalidadService locService;
+    
+    @Autowired
+    private EventoService eventoService;
     
     @Autowired
     private UsuarioValidator usuarioValidator;
@@ -145,6 +152,9 @@ public class UsuarioController extends WebController{
         if(emprendedorCheckBox != null ) {
         	userLogueado.addPerfil(PerfilService.EMPRENDEDOR);
     	} else {
+    		if(userLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
+    			removerEmprendedor(userLogueado);
+    		}
     		userLogueado.removePerfil(PerfilService.EMPRENDEDOR);
     	}
         
@@ -173,7 +183,37 @@ public class UsuarioController extends WebController{
         return Page.MI_PERFIL.getFile();
      }
     
-    @GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
+    /**
+     * Si un usuario deja de ser emprendedor se borran sus inscripciones a eventos que aun no hayan tenido lugar, y sus eventos que no hayan tenido lugar son borrados.
+     */
+    private void removerEmprendedor(Usuario usuario) {
+		Set<Evento> inscripcionesARemover = new HashSet<Evento>();
+    	for(Evento evento: usuario.getEventosInscriptos()) {
+			if(!evento.isFinalizado()) {
+				evento.removeEmprendedor(usuario);
+				inscripcionesARemover.add(evento);
+				eventoService.save(evento);
+			}
+		}
+    	usuario.getEventosInscriptos().removeAll(inscripcionesARemover);
+		
+    	Set<Evento> creacionesABorrar = new HashSet<Evento>();
+		for(Evento evento: usuario.getEventosCreados()) {
+			if(!evento.isFinalizado()) {
+				creacionesABorrar.add(evento);
+			}
+		}
+		
+		usuario.getEventosCreados().removeAll(creacionesABorrar);
+		
+		for(Evento evento: creacionesABorrar) {
+			evento.empty();
+			evento.setBorrado(true);
+			eventoService.save(evento);
+		}
+	}
+
+	@GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
     public String goToModificarClave(Model model, Principal principal) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();

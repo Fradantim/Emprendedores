@@ -2,8 +2,6 @@ package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,36 +10,19 @@ import org.springframework.ui.Model;
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
-import com.tmi.emprendedores.persistence.entities.Evento;
 import com.tmi.emprendedores.persistence.entities.Usuario;
-import com.tmi.emprendedores.service.EventoService;
 import com.tmi.emprendedores.service.UsuarioService;
 
 @Controller
 public abstract class WebController {
+	
+	protected final static int DEFAULT_PAGE_SIZE = 10;
     
 	@Autowired
 	protected UsuarioService usuarioService;
-	
-    @Autowired
-    private EventoService eventoService;
-    
+	    
 	public String welcome(Model model, Principal principal) {
-		List<Evento> eventos = eventoService.findPublicos();
-    	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-    		addUsuarioLogueado(model, principal);
-    		for(Evento evento: eventos) {
-    			if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				evento.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
-    			} else {
-    				evento.setInscripto(false);
-    			}
-    		}
-    	}
-    	
-    	model.addAttribute("eventos", eventos.stream().map(Evento::toDTO).collect(Collectors.toList()));
-        return Page.PORTAL.getFile();
+		return Page.PORTAL.getFile();
     }
 	
 	protected Usuario getLoggedUser(Principal principal) {
@@ -115,5 +96,19 @@ public abstract class WebController {
 	*/
     protected String amortiguarCKEditor(String value) {
     	return value.replace("\r", "").replace("\n", "").trim();
+    }
+    
+    
+    /**
+     * retorna el primer elemento de la lista que no sea null
+     * @param thisOne
+     * @param thisOther
+     * @return
+     */
+    protected String choice(String... choices) {
+    	for(String choice : choices) {
+    		if(choice != null) return choice;
+    	}
+    	return null;
     }
 }
