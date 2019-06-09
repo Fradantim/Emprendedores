@@ -23,7 +23,12 @@
 						<span class="date">
 							 <fmt:formatDate pattern = "MMMMMMMMM dd" value = "${e.fechaCreacion}" />
 						</span>
-						<h3><a href="${contextPath}/detalleEvento?idEvento=${e.id}">#${e.id} - ${e.nombre}</a></h3>
+						<h3>
+							<a href="${contextPath}/detalleEvento?idEvento=${e.id}">#${e.id} - ${e.nombre}</a>
+							<c:if test="${e.finalizado}">
+								<span> - [FINALIZADO]</span>
+							</c:if>
+						</h3>
 					</header>
 					Creador: ${e.creador.nick} <br>
 					Cuando: ${e.fecha} <br>

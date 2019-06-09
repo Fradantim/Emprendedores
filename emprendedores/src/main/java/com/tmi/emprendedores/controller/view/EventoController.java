@@ -3,6 +3,7 @@ package com.tmi.emprendedores.controller.view;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.EventoDTO;
 import com.tmi.emprendedores.dto.EventoDTO.TipoInscripcion;
 import com.tmi.emprendedores.dto.EventoDTO.TipoVisibilidad;
 import com.tmi.emprendedores.dto.MensajeDTO;
@@ -180,7 +182,11 @@ public class EventoController extends WebController {
 			return null;
 		}
 		
-		model.addAttribute("eventos", usuario.getEventosInscriptos().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		List<EventoDTO> eventos = usuario.getEventosInscriptos().stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+		
+		Collections.sort(eventos,(e1,e2) -> e1.getFecha().compareTo(e2.getFecha()));
+		
+		model.addAttribute("eventos", eventos);
 		return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
 	
@@ -194,7 +200,11 @@ public class EventoController extends WebController {
 			return null;
 		}
 		
-		model.addAttribute("eventos", usuario.getEventosCreados().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		List<EventoDTO> eventos = usuario.getEventosCreados().stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+		
+		Collections.sort(eventos,(e1,e2) -> e1.getFecha().compareTo(e2.getFecha()));
+		
+		model.addAttribute("eventos", eventos);
 		return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
 	
@@ -209,7 +219,11 @@ public class EventoController extends WebController {
 		}
 		
 		addUsuarioLogueado(model, principal);
-		model.addAttribute("eventos", usuario.getEventosAsistencia().stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+		List<EventoDTO> eventos = usuario.getEventosAsistencia().stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+		
+		Collections.sort(eventos,(e1,e2) -> e1.getFecha().compareTo(e2.getFecha()));
+		
+		model.addAttribute("eventos", eventos);
 		return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
 	
@@ -369,7 +383,8 @@ public class EventoController extends WebController {
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
-	public String inscribirmeEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+	public String inscribirmeEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento
+			, @RequestParam(value = "jsp", required = false) String jsp) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
@@ -403,11 +418,13 @@ public class EventoController extends WebController {
     	eventoService.save(eventoGuardado);
     	
     	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se inscribio al evento con exito!"));
-    	return welcome(model, principal);
+    	return choice(jsp,welcome(model, principal));
 	}
 	
 	@GetMapping(WebUtils.MAPPING_DESINSCRIBIRME_EVENTO)
-	public String desinscribirmeEvento(Model model, Principal principal, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
+	public String desinscribirmeEvento(Model model, Principal principal
+			, @RequestParam(value = "idEvento", required = false) Integer idEvento
+			, @RequestParam(value = "jsp", required = false) String jsp) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
@@ -441,7 +458,7 @@ public class EventoController extends WebController {
     	eventoService.save(eventoGuardado);
     	
     	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se desinscribio al evento con exito!"));
-    	return welcome(model, principal);
+    	return choice(jsp,welcome(model, principal));
 	}
 	
 	@GetMapping(WebUtils.MAPPING_DETALLE_EVENTO)

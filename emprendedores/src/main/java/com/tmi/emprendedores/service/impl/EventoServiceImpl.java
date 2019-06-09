@@ -29,6 +29,6 @@ public class EventoServiceImpl implements EventoService {
 
 	@Override
 	public List<Evento> findPublicos() {
-		return eventoRepo.findByTipoVisibilidadAndBorradoOrderByFechaCreacionDesc(TipoVisibilidad.PUBLICA, false);
+		return eventoRepo.findByTipoVisibilidadAndBorradoOrderByFechaDesc(TipoVisibilidad.PUBLICA, false);
 	}
 }

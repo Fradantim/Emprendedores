@@ -8,7 +8,7 @@ import com.tmi.emprendedores.dto.EventoDTO.TipoVisibilidad;
 import com.tmi.emprendedores.persistence.entities.Evento;
 
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
-	public List<Evento> findByTipoVisibilidadAndBorradoOrderByFechaCreacionDesc(TipoVisibilidad tipoVisibilidad, Boolean borrado);
+	public List<Evento> findByTipoVisibilidadAndBorradoOrderByFechaDesc(TipoVisibilidad tipoVisibilidad, Boolean borrado);
 	
 	public Evento findByIdAndBorrado(Integer id, Boolean borrado);
 }
