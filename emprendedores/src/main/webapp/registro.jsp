@@ -90,10 +90,10 @@
 													</div>
 												</spring:bind>
 												
-												<input name="aceptaTyCCheckBox" type="checkbox"/>
+												<input name="aceptaTyCCheckBox" id="aceptaTyCCheckBox" type="checkbox"/>
 												<span title="Haz click aqui para leerlos.">
-													<a data-toggle="modal" data-target="#myModal" >
-														Acepto los términos y condiciones.
+													<a data-toggle="modal" data-target="#myModal" style="cursor: pointer;" >
+														<u>Acepto los términos y condiciones.</u>
 													</a>
 												</span>
 												<br> 
@@ -111,46 +111,20 @@
 											</figure>
 										</div>
 									</div>
-									<!-- Modal -->
-									<jsp:include page="${contextPath}/modalTyC.jsp"/>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
+		<jsp:include page="${contextPath}/modalTyC.jsp"/>
 		<!-- Footer Wrapper -->
 		<div id="footer-wrapper">
 			<jsp:include page="footerNav.jsp" />
 		</div>
-
-		<script>
-			jQuery(function() {
-
-				$("#submit").click(function() {
-					$(".error-messages").remove();
-					$(".error").hide();
-					var hasError = false;
-					var passwordVal = $("#password").val();
-					//var checkVal = $("#password-check").val();
-					if (passwordVal == '') {
-						$("#password").after('<span class="error-messages">Por favor ingrese una password</span>');
-						hasError = true;
-					} else if (passwordVal.length < 6) {
-						$("#password").after('<span class="error-messages">El password es muy corto. Verifique.</span>');
-						hasError = true;
-					} else if (passwordVal.length > 12) {
-						$("#password").after('<span class="error-messages">El password máximo es de 12 caracteres</span>');
-						hasError = true;
-					}
-					if (hasError == true) {
-						return false;
-					}
-				});
-			});
-		</script>
+		
 	</div>
 </body>
 </html>

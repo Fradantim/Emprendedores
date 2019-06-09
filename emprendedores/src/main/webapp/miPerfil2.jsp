@@ -87,7 +87,7 @@
 									  <div class="card card-body">
 										<div class="row">
 											<div class="col-md-12">
-												<div id="eventosCreadosDiv">
+												<div id="eventosCreadosDiv" style="overflow-y:auto;">
 													<jsp:include page="loading.jsp"/>
 												</div>
 											</div>
@@ -105,7 +105,7 @@
 										<div class="card card-body">
 											<div class="row">
 												<div class="col-md-12">
-													<div id="eventosInscriptosDiv">
+													<div id="eventosInscriptosDiv" style="overflow-y:auto;">
 														<jsp:include page="loading.jsp"/>
 													</div>
 												</div>

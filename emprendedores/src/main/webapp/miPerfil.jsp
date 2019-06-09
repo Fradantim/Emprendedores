@@ -67,29 +67,23 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="row">
-										<div class="col-md-6">
-
-											<button type="button" class="btn btn-block btn-primary" onclick="location.href='${contextPath}/modificarPerfil';">Modificar Mi Perfil</button>
+										<div class="col-md-4">
+											<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/modificarPerfil';">Modificar Mi Perfil</button>
 										</div>
-										<div class="col-md-6">
-
-											<button type="button" class="btn btn-block btn-primary" onclick="location.href='${contextPath}/modificarClave';">Modificar Mi Contraseña</button>
+										<div class="col-md-4">
+											<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/modificarClave';">Modificar Mi Contraseña</button>
+										</div>
+										<div class="col-md-4">
+											<button type="button" class="btn btn-primary" onclick="buscarEventosAsistencia(${usuarioLogueado.id})" data-toggle="collapse" data-target="#collapseEventos" aria-expanded="false" aria-controls="collapseEventos">Eventos a los que asistire</button>
 										</div>
 									</div>
-									<br />
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-12">
-									<p>
-										<button class="btn btn-primary" type="button" onclick="buscarEventosAsistencia(${usuarioLogueado.id})" data-toggle="collapse" data-target="#collapseEventos" aria-expanded="false" aria-controls="collapseEventos">Eventos a los que asistire</button>
-									</p>
 									<div class="collapse" id="collapseEventos">
 										<div class="card card-body">
 											<div class="row">
 												<div class="col-md-12">
-													<div id="eventosAsistenciaDiv">
+													<div id="eventosAsistenciaDiv" style="overflow-y:auto;">
 														<jsp:include page="loading.jsp" />
 													</div>
 												</div>
