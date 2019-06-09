@@ -95,16 +95,15 @@
 								<h2>Descripción del evento<br></h2>
 								<p>${evento.descripcionLarga}</p>
 								
-								<hr>
-								
 								<c:if test="${! empty evento.mapa}">
+									<hr>
+									<h2>Mapa</h2>
 									<!--Google map-->
 									<div id="map-container-google-2" class="z-depth-1-half map-container-2">
 									  ${evento.mapa}
 									</div>
 									<!--Google Maps-->
 								</c:if>
-								<h2>Mapa</h2>
 							</article>
 						</div>
 					</div>

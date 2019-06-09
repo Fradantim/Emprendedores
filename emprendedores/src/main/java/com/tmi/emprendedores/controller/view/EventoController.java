@@ -287,7 +287,8 @@ public class EventoController extends WebController {
 	}
 	
 	@PostMapping(WebUtils.MAPPING_MODIFICAR_EVENTO)
-	public String modificarEvento(Model model, Principal principal,@RequestParam(value = "idEvento", required = false) Integer idEvento,
+	public String modificarEvento(Model model, Principal principal,
+			@RequestParam(value = "idEvento", required = false) Integer idEvento,
 			@ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
@@ -376,10 +377,10 @@ public class EventoController extends WebController {
 			eventoForm.setMapa(amortiguarCKEditor(eventoForm.getMapa()));
 		eventoGuardado.modificarEvento(eventoForm);
 		
-		eventoService.save(eventoGuardado);
+		eventoGuardado = eventoService.save(eventoGuardado);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
-		return detalleEvento(model, principal, eventoGuardado.getId());
+		return detalleEvento(model, principal, idEvento);
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
