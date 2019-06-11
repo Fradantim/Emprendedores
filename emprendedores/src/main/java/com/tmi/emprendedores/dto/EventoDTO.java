@@ -34,8 +34,14 @@ public class EventoDTO extends DTO{
 	
 	private Integer cantidadEmprendedores;
 	
+	/**
+	* Atributo usado para determinar si el usuario logueado esta inscripto a este evento.
+	*/
 	private Boolean inscripto;
 	
+	/**
+	* Atributo usado para determinar si el usuario logueado indico que asistira a este evento.
+	*/
 	private Boolean asiste;
 	
 	private String descripcionLarga;
@@ -43,7 +49,7 @@ public class EventoDTO extends DTO{
 	private String mapa;
 	
 	public EventoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, LocalidadDTO localidad, UsuarioDTO creador,
-			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, Boolean inscripto, Boolean asiste) {
+			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores) {
 		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.descripcion = descripcion;

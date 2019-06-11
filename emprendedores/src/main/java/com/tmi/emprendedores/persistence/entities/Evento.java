@@ -81,18 +81,6 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Column (name="MAPA" , length = 512)
 	private String mapa;
 	
-	/**
-	* Atributo usado para determinar si el usuario logueado esta inscripto a este evento.
-	*/
-	@Transient
-	private Boolean inscripto;
-	
-	/**
-	* Atributo usado para determinar si el usuario logueado indico que asistira a este evento.
-	*/
-	@Transient
-	private Boolean asiste;
-	
 	public Evento() {
 		super();
 	}
@@ -193,14 +181,6 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		this.cantidadEmprendedores = cantidadEmprendedores;
 	}
 
-	public Boolean getInscripto() {
-		return inscripto;
-	}
-
-	public void setInscripto(Boolean inscripto) {
-		this.inscripto = inscripto;
-	}
-
 	public String getDescripcionLarga() {
 		return descripcionLarga;
 	}
@@ -215,14 +195,6 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
-	}
-	
-	public Boolean getAsiste() {
-		return asiste;
-	}
-
-	public void setAsiste(Boolean asiste) {
-		this.asiste = asiste;
 	}
 
 	public void setEmprendedores(Set<Usuario> emprendedores) {
@@ -298,7 +270,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Override
 	public EventoDTO toMiniDTO() {
 		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),
-				cantidadEmprendedores, inscripto, asiste);
+				cantidadEmprendedores);
 	}
 	
 	/**

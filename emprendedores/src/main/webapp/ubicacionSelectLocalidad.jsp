@@ -3,9 +3,9 @@
 <body>
 	<div class="form-group" id="localidadDiv">
 		<select class="form-control" id="localidadId" name="localidadId">
-			<option></option>
+			<option value="X"></option>
 			<c:forEach items="${localidades}" var="lo">
-				<option value="${lo.id}" ${myLocalidadId == lo.id ? 'selected' : ''}>${lo.nombre}</option>
+				<option value="${lo.id}" ${lo.selected ? 'selected' : ''}>${lo.nombre}</option>
 			</c:forEach>
 		</select>
 	</div>

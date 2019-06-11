@@ -62,7 +62,7 @@ public class EmprendimientoController extends WebController {
 			return Page.MODIFICAR_EMPRENDIMIENTO.getFile();
 		}
 		
-		emprendimientoForm.setDescripcion(amortiguarCKEditor(emprendimientoForm.getDescripcion()));
+		emprendimientoForm.setDescripcion(amortiguarInputHTML(emprendimientoForm.getDescripcion()));
 		
 		Emprendimiento emprendimientoAPersistir = null;
 		if(emprendimientoForm.getId() == null) {

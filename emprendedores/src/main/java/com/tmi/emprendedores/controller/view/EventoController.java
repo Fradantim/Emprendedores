@@ -140,9 +140,9 @@ public class EventoController extends WebController {
 		}
 		
 		//si todo sale ok....
-		eventoForm.setDescripcionLarga(amortiguarCKEditor(eventoForm.getDescripcionLarga()));
+		eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
 		if(eventoForm.getMapa()!=null)
-			eventoForm.setMapa(amortiguarCKEditor(eventoForm.getMapa()));
+			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
 		
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
@@ -150,25 +150,33 @@ public class EventoController extends WebController {
 		eventoForm = eventoService.save(eventoForm);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Creo su evento con exito!"));
-		return detalleEvento(model, principal, eventoForm.getId());
+		
+		if(eventoForm.getMapa()!=null && !eventoForm.getMapa().trim().isEmpty()) {
+			return welcome(model, principal);
+		} else {
+			//TODO corregir este error, cuando vuelve el mapa me rompe el forward
+			return detalleEvento(model, principal, eventoForm.getId());	
+		}
 	}
 
 	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_PUBLICOS)
 	public String getEventosPublicos(Model model, Principal principal, @RequestParam(value = "jsp", required = false) String jsp) {
 		List<Evento> eventos = eventoService.findPublicos();
+		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
     	if(isUsuarioLogueado(principal)) {
     		Usuario usuarioLogueado = getLoggedUser(principal);
     		addUsuarioLogueado(model, principal);
     		for(Evento evento: eventos) {
+    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
     			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				evento.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
     			} else {
-    				evento.setInscripto(false);
+    				dto.setAsiste(false);
     			}
     		}
     	}
     	
-    	model.addAttribute("eventos", eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList()));
+    	model.addAttribute("eventos", dtos);
     	return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
 	
@@ -299,8 +307,7 @@ public class EventoController extends WebController {
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
 			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
-			@RequestParam(value = "jsp", required = false) String jsp) {
+			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad) {
 		
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -378,16 +385,21 @@ public class EventoController extends WebController {
 		
 		//si todo sale ok....
 
-		eventoForm.setDescripcionLarga(amortiguarCKEditor(eventoForm.getDescripcionLarga()));
+		eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
 		if(eventoForm.getMapa()!=null)
-			eventoForm.setMapa(amortiguarCKEditor(eventoForm.getMapa()));
+			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
 		eventoGuardado.modificarEvento(eventoForm);
 		
 		eventoGuardado = eventoService.save(eventoGuardado);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
-		return welcome(model, principal);//"redirect:/"+
-		//detalleEvento(model, principal, idEvento);
+		System.out.println("!!!!!!! "+eventoForm.getMapa());
+		if(eventoForm.getMapa()!=null && !eventoForm.getMapa().trim().isEmpty()) {
+			return welcome(model, principal);
+		} else {
+			//TODO corregir este error, cuando vuelve el mapa me rompe el forward
+			return detalleEvento(model, principal, eventoGuardado.getId());	
+		}
 	}
 	
 	@GetMapping(WebUtils.MAPPING_INSCRIBIRME_EVENTO)
@@ -473,24 +485,27 @@ public class EventoController extends WebController {
 	public String detalleEvento(Model model, Principal principal
 			, @RequestParam(value = "idEvento", required = false) Integer idEvento) {
     	Evento evento = eventoService.findById(idEvento);
+    	
     	if(evento==null) {
     		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro un Evento con id:"+idEvento));
     		return welcome(model, principal);
     	}
     	
+    	EventoDTO dto = evento.toDTO();
+    	
     	if(isUsuarioLogueado(principal)) {
     		Usuario usuarioLogueado = getLoggedUser(principal);
         	
         	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		evento.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+        		dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
     		} else {
-    			evento.setAsiste(false);
+    			dto.setAsiste(false);
     		}
         	
         	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		evento.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
+        		dto.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
         	} else {
-        		evento.setInscripto(false);
+        		dto.setInscripto(false);
         	}
         	addUsuarioLogueado(model, usuarioLogueado);
     	}

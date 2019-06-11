@@ -7,6 +7,11 @@ public class DTO implements Comparable<DTO>{
 	protected Integer id;
 	
 	protected Date fechaCreacion;
+	
+	/**
+	 * usado para llevar a la pantalla si un elemento debe resaltarse.
+	 */
+	protected Boolean selected = false;
 
 	public DTO() {	}
 	
@@ -45,6 +50,16 @@ public class DTO implements Comparable<DTO>{
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
+
+	public Boolean isSelected() {
+		return selected;
+	}
 	
-	
+	public Boolean getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Boolean selected) {
+		this.selected = selected;
+	}
 }

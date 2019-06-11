@@ -2,12 +2,14 @@ package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.DTO;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Usuario;
@@ -91,10 +93,10 @@ public abstract class WebController {
     }
     
     /**
-    * Cuando el CKEDITOR manda el atributo le mete espacios y saltos del linea al fondo, si lo llevo asi de
+    * Cuando el CKEDITOR o el iframe de google maps manda el atributo le mete espacios y saltos del linea al fondo, si lo llevo asi de
     * nuevo a la pantalla rompe el jsp y se va todo a la mierda, asi amortiguo las cosas.
 	*/
-    protected String amortiguarCKEditor(String value) {
+    protected String amortiguarInputHTML(String value) {
     	return value.replace("\r", "").replace("\n", "").trim();
     }
     
@@ -111,4 +113,13 @@ public abstract class WebController {
     	}
     	return null;
     }
+    
+    /**
+     * Recorre la lista de DTOs, y si el id de alguno corresponde al parametro <b>slectedId</b> lo marca como <i>selected = true</i>
+     * @param dtos
+     * @param selectedId
+     */
+	protected void updateSelected(List<? extends DTO> dtos, Integer selectedId) {
+		dtos.stream().forEach(dto -> dto.setSelected( dto.getId().equals(selectedId) ));
+	}
 }
