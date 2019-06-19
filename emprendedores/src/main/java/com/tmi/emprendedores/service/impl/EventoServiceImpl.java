@@ -31,4 +31,14 @@ public class EventoServiceImpl implements EventoService {
 	public List<Evento> findPublicos() {
 		return eventoRepo.findByTipoVisibilidadAndBorradoOrderByFechaDesc(TipoVisibilidad.PUBLICA, false);
 	}
+
+	@Override
+	public List<Evento> getByYearAndMonth(int year, int month) {
+		return eventoRepo.getByYearAndMonth(year, month);
+	}
+
+	@Override
+	public List<Evento> getByYearAndMonthAndDay(int year, int month, int day) {
+		return eventoRepo.getByYearAndMonthAndDay(year, month, day);
+	}
 }

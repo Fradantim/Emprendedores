@@ -36,6 +36,8 @@ public interface WebUtils {
 	public final String MAPPING_GET_EVENTOS_CREADOS = "/getEventosCreados";
 	public final String MAPPING_GET_EVENTOS_INSCRIPTOS = "/getEventosInscriptos";
 	public final String MAPPING_GET_EVENTOS_ASISTENCIA = "/getEventosAsistencia";
+	public final String MAPPING_GET_EVENTOS_CALENDARIO = "/getEventosCalendario";
+	public final String MAPPING_GET_EVENTOS_FILTRADOS = "/getEventosFiltrados";
 	
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)

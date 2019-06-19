@@ -2,10 +2,14 @@ package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
 import com.tmi.emprendedores.dto.EventoDTO;
@@ -589,4 +596,77 @@ public class EventoController extends WebController {
     	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se desinscribio al evento con exito!"));
     	return choice(jsp, welcome(model, principal));
 	}
+
+	@RequestMapping(value = "/"+WebUtils.MAPPING_GET_EVENTOS_CALENDARIO, method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public String getEventosMensuales(
+			@RequestParam(value = "year", required = false) String year
+			, @RequestParam(value = "month", required = false) String month) {
+		
+		List<MensajeDTO> errores = new ArrayList<>();
+		if(year== null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR, "El año debe ser informado."));
+		}
+		if(month== null) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR, "El mes debe ser informado."));
+		}
+		
+		Integer intYear = null;
+		Integer intMonth = null;
+		if(errores.isEmpty()) {
+			try {
+				intYear = Integer.parseInt(year);
+			} catch (NumberFormatException e) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR, "No se pudo interpretar el año como un numero."));
+			}
+			
+			try {
+				intMonth = Integer.parseInt(month);
+			} catch (NumberFormatException e) {
+				errores.add(new MensajeDTO(TipoMensaje.ERROR, "No se pudo interpretar el mes como un numero."));
+			}
+		}
+		
+		if(!errores.isEmpty()) {
+			//addMensajes(model, errores);
+			//return welcome(model, principal);
+			//TODO retornar codigo 400
+		}
+		
+		List<Evento> eventos= eventoService.getByYearAndMonth(intYear.intValue(), intMonth.intValue());
+		
+		Set<String> fechas = new HashSet<>();
+		
+		for(Evento evento: eventos) {
+			fechas.add(evento.toMiniDTO().getDatePickerFormatedDate());
+		}
+		
+		return "["+ fechas.stream().collect( Collectors.joining( "," ) )+ "]";
+	}
+	
+	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_FILTRADOS)
+	public String getEventosFiltrados(Model model, Principal principal
+			, @RequestParam(value = "jsp", required = false) String jsp
+			, @RequestParam(value = "year", required = false) String year
+			, @RequestParam(value = "month", required = false) String month
+			, @RequestParam(value = "day", required = false) String day) {
+		
+		List<Evento> eventos = eventoService.getByYearAndMonthAndDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+    	if(isUsuarioLogueado(principal)) {
+    		Usuario usuarioLogueado = getLoggedUser(principal);
+    		addUsuarioLogueado(model, principal);
+    		for(Evento evento: eventos) {
+    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
+    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
+    			} else {
+    				dto.setAsiste(false);
+    			}
+    		}
+    	}
+    	
+    	model.addAttribute("eventos", dtos);
+    	return choice(jsp,Page.LISTA_EVENTOS.getFile());
+	}	
 }

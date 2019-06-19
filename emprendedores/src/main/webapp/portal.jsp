@@ -12,7 +12,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${contextPath}/assets/css/jquery-ui.css" />
-
+	<link rel="stylesheet" href="${contextPath}/assets/css/calendarioEventos.css" />
 </head>
 
 <body class="homepage is-preload">
@@ -35,8 +35,8 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-md-8">
-								<h2 class="icon fa-file-text-o">Eventos recientes</h2>
-								<div id="eventosPublicosDiv">
+								<h2 id="tituloListaEventos" class="icon fa-file-text-o">Eventos recientes</h2>
+								<div id="eventosPortalDiv">
 									<jsp:include page="loading.jsp"/>
 								</div>
 								
@@ -50,6 +50,10 @@
 										</header>
 										<center>
 											<div id="datepicker"></div>
+											<div id="datepickerLoading">
+												Buscando Eventos...
+												<jsp:include page="loading.jsp"/>
+											</div>
 										</center>
 										<!--
 										<footer>
@@ -91,12 +95,9 @@
 <script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
 <script src="${contextPath}/assets/js/jquery-ui.js"></script>
 <script src="${contextPath}/assets/js/eventos.js"></script>
+<script src="${contextPath}/assets/js/calendarioEventos.js"></script>
 <script>
 	window.onload=buscarEventosPublicos;
-	
-	$( function() {
-	  $( "#datepicker" ).datepicker();
-	} );
 </script>
 </body>
 

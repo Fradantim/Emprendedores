@@ -9,8 +9,8 @@ var eventosAsistenciaBuscados = 0;
 function buscarEventosPublicos() {
 	var url='/getEventosPublicos';
 	console.log("Buscando eventos publicos url:" + url);
-	$('#eventosPublicosDiv').load(url);
-	console.log("Fin buscando eventos publicos.");
+	$('#eventosPortalDiv').load(url);
+	console.log("Buscando eventos publicos FIN.");
 }
 
 function buscarEventosCreados(id){
@@ -20,7 +20,7 @@ function buscarEventosCreados(id){
 		var url='/getEventosCreados?jsp=tablaEventosCreados&idUsuario='+id;
 		console.log("Buscando eventos creados url:" + url);
 		$('#eventosCreadosDiv').load(url);
-		console.log("Fin buscando eventos creados.");
+		console.log("Buscando eventos creados FIN.");
 	}
 }
 
@@ -31,7 +31,7 @@ function buscarEventosInscriptos(id){
 		var url='/getEventosInscriptos?jsp=tablaEventosInscriptos&idUsuario='+id;
 		console.log("Buscando eventos creados url:" + url);
 		$('#eventosInscriptosDiv').load(url);
-		console.log("Fin buscando eventos inscriptos.");
+		console.log("Buscando eventos creados FIN.");
 	}
 }
 
@@ -42,6 +42,6 @@ function buscarEventosAsistencia(id){
 		var url='/getEventosAsistencia?jsp=tablaEventosAsistencia&idUsuario='+id;
 		console.log("Buscando eventos a los que asistire url:" + url);
 		$('#eventosAsistenciaDiv').load(url);
-		console.log("Fin buscando eventos a los que asistire.");
+		console.log("Buscando eventos a los que asistire FIN.");
 	}
 }

@@ -1,5 +1,7 @@
 package com.tmi.emprendedores.dto;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Set;
 
@@ -178,5 +180,16 @@ public class EventoDTO extends DTO{
 
 	public void setAsiste(Boolean asiste) {
 		this.asiste = asiste;
+	}
+	
+	public String getDatePickerFormatedDate() {
+		LocalDate localDate = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		String strMonth= (localDate.getMonthValue() < 10 ? "0" : "") + localDate.getMonthValue();
+		String strDay= (localDate.getDayOfMonth() < 10 ? "0" : "") + localDate.getDayOfMonth();
+		return "\""
+				+localDate.getYear()
+				+strMonth
+				+strDay
+				+"\"";
 	}
 }
