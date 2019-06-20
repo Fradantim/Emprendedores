@@ -44,7 +44,7 @@
 										Yo
 									</c:when>
 									<c:otherwise>
-										${e.creador.nick}	
+										<a href="${contextPath}/detalleEmprendedor?idEmprendedor=${e.creador.id}">${e.creador.nick}</a>
 									</c:otherwise>
 								</c:choose>
 							</td>
