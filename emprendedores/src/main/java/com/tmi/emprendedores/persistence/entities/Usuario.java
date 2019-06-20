@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.UsuarioDTO;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;

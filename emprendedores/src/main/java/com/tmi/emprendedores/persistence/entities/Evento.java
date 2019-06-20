@@ -20,7 +20,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Where;
 
-import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.EventoDTO;
 import com.tmi.emprendedores.dto.EventoDTO.Estado;
