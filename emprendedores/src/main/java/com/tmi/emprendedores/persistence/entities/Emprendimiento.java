@@ -6,7 +6,6 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.tmi.emprendedores.controller.view.HasOwner;
 import com.tmi.emprendedores.dto.DTOTransformable;
 import com.tmi.emprendedores.dto.EmprendimientoDTO;
 
