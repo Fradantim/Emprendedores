@@ -1,5 +1,8 @@
 package com.tmi.emprendedores.service;
 
+import java.util.List;
+
+import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 
 public interface UsuarioService {
@@ -18,4 +21,6 @@ public interface UsuarioService {
 	public Usuario findById(Integer id);
 
 	public Usuario saveAndEncodePassword(Usuario usuario);
+	
+	public List<Usuario> getByPerfil(Perfil p);
 }

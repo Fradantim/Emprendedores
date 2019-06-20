@@ -1,9 +1,12 @@
 package com.tmi.emprendedores.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tmi.emprendedores.persistence.entities.Perfil;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.persistence.repository.UsuarioRepository;
 import com.tmi.emprendedores.service.PerfilService;
@@ -50,5 +53,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario findById(Integer id) {
 		if (id == null) return null;
 		return usuarioRepo.findById(id).get();
+	}
+	
+	@Override
+	public List<Usuario> getByPerfil(Perfil p) {
+		if (p == null) return null;
+		return usuarioRepo.getByPerfil(p);
 	}
 }

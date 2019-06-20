@@ -40,6 +40,7 @@ public interface WebUtils {
 	public final String MAPPING_GET_EVENTOS_ASISTENCIA = "/getEventosAsistencia";
 	public final String MAPPING_GET_EVENTOS_CALENDARIO = "/getEventosCalendario";
 	public final String MAPPING_GET_EVENTOS_FILTRADOS = "/getEventosFiltrados";
+	public final String MAPPING_GET_EMPRENDEDORES_LISTADO = "/getListaEmprendedores";
 	
 	/**
 	 * Este enum refleja los archivos de vista que tiene la web (de momento solo *jsp)
@@ -56,6 +57,7 @@ public interface WebUtils {
 		MODIFICAR_CLAVE("modificarClave"),
 		MI_PERFIL("miPerfil"),
 		MI_PERFIL2("miPerfil2"),
+		LISTA_EMPRENDEDORES("listaEmprendedores"),
 		
 		
 		/*EMPRENDIMIENTO*/

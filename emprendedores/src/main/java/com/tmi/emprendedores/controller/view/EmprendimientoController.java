@@ -1,6 +1,8 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.EventoDTO;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Emprendimiento;
+import com.tmi.emprendedores.persistence.entities.Evento;
 import com.tmi.emprendedores.persistence.entities.Usuario;
 import com.tmi.emprendedores.service.EmprendimientoService;
 import com.tmi.emprendedores.validator.EmprendimientoValidator;
@@ -87,5 +91,5 @@ public class EmprendimientoController extends WebController {
 		addUsuarioLogueado(model, principal);
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Actualizo correctamente su emprendimiento!"));
 		return Page.MI_PERFIL.getFile();
-	}
+	}	
 }

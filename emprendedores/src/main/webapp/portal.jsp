@@ -68,15 +68,9 @@
 											<h2>Ultimos Emprendedores</h2>
 										</header>
 										<ul class="style2">
-											<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-											<li><a href="#">Ornare in hendrerit in lectus</a></li>
-											<li><a href="#">Semper mod quis eget mi dolore</a></li>
-											<li><a href="#">Quam turpis feugiat sit dolor</a></li>
-											<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-											<li><a href="#">Semper mod quisturpis nisi</a></li>
-											<li><a href="#">Consequat etiam lorem phasellus</a></li>
-											<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-											<li><a href="#">Semper mod quisturpis nisi</a></li>
+											<div id="divListaEmprendedores">
+											</div>
+											<li><a href="${contextPath}/detalleEmprendedor?idEmprendedor=${usuarioLogueado.emprendimiento.id}">Un emprendedor</a></li>
 										</ul>
 									</section>
 								</div>
@@ -96,6 +90,7 @@
 <script src="${contextPath}/assets/js/jquery-1.12.4.js"></script>
 <script src="${contextPath}/assets/js/jquery-ui.js"></script>
 <script src="${contextPath}/assets/js/eventos.js"></script>
+<script src="${contextPath}/assets/js/emprendedores.js"></script>
 <script src="${contextPath}/assets/js/calendarioEventos.js"></script>
 <script>
 	window.onload=buscarEventosPublicos;

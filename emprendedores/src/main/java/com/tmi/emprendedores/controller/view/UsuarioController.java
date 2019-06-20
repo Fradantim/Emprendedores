@@ -271,4 +271,13 @@ public class UsuarioController extends WebController{
     	return Page.LOGIN.getFile();
         
      }
+    
+    @GetMapping(WebUtils.MAPPING_GET_EMPRENDEDORES_LISTADO)
+    public String getListaEmprendedores(Model model, Principal principal) {
+    	
+    	List<Usuario> usr = usuarioService.getByPerfil(PerfilService.EMPRENDEDOR);
+    	
+    	model.addAttribute("usuarios", usr);
+        return Page.MODIFICAR_CLAVE.getFile();
+    }
 }
