@@ -278,6 +278,6 @@ public class UsuarioController extends WebController{
     	List<Usuario> usr = usuarioService.getByPerfil(PerfilService.EMPRENDEDOR);
     	
     	model.addAttribute("usuarios", usr);
-        return Page.MODIFICAR_CLAVE.getFile();
+        return Page.LISTA_EMPRENDEDORES.getFile();
     }
 }

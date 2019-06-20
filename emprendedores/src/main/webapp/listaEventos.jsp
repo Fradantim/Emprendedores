@@ -5,11 +5,6 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<!DOCTYPE html>
-<html lang="es">
-<head> </head>
-
-<body>
 	<section class="box article-list">
 		<security:authorize access="hasAuthority('EMPRENDEDOR')" var="isEmp" />
 		<security:authorize access="hasAuthority('MODERADOR')" var="isMod" />
@@ -83,6 +78,3 @@
 		</ul>
 	</nav>
 	-->
-</body>
-
-</html>

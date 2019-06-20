@@ -68,9 +68,7 @@
 											<h2>Ultimos Emprendedores</h2>
 										</header>
 										<ul class="style2">
-											<div id="divListaEmprendedores">
-											</div>
-											<li><a href="${contextPath}/detalleEmprendedor?idEmprendedor=${usuarioLogueado.emprendimiento.id}">Un emprendedor</a></li>
+											<div id="divListaEmprendedores"></div>
 										</ul>
 									</section>
 								</div>
@@ -93,7 +91,11 @@
 <script src="${contextPath}/assets/js/emprendedores.js"></script>
 <script src="${contextPath}/assets/js/calendarioEventos.js"></script>
 <script>
-	window.onload=buscarEventosPublicos;
+	//window.onload=buscarEventosPublicos, buscarEmprendedores;
+	window.onload = function() {
+		buscarEventosPublicos();
+		buscarEmprendedores();
+	}
 </script>
 </body>
 

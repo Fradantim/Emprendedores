@@ -2,6 +2,7 @@ package com.tmi.emprendedores.persistence.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
 	
 	@Query("SELECT u FROM Usuario u WHERE :perfil member of u.perfiles")
-	public List<Usuario> getByPerfil(@Param("perfil") Perfil perfil);
+	public List<Usuario> getByPerfil(@Param("perfil") Perfil perfil, Pageable p);
 	
 }

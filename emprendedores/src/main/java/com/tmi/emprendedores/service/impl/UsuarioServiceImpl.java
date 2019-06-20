@@ -3,6 +3,7 @@ package com.tmi.emprendedores.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public List<Usuario> getByPerfil(Perfil p) {
 		if (p == null) return null;
-		return usuarioRepo.getByPerfil(p);
+		return usuarioRepo.getByPerfil(p, new PageRequest(0, 10));
 	}
 }
