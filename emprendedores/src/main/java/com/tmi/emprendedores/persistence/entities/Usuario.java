@@ -67,6 +67,10 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>, 
 	@ManyToMany(mappedBy = "asistencia", fetch= FetchType.LAZY)
 	private Set<Evento> eventosAsistencia;
 	
+	@OneToOne
+	@JoinColumn(name="RECUPERO_CLAVE_ID")
+    private RecuperoClave recuperoClave;
+
 	public Usuario() {
 		super();
 	}
@@ -189,6 +193,14 @@ public class Usuario extends AbsEntity implements DTOTransformable<UsuarioDTO>, 
 
 	public void setEventosAsistencia(Set<Evento> eventosAsistencia) {
 		this.eventosAsistencia = eventosAsistencia;
+	}
+	
+	public RecuperoClave getRecuperoClave() {
+		return recuperoClave;
+	}
+
+	public void setRecuperoClave(RecuperoClave recuperoClave) {
+		this.recuperoClave = recuperoClave;
 	}
 	
 	public void modificarPerfil(Usuario nuevo) {

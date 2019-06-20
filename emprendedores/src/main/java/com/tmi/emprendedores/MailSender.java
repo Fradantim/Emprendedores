@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -18,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tmi.emprendedores.controller.view.WebUtils;
+import com.tmi.emprendedores.persistence.entities.RecuperoClave;
 import com.tmi.emprendedores.util.PathUtils;
 
 public class MailSender {
@@ -51,23 +52,13 @@ public class MailSender {
         }
 	}
 	
-	public boolean sendMail(String destination, String subject, String content) throws AddressException{
-        Session session = getSession(username, password);
-        try {
-        	logger.debug("Armando correo para "+destination);
-            Message message = buildMessage(session, username, password, destination, subject, content); 
-            logger.debug("Enviando correo a . "+destination);		
-            Transport.send(message);
-            logger.debug("OK Enviado correo a "+destination);
-
-        } catch (MessagingException e) {
-        	System.out.println("Oops!");
-            e.printStackTrace();
-        }
-		return true;
+	public void sendMail(String destination, Message message) throws AddressException , MessagingException{
+        logger.info("Enviando correo a . "+destination);		
+        Transport.send(message);
+        logger.info("OK Enviado correo a "+destination);
 	}
 
-	private Session getSession(String username, String password) {
+	private Session getSession() {
 		Session mySession = Session.getInstance(mailProperties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
@@ -76,8 +67,9 @@ public class MailSender {
 		return mySession;
 	}
 	
-	private Message buildMessage(Session session, String username, String password, String destination, String subject, String content) throws AddressException, MessagingException {
-		Message message = new MimeMessage(session);
+	public Message buildMessage(String destination, String subject, String content) throws AddressException, MessagingException {
+		logger.debug("Armando correo para "+destination);
+		Message message = new MimeMessage(getSession());
         message.setFrom(new InternetAddress(username));
         message.setRecipients(
                 Message.RecipientType.TO,
@@ -89,11 +81,21 @@ public class MailSender {
         return message;
 	}
 	
-	@PostConstruct
-	public void getUserAndPass() {
-		logger.debug(this.getClass().getSimpleName()+" instanciado, busco user y pass.");
-		username = "UADE.EMPRENDEDORES@GMAIL.COM";
-		password = "XXXXXX";
+	public Message buildMessageRecuperoClave(String destination, RecuperoClave recupero) throws AddressException, MessagingException {
+		String subject = recupero.getUsuario().getNick()+" solicitaste un cambio de clave?";
+		
+		String content = "Hola "+recupero.getUsuario().getNick()+"!\n"
+				+ "\n"
+				+"Nos llego un pedido de reseteo de clave. Si este fuiste vos por por favor seguí el link de abajo, de otra manera desestima este correo.\n"
+				+"\n"
+				+"http://emprendedores.ddns.net"+WebUtils.MAPPING_RECUPERO+"?id="+recupero.getIdUsuarioEncriptado()+"\n"
+				+"\n"
+				+"Saludos!\n"
+				+"Equipo de Emprendedores.";
+		
+		Message message = buildMessage(destination, subject, content);
+		
+		return message;
 	}
 }
 
