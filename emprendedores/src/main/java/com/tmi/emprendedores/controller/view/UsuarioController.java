@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
+import com.tmi.emprendedores.dto.EventoDTO;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Evento;
@@ -280,4 +281,20 @@ public class UsuarioController extends WebController{
     	model.addAttribute("usuarios", usr);
         return Page.LISTA_EMPRENDEDORES.getFile();
     }
+    
+    @GetMapping(WebUtils.MAPPING_DETALLE_EMPRENDEDOR)
+	public String detalleEmprendedor(Model model, Principal principal
+			, @RequestParam(value = "idEmprendedor", required = false) Integer idEmprendedor) {
+    	Usuario usuario = usuarioService.findById(idEmprendedor);
+    	
+    	if(usuario == null) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro al Emprendedor con id:" + idEmprendedor));
+    		return welcome(model, principal);
+    	}
+    	
+    	    	
+    	model.addAttribute("usuarioEmprendedor", usuario);
+    	
+    	return Page.DETALLE_EMPRENDEDOR.getFile();
+	}
 }

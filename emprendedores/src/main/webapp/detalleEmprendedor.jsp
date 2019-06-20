@@ -13,24 +13,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${contextPath}/assets/css/jquery.datetimepicker.min.css" />
 	
-	<style>
-		.map-container-2
-		{
-			overflow:hidden;
-			padding-bottom:50%;
-			position:relative;
-			height:0;
-		}
-		.map-container-2 iframe
-		{
-			left:0;
-			top:0;
-			height:100%;
-			width:100%;
-			position:absolute;
-		}
-	</style>
-	
 </head>
 <body class="homepage is-preload">
 	<div id="page-wrapper">
@@ -49,52 +31,61 @@
 			<div class="wrapper style1">
 				<div class="inner">
 					<div class="container">
-						<div class="col-md-12">
-							<article>
-								<div class="card">
-									<h5 class="card-header">
-										${usuarioLogueado.emprendimiento.nombre}
-									</h5>
-									<div class="card-body">
-										<div class="card-text">
-										<div class="scroll-box">
-											${usuarioLogueado.emprendimiento.descripcion}
-										</div>
+						<article>
+							<div class="card card-body">
+								<h2>Datos del Emprendedor</h2>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="card">
+											<h5 class="card-header">Mis datos</h5>
+											<div class="card-body">
+												<p class="card-text">
+													Nick: ${usuarioEmprendedor.nick} <br> Nombre: ${usuarioEmprendedor.nombre} <br> Apellido: ${usuarioEmprendedor.apellido} <br> email: ${usuarioEmprendedor.email} <br>
+												</p>
+											</div>
 										</div>
 									</div>
-									<div class="card-footer">
-										${usuarioLogueado.emprendimiento.link} <br>
-										${usuarioLogueado.emprendimiento.contacto}
+									<c:if test="${(not empty usuarioEmprendedor.localidad)}">
+										<div class="col-md-6">
+											<div class="card">
+												<h5 class="card-header">Mi ubicacion</h5>
+												<div class="card-body">
+													<p class="card-text">
+														Pais: ${usuarioEmprendedor.localidad.provincia.pais.nombre} <br> Provincia: ${usuarioEmprendedor.localidad.provincia.nombre} <br> Localidad: ${usuarioEmprendedor.localidad.nombre} <br>
+													</p>
+												</div>
+											</div>
+										</div>
+									</c:if>
+								</div>
+							</div>
+						</article>
+						
+						<article>
+							<div class="card card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<h3><span>Mi Emprendimiento</span></h3>
+										<div class="card">
+											<h5 class="card-header">
+												${usuarioEmprendedor.emprendimiento.nombre}
+											</h5>
+											<div class="card-body">
+												<div class="card-text">
+													<div class="scroll-box">
+														${usuarioEmprendedor.emprendimiento.descripcion}
+													</div>
+												</div>
+											</div>
+											<div class="card-footer">
+												${usuarioEmprendedor.emprendimiento.link} <br>
+												${usuarioEmprendedor.emprendimiento.contacto}
+											</div>
+										</div>
 									</div>
 								</div>
-							</article>
-							<hr>
-							<article>
-								<header class="major">
-									<h2>Evento: ${evento.nombre} </h2>
-									<h2>Creador: ${evento.creador.nick} </h2><br>
-								</header>
-								
-								<h3>Cuando: ${evento.fecha} </h3><br>
-								<h3>Donde: ${evento.localidad.nombre}, ${evento.localidad.provinciaNombre} - ${evento.localidad.paisNombre}</h3> <br>
-								
-								<hr>
-								<!--  <span class="image featured"><img src="../assets/css/images/pic08.jpg" alt="" /></span>-->
-							
-								<h2>Descripción del evento<br></h2>
-								<p>${evento.descripcionLarga}</p>
-								
-								<c:if test="${! empty evento.mapa}">
-									<hr>
-									<h2>Mapa</h2>
-									<!--Google map-->
-									<div id="map-container-google-2" class="z-depth-1-half map-container-2">
-									  ${evento.mapa}
-									</div>
-									<!--Google Maps-->
-								</c:if>
-							</article>
-						</div>
+							</div>
+						</article>
 					</div>
 				</div>
 			</div>

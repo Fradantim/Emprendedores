@@ -15,6 +15,7 @@ public interface WebUtils {
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
 	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
 	public final String MAPPING_RECUPERO= "/recupero";
+	public final String MAPPING_DETALLE_EMPRENDEDOR= "/detalleEmprendedor";
 	
 	
 	/*EMPRENDIMIENTO*/
@@ -58,6 +59,7 @@ public interface WebUtils {
 		MI_PERFIL("miPerfil"),
 		MI_PERFIL2("miPerfil2"),
 		LISTA_EMPRENDEDORES("listaEmprendedores"),
+		DETALLE_EMPRENDEDOR("detalleEmprendedor"),
 		
 		
 		/*EMPRENDIMIENTO*/
