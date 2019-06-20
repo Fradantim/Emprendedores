@@ -15,6 +15,9 @@
 </head>
 
 <body>
+
+<security:authorize access="hasAuthority('EMPRENDEDOR')" var="isEmp" />
+
 	<form id="logoutForm" method="POST" action="${contextPath}/logout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
@@ -61,20 +64,26 @@
 						</security:authorize>
 					</li>
 					<li>
-						<a href="${contextPath}/miPerfil">Mi Perfil</a>
-						
-						<!--  
-							<li>
-								<a href="${contextPath}/miPerfil">Usuario</a>
-							</li>
-						-->
-						<security:authorize access="hasAuthority('EMPRENDEDOR')" >
-							<ul>
-								<li>
-									<a href="${contextPath}/miPerfil2">Emprendedor</a>
-								</li>
-							</ul>
-						</security:authorize>
+					
+					<c:if test="${isEmp != null}">
+						<c:choose>
+							<c:when test="${isEmp == true}">
+								<a href="#">Mi Perfil</a>
+								<ul>
+									<li>
+										<a href="${contextPath}/miPerfil">Usuario</a>
+									</li>
+									<li>
+										<a href="${contextPath}/miPerfil2">Emprendedor</a>
+									</li>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<a href="${contextPath}/miPerfil">Mi Perfil</a>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					
 						
 					</li>
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
