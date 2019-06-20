@@ -119,13 +119,14 @@
 								<form method="POST" action="${contextPath}/recupero" class="form-signin">
 									<div class="form-group" >
 										<input type="text" name="email" id="email" placeholder="e-mail"/>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									</div>
 									<div class="form-group form-button">
 									<br/>
 										<table style="width:100%">
 											<tr align="center">
 												<td width="50%" align="center">
-													<button type="submit" class="btn btn-block btn-primary" id="submit" name="signin" id="signin" class="form-submit">
+													<button type="submit" class="btn btn-block btn-primary" id="submit" name="signin" class="form-submit">
 														Recuperar
 													</button>
 												</td>
