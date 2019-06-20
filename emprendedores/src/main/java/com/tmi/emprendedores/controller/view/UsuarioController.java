@@ -261,11 +261,14 @@ public class UsuarioController extends WebController{
     public String recuperoContrasena(Model model, @RequestParam(value = "email", required = false) String mail) {
     	
     	System.out.println("ADEMTROO");
-    	usuarioService.findByEmail(mail);
+    	Usuario usr = usuarioService.findByEmail(mail);
     	
-    	
-    	
-        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, verifique en ingresos o spam!"));
-        return Page.LOGIN.getFile();
+    	if(usr != null) {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, verifique en su correo o correo spam!"));          
+    	} else {
+    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontró el e-mail!"));
+    	}
+    	return Page.LOGIN.getFile();
+        
      }
 }
