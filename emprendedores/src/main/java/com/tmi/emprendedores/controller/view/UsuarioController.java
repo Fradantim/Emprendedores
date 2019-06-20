@@ -256,4 +256,16 @@ public class UsuarioController extends WebController{
         addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "La clave se modifico correctamente!"));
         return Page.MI_PERFIL.getFile();
      }
+    
+    @PostMapping(WebUtils.MAPPING_RECUPERO)
+    public String recuperoContrasena(Model model, @RequestParam(value = "email", required = false) String mail) {
+    	
+    	System.out.println("ADEMTROO");
+    	usuarioService.findByEmail(mail);
+    	
+    	
+    	
+        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, verifique en ingresos o spam!"));
+        return Page.LOGIN.getFile();
+     }
 }

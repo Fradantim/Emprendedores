@@ -69,6 +69,9 @@
 														<span class="error-messages">${error}</span>
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 													</div>
+													<div class="form-group">
+														Olvidó su contraseña? <u><a data-toggle="modal" data-target="#myModal">Click Aquí</a></u>
+													</div>
 													<div class="form-group form-button">
 													<br/>
 														<table style="width:100%">
@@ -101,35 +104,48 @@
 					</div>
 				</div>
 				
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow: auto;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">Recuperar Contraseña</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								
+							</div>
+							<div class="modal-body">
+								<h2 class="form-title">e-mail</h2>
+								<form method="POST" action="${contextPath}/recupero" class="form-signin">
+									<div class="form-group" >
+										<input type="text" name="email" id="email" placeholder="e-mail"/>
+									</div>
+									<div class="form-group form-button">
+									<br/>
+										<table style="width:100%">
+											<tr align="center">
+												<td width="50%" align="center">
+													<button type="submit" class="btn btn-block btn-primary" id="submit" name="signin" id="signin" class="form-submit">
+														Recuperar
+													</button>
+												</td>
+											</tr>
+										</table>	
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 
 			<!-- Footer Wrapper -->
 				<div id="footer-wrapper">
 					<jsp:include page="footerNav.jsp"/>
 				</div>
-				
-			<script>
-				jQuery(function(){
-						
-				        $("#submit").click(function(){
-				        $(".error-messages").remove();
-				        $(".error").hide();
-				        var hasError = false;
-				        var passwordVal = $("#password").val();
-				        //var checkVal = $("#password-check").val();
-				        if (passwordVal == '') {
-				            $("#password").after('<span class="error-messages">Por favor ingrese un password</span>');
-				            hasError = true;
-				        } else if (passwordVal.length < 8) {
-				            $("#password").after('<span class="error-messages">El password no puede ser menor a 8 caracteres. Verifique.</span>');
-				            hasError = true;
-				        } else if (passwordVal.length > 12 ) {
-				            $("#password").after('<span class="error-messages">El password máximo es de 12 caracteres</span>');
-				            hasError = true;
-				        }
-				        if(hasError == true) {return false;}
-				    });
-				});
-				</script>
 		</div>
 	</body>
 </html>

@@ -14,6 +14,8 @@ public interface WebUtils {
 	public final String MAPPING_LOGBOX = "/logBox";
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
 	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
+	public final String MAPPING_RECUPERO= "/recupero";
+	
 	
 	/*EMPRENDIMIENTO*/
 	public final String MAPPING_MODIFICAR_EMPRENDIMIENTO = "/modificarEmprendimiento";
@@ -54,6 +56,7 @@ public interface WebUtils {
 		MODIFICAR_CLAVE("modificarClave"),
 		MI_PERFIL("miPerfil"),
 		MI_PERFIL2("miPerfil2"),
+		
 		
 		/*EMPRENDIMIENTO*/
 		MODIFICAR_EMPRENDIMIENTO("modificarEmprendimiento"),
