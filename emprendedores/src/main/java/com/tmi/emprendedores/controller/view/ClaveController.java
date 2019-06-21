@@ -1,6 +1,11 @@
 package com.tmi.emprendedores.controller.view;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -21,12 +26,14 @@ import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.exception.CryptoException;
 import com.tmi.emprendedores.persistence.entities.RecuperoClave;
 import com.tmi.emprendedores.persistence.entities.Usuario;
+import com.tmi.emprendedores.persistence.repository.UsuarioRepository;
 import com.tmi.emprendedores.service.RecuperoClaveService;
-import com.tmi.emprendedores.service.UsuarioService;
 import com.tmi.emprendedores.validator.UsuarioValidator;
 
 @Controller
 public class ClaveController extends WebController{
+	
+	public static final long WAIT_BETWEEN_MAILS = 10;
     
     @Autowired
     private RecuperoClaveService recuperoClaveService;
@@ -96,6 +103,8 @@ public class ClaveController extends WebController{
         	
         	usuarioService.saveAndEncodePassword(user);
         	
+        	recupero.getUsuario().setRecuperoClave(null);
+        	usuarioService.save(recupero.getUsuario());
         	recuperoClaveService.delete(recupero);
         	
         	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "La clave se modifico correctamente, ya puede ingresar!"));
@@ -120,33 +129,60 @@ public class ClaveController extends WebController{
     		return Page.LOGIN.getFile();
     	} 
     	
-    	RecuperoClave recupero;
-    	try {
-			recupero = new RecuperoClave(user);
-		} catch (CryptoException e) {
-			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "Ocurrio un error no controlado."));
-			e.printStackTrace();
-			return Page.LOGIN.getFile(); 
-		}
     	
-    	try {
-			mailSender.sendMail(mailSender.buildMessageRecuperoClave(user.getEmail(), recupero));
-		} catch (AddressException e) {
-			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "El correo de destino no es consistente."));
-			return Page.LOGIN.getFile(); 
-		} catch (MessagingException e) {
-			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "Ocurrio un error al enviar el correo."));
-			e.printStackTrace();
-			return Page.LOGIN.getFile(); 
-		}
+    	RecuperoClave recupero =user.getRecuperoClave();
     	
-    	//si el correo se mando bien entonces persisto.
-    	recuperoClaveService.save(recupero);
+    	boolean deNuevo=false;
     	
-    	addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, aguarde unos minutos a que llegue y verifique en su correo o casilla de spam."));
+    	if(recupero != null) {
+    		deNuevo= true;
+    	} else {
+    		try {
+    			recupero = new RecuperoClave(user);
+    		} catch (CryptoException e) {
+    			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "Ocurrio un error no controlado."));
+    			e.printStackTrace();
+    			return Page.LOGIN.getFile(); 
+    		}
+    	}
+   	
+    	if(deNuevo) {
+    		LocalDateTime dateBefore= LocalDateTime.ofInstant(recupero.getFechaCreacion().toInstant(),ZoneId.systemDefault());
+    		LocalDateTime dateAfter = LocalDateTime.ofInstant(new Date().toInstant(),ZoneId.systemDefault());
+        	LocalDateTime tempDateTime = LocalDateTime.from( dateBefore );
+
+        	if(tempDateTime.until( dateAfter, ChronoUnit.MINUTES) < WAIT_BETWEEN_MAILS) {
+        		//que espere...
+        		addMensajes(model, new MensajeDTO("Por favor aguarde a que llegue su correo, demora algunos minutos."));
+        	} else {
+        		recupero.setFechaCreacion(new Date());
+        		sendMailRecuperarClave(model, recupero, deNuevo);
+        	}
+        		
+    	} else {
+    		sendMailRecuperarClave(model, recupero, deNuevo);
+    	}
     	return Page.LOGIN.getFile();    	
      }
     
-    
+    private void sendMailRecuperarClave(Model model, RecuperoClave recupero, boolean deNuevo) {
+        try {
+        	mailSender.sendMail(mailSender.buildMessageRecuperoClave(recupero.getUsuario().getEmail(), recupero));
+    	
+        	recupero=recuperoClaveService.save(recupero);
+        	recupero.getUsuario().setRecuperoClave(recupero);
+        	usuarioService.save(recupero.getUsuario());
+        	if(deNuevo) {
+    			addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo nuevamente, por favor aguarde unos minutos a que llegue y verifique en su correo o casilla de spam."));
+    		} else {
+    			addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, aguarde unos minutos a que llegue y verifique en su correo o casilla de spam."));
+    		}
+		} catch (AddressException e) {
+			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "El correo de destino no es consistente."));
+		} catch (MessagingException e) {
+			addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "Ocurrio un error al enviar el correo."));
+			e.printStackTrace();
+		}
+    }
     
 }
