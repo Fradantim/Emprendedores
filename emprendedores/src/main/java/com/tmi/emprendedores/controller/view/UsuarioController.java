@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
-import com.tmi.emprendedores.dto.EventoDTO;
 import com.tmi.emprendedores.dto.MensajeDTO;
 import com.tmi.emprendedores.dto.MensajeDTO.TipoMensaje;
 import com.tmi.emprendedores.persistence.entities.Evento;
@@ -221,57 +220,6 @@ public class UsuarioController extends WebController{
 			eventoService.save(evento);
 		}
 	}
-
-	@GetMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
-    public String goToModificarClave(Model model, Principal principal) {
-    	if(!isUsuarioLogueado(principal)) {
-    		return goToDebeIniciarSesion(model).getFile();
-    	}
-    	model.addAttribute("userForm", new Usuario());
-    	addUsuarioLogueado(model, principal);
-        return Page.MODIFICAR_CLAVE.getFile();
-    }
-    
-    @PostMapping(WebUtils.MAPPING_MODIFICAR_CLAVE)
-    public String modificarClave(Model model, Principal principal, @ModelAttribute("userForm") Usuario userForm, BindingResult bindingResult) {
-    	if(!isUsuarioLogueado(principal)) {
-    		return goToDebeIniciarSesion(model).getFile();
-    	}
-    	
-    	usuarioValidator.validateUpdatePassword(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-        	//si hubo errores vuelvo a la web de la que vine
-        	return Page.MODIFICAR_CLAVE.getFile();
-        }
-    	
-        
-        Usuario userLogueado = getLoggedUser(principal);
-        //si paso todas las validaciones actualizo el usuario
-        userLogueado.setPassword(userForm.getPassword());
-        
-        //persisto nuevo usuario
-        userLogueado = usuarioService.saveAndEncodePassword(userLogueado);
-        addUsuarioLogueado(model, userLogueado);
-        
-        addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "La clave se modifico correctamente!"));
-        return Page.MI_PERFIL.getFile();
-     }
-    
-    @PostMapping(WebUtils.MAPPING_RECUPERO)
-    public String recuperoContrasena(Model model, @RequestParam(value = "email", required = false) String mail) {
-    	
-    	System.out.println("ADEMTROO");
-    	Usuario usr = usuarioService.findByEmail(mail);
-    	
-    	if(usr != null) {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Se envió un correo, verifique en su correo o correo spam!"));          
-    	} else {
-    		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontró el e-mail!"));
-    	}
-    	return Page.LOGIN.getFile();
-        
-     }
     
     @GetMapping(WebUtils.MAPPING_GET_EMPRENDEDORES_LISTADO)
     public String getListaEmprendedores(Model model, Principal principal) {
@@ -290,11 +238,12 @@ public class UsuarioController extends WebController{
     	if(usuario == null) {
     		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No se encontro al Emprendedor con id:" + idEmprendedor));
     		return welcome(model, principal);
-    	}
-    	
+    	}    	
     	    	
     	model.addAttribute("usuarioEmprendedor", usuario);
     	
     	return Page.DETALLE_EMPRENDEDOR.getFile();
 	}
+    
+    
 }

@@ -14,9 +14,8 @@ public interface WebUtils {
 	public final String MAPPING_LOGBOX = "/logBox";
 	public final String MAPPING_MI_PERFIL= "/miPerfil";
 	public final String MAPPING_MI_PERFIL2= "/miPerfil2";
-	public final String MAPPING_RECUPERO= "/recupero";
+	public final String MAPPING_SOLICITUD_RECUPERO_CLAVE= "/solicitudRecuperoClave";
 	public final String MAPPING_DETALLE_EMPRENDEDOR= "/detalleEmprendedor";
-	
 	
 	/*EMPRENDIMIENTO*/
 	public final String MAPPING_MODIFICAR_EMPRENDIMIENTO = "/modificarEmprendimiento";

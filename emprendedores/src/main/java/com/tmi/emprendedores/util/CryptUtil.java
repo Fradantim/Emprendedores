@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.sun.mail.util.BASE64DecoderStream;
 import com.sun.mail.util.BASE64EncoderStream;
+import com.tmi.emprendedores.exception.CryptoException;
 
 public class CryptUtil {
 
@@ -49,12 +50,21 @@ public class CryptUtil {
 		}
 	}
 
-	public static String encrypt(String str) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-		return new String(BASE64EncoderStream.encode(ecipher.doFinal(str.getBytes(CHARSET))));
+	public static String encrypt(String str) throws CryptoException {
+		try {
+			return new String(BASE64EncoderStream.encode(ecipher.doFinal(str.getBytes(CHARSET))));
+		} catch (IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e) {
+			throw new CryptoException(e.getMessage(), e);
+		}
 	}
 
-	public static String decrypt(String str) throws UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
-		return new String(dcipher.doFinal(BASE64DecoderStream.decode(str.getBytes())), CHARSET);
+	public static String decrypt(String str) throws CryptoException {
+		try {
+			return new String(dcipher.doFinal(BASE64DecoderStream.decode(str.getBytes())), CHARSET);
+		} catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
+			throw new CryptoException(e.getMessage(), e);
+		}
+		
 	}
 
 }

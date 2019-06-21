@@ -59,6 +59,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public List<Usuario> getByPerfil(Perfil p) {
 		if (p == null) return null;
-		return usuarioRepo.getByPerfil(p, new PageRequest(0, 10));
+		return usuarioRepo.getByPerfil(p, PageRequest.of(0, 10));
 	}
 }

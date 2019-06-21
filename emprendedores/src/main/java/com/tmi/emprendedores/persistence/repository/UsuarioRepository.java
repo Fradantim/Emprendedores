@@ -13,10 +13,9 @@ import com.tmi.emprendedores.persistence.entities.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	public Usuario findByNickIgnoreCase(String nick);
 	
-	public Usuario findByEmailIgnoreCase(String email);
+	public Usuario findByEmailIgnoreCase(String email);	
 	
-	
-	@Query("SELECT u FROM Usuario u WHERE :perfil member of u.perfiles")
+	@Query("SELECT u FROM Usuario u WHERE :perfil member of u.perfiles order by id desc")
 	public List<Usuario> getByPerfil(@Param("perfil") Perfil perfil, Pageable p);
 	
 }

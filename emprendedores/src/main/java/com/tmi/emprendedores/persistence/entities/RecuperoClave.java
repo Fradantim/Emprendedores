@@ -1,16 +1,14 @@
 package com.tmi.emprendedores.persistence.entities;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.tmi.emprendedores.exception.CryptoException;
 import com.tmi.emprendedores.util.CryptUtil;
+
 
 @Entity
 @Table(name="RECUPERO_CLAVE")
@@ -23,7 +21,9 @@ public class RecuperoClave extends AbsEntity{
 	@JoinColumn(name="USUARIO_ID")
     private Usuario usuario;
 	
-	public RecuperoClave(Usuario usuario) throws IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+	public RecuperoClave() { }
+	
+	public RecuperoClave(Usuario usuario) throws CryptoException {
 		super();
 		this.usuario = usuario;
 		this.idUsuarioEncriptado = CryptUtil.encrypt(String.valueOf(usuario.getId()));
@@ -35,9 +35,5 @@ public class RecuperoClave extends AbsEntity{
 	
 	public String getIdUsuarioEncriptado() {
 		return idUsuarioEncriptado;
-	}
-	
-	public String getIdUsuarioDecriptado() throws UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
-		return CryptUtil.decrypt(idUsuarioEncriptado);
 	}
 }

@@ -116,7 +116,7 @@
 							</div>
 							<div class="modal-body">
 								<h2 class="form-title">e-mail</h2>
-								<form method="POST" action="${contextPath}/recupero" class="form-signin">
+								<form method="POST" action="${contextPath}/solicitudRecuperoClave" class="form-signin">
 									<div class="form-group" >
 										<input type="text" name="email" id="email" placeholder="e-mail"/>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

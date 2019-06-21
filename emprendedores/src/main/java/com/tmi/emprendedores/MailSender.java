@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -16,11 +17,13 @@ import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.tmi.emprendedores.controller.view.WebUtils;
 import com.tmi.emprendedores.persistence.entities.RecuperoClave;
 import com.tmi.emprendedores.util.PathUtils;
 
+@Component
 public class MailSender {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MailSender.class);
@@ -52,8 +55,9 @@ public class MailSender {
         }
 	}
 	
-	public void sendMail(String destination, Message message) throws AddressException , MessagingException{
-        logger.info("Enviando correo a . "+destination);		
+	public void sendMail(Message message) throws AddressException , MessagingException{
+        String destination = message.getRecipients(RecipientType.TO)[0].toString();
+		logger.info("Enviando correo a . "+destination);		
         Transport.send(message);
         logger.info("OK Enviado correo a "+destination);
 	}
@@ -88,7 +92,7 @@ public class MailSender {
 				+ "\n"
 				+"Nos llego un pedido de reseteo de clave. Si este fuiste vos por por favor seguí el link de abajo, de otra manera desestima este correo.\n"
 				+"\n"
-				+"http://emprendedores.ddns.net"+WebUtils.MAPPING_RECUPERO+"?id="+recupero.getIdUsuarioEncriptado()+"\n"
+				+"http://emprendedores.ddns.net"+WebUtils.MAPPING_MODIFICAR_CLAVE+"?idEncriptado="+recupero.getIdUsuarioEncriptado()+"\n"
 				+"\n"
 				+"Saludos!\n"
 				+"Equipo de Emprendedores.";

@@ -36,12 +36,15 @@
 									<form:form method="POST" action="${contextPath}/modificarClave" modelAttribute="userForm" class="form-signin">
 										<h2 class="form-signin-heading">Modifica tu Contraseña</h2>
 										
+										<input type="hidden" id="idEncriptado" name="idEncriptado" class="form-control" value="${idEncriptado}"></input>
+										
 										<spring:bind path="password">
 											<div class="form-group ${status.error ? 'has-error' : ''}">
 												<form:input type="password" path="password" class="form-control" placeholder="Contraseña"></form:input>
 												<form:errors path="password"></form:errors>
 											</div>
 										</spring:bind>
+										
 										<br/>
 										<spring:bind path="passwordConfirm">
 											<div class="form-group ${status.error ? 'has-error' : ''}">
