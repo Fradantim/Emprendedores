@@ -49,13 +49,13 @@
 										<header class="major">
 											<h2>Calendario de Eventos</h2>
 										</header>
-										<center>
+										<div style="text-align:center; width:100%">
 											<div id="datepicker"></div>
 											<div id="datepickerLoading">
 												Buscando Eventos...
 												<jsp:include page="loading.jsp"/>
 											</div>
-										</center>
+										</div>
 										<!--
 										<footer>
 											<a href="#" class="button icon fa-info-circle">Find out more</a>

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow: auto;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -10,52 +11,52 @@
 			</div>
 			<div class="modal-body">
 				<h2 style="text-align: center;">
-					<strong>TÈrminos y Condiciones de Uso</strong>
+					<strong>T√©rminos y Condiciones de Uso</strong>
 				</h2>
 				<p>&nbsp;</p>
 				<p>
-					<strong>INFORMACI”N RELEVANTE</strong>
+					<strong>INFORMACI√ìN RELEVANTE</strong>
 				</p>
-				<p>Es requisito necesario para la adquisiciÛn de los productos que se ofrecen en este sitio, que lea y acepte los siguientes TÈrminos y Condiciones que a continuaciÛn se redactan. El uso de nuestros servicios asÌ como la compra de nuestros productos implicar· que usted ha leÌdo y aceptado los TÈrminos y Condiciones de Uso en el presente documento. Todas los productos &nbsp;que son ofrecidos por nuestro sitio web pudieran ser creadas, cobradas, enviadas o presentadas por una p·gina web tercera y en tal caso estarÌan sujetas a sus propios TÈrminos y Condiciones. En algunos casos, para adquirir un producto, ser· necesario el registro por parte del usuario, con ingreso de datos personales fidedignos y
-					definiciÛn de una contraseÒa.</p>
-				<p>El usuario puede elegir y cambiar la clave para su acceso de administraciÛn de la cuenta en cualquier momento, en caso de que se haya registrado y que sea necesario para la compra de alguno de nuestros productos. emprendedores.ddns.net no asume la responsabilidad en caso de que entregue dicha clave a terceros.</p>
-				<p>Todas las compras y transacciones que se lleven a cabo por medio de este sitio web, est·n sujetas a un proceso de confirmaciÛn y verificaciÛn, el cual podrÌa incluir la verificaciÛn del stock y disponibilidad de producto, validaciÛn de la forma de pago, validaciÛn de la factura (en caso de existir) y el cumplimiento de las condiciones requeridas por el medio de pago seleccionado. En algunos casos puede que se requiera una verificaciÛn por medio de correo electrÛnico.</p>
-				<p>Los precios de los productos ofrecidos en esta Tienda Online es v·lido solamente en las compras realizadas en este sitio web.</p>
+				<p>Es requisito necesario para la adquisici√≥n de los productos que se ofrecen en este sitio, que lea y acepte los siguientes T√©rminos y Condiciones que a continuaci√≥n se redactan. El uso de nuestros servicios as√≠ como la compra de nuestros productos implicar√° que usted ha le√≠do y aceptado los T√©rminos y Condiciones de Uso en el presente documento. Todas los productos &nbsp;que son ofrecidos por nuestro sitio web pudieran ser creadas, cobradas, enviadas o presentadas por una p√°gina web tercera y en tal caso estar√≠an sujetas a sus propios T√©rminos y Condiciones. En algunos casos, para adquirir un producto, ser√° necesario el registro por parte del usuario, con ingreso de datos personales fidedignos y
+					definici√≥n de una contrase√±a.</p>
+				<p>El usuario puede elegir y cambiar la clave para su acceso de administraci√≥n de la cuenta en cualquier momento, en caso de que se haya registrado y que sea necesario para la compra de alguno de nuestros productos. emprendedores.ddns.net no asume la responsabilidad en caso de que entregue dicha clave a terceros.</p>
+				<p>Todas las compras y transacciones que se lleven a cabo por medio de este sitio web, est√°n sujetas a un proceso de confirmaci√≥n y verificaci√≥n, el cual podr√≠a incluir la verificaci√≥n del stock y disponibilidad de producto, validaci√≥n de la forma de pago, validaci√≥n de la factura (en caso de existir) y el cumplimiento de las condiciones requeridas por el medio de pago seleccionado. En algunos casos puede que se requiera una verificaci√≥n por medio de correo electr√≥nico.</p>
+				<p>Los precios de los productos ofrecidos en esta Tienda Online es v√°lido solamente en las compras realizadas en este sitio web.</p>
 				<p>
 					<strong>LICENCIA</strong>
 				</p>
-				<p>emprendedores&nbsp; a travÈs de su sitio web concede una licencia para que los usuarios utilicen&nbsp; los productos que son vendidos en este sitio web de acuerdo a los TÈrminos y Condiciones que se describen en este documento.</p>
+				<p>emprendedores&nbsp; a trav√©s de su sitio web concede una licencia para que los usuarios utilicen&nbsp; los productos que son vendidos en este sitio web de acuerdo a los T√©rminos y Condiciones que se describen en este documento.</p>
 				<p>
 					<strong>USO NO AUTORIZADO</strong>
 				</p>
-				<p>En caso de que aplique (para venta de software, templetes, u otro producto de diseÒo y programaciÛn) usted no puede colocar uno de nuestros productos, modificado o sin modificar, en un CD, sitio web o ning˙n otro medio y ofrecerlos para la redistribuciÛn o la reventa de ning˙n tipo.</p>
+				<p>En caso de que aplique (para venta de software, templetes, u otro producto de dise√±o y programaci√≥n) usted no puede colocar uno de nuestros productos, modificado o sin modificar, en un CD, sitio web o ning√∫n otro medio y ofrecerlos para la redistribuci√≥n o la reventa de ning√∫n tipo.</p>
 				<p>
 					<strong>PROPIEDAD</strong>
 				</p>
-				<p>Usted no puede declarar propiedad intelectual o exclusiva a ninguno de nuestros productos, modificado o sin modificar. Todos los productos son propiedad &nbsp;de los proveedores del contenido. En caso de que no se especifique lo contrario, nuestros productos se proporcionan&nbsp; sin ning˙n tipo de garantÌa, expresa o implÌcita. En ning˙n esta compaÒÌa ser· &nbsp;responsables de ning˙n daÒo incluyendo, pero no limitado a, daÒos directos, indirectos, especiales, fortuitos o consecuentes u otras pÈrdidas resultantes del uso o de la imposibilidad de utilizar nuestros productos.</p>
+				<p>Usted no puede declarar propiedad intelectual o exclusiva a ninguno de nuestros productos, modificado o sin modificar. Todos los productos son propiedad &nbsp;de los proveedores del contenido. En caso de que no se especifique lo contrario, nuestros productos se proporcionan&nbsp; sin ning√∫n tipo de garant√≠a, expresa o impl√≠cita. En ning√∫n esta compa√±√≠a ser√° &nbsp;responsables de ning√∫n da√±o incluyendo, pero no limitado a, da√±os directos, indirectos, especiales, fortuitos o consecuentes u otras p√©rdidas resultantes del uso o de la imposibilidad de utilizar nuestros productos.</p>
 				<p>
-					<strong>POLÕTICA DE REEMBOLSO Y GARANTÕA</strong>
+					<strong>POL√çTICA DE REEMBOLSO Y GARANT√çA</strong>
 				</p>
-				<p>En el caso de productos que sean&nbsp; mercancÌas irrevocables no-tangibles, no realizamos reembolsos despuÈs de que se envÌe el producto, usted tiene la responsabilidad de entender antes de comprarlo. &nbsp;Le pedimos que lea cuidadosamente antes de comprarlo. Hacemos solamente excepciones con esta regla cuando la descripciÛn no se ajusta al producto. Hay algunos productos que pudieran tener garantÌa y posibilidad de reembolso pero este ser· especificado al comprar el producto. En tales casos la garantÌa solo cubrir· fallas de f·brica y sÛlo se har· efectiva cuando el producto se haya usado correctamente. La garantÌa no cubre averÌas o daÒos ocasionados por uso indebido. Los tÈrminos de la garantÌa
-					est·n asociados a fallas de fabricaciÛn y funcionamiento en condiciones normales de los productos y sÛlo se har·n efectivos estos tÈrminos si el equipo ha sido usado correctamente. Esto incluye:</p>
+				<p>En el caso de productos que sean&nbsp; mercanc√≠as irrevocables no-tangibles, no realizamos reembolsos despu√©s de que se env√≠e el producto, usted tiene la responsabilidad de entender antes de comprarlo. &nbsp;Le pedimos que lea cuidadosamente antes de comprarlo. Hacemos solamente excepciones con esta regla cuando la descripci√≥n no se ajusta al producto. Hay algunos productos que pudieran tener garant√≠a y posibilidad de reembolso pero este ser√° especificado al comprar el producto. En tales casos la garant√≠a solo cubrir√° fallas de f√°brica y s√≥lo se har√° efectiva cuando el producto se haya usado correctamente. La garant√≠a no cubre aver√≠as o da√±os ocasionados por uso indebido. Los t√©rminos de la garant√≠a
+					est√°n asociados a fallas de fabricaci√≥n y funcionamiento en condiciones normales de los productos y s√≥lo se har√°n efectivos estos t√©rminos si el equipo ha sido usado correctamente. Esto incluye:</p>
 				<p>
-					> De acuerdo a las especificaciones tÈcnicas indicadas para cada producto.<br>
+					> De acuerdo a las especificaciones t√©cnicas indicadas para cada producto.<br>
 					> En condiciones ambientales acorde con las especificaciones indicadas por el fabricante.<br>
-					> En uso especÌfico para la funciÛn con que fue diseÒado de f·brica.<br>
-					> En condiciones de operaciÛn elÈctricas acorde con las especificaciones y tolerancias indicadas.
+					> En uso espec√≠fico para la funci√≥n con que fue dise√±ado de f√°brica.<br>
+					> En condiciones de operaci√≥n el√©ctricas acorde con las especificaciones y tolerancias indicadas.
 				</p>
 				<p>
-					<strong>COMPROBACI”N ANTIFRAUDE</strong>
+					<strong>COMPROBACI√ìN ANTIFRAUDE</strong>
 				</p>
-				<p>La compra del cliente puede ser aplazada para la comprobaciÛn antifraude. TambiÈn puede ser suspendida por m·s tiempo para una investigaciÛn m·s rigurosa, para evitar transacciones fraudulentas.</p>
+				<p>La compra del cliente puede ser aplazada para la comprobaci√≥n antifraude. Tambi√©n puede ser suspendida por m√°s tiempo para una investigaci√≥n m√°s rigurosa, para evitar transacciones fraudulentas.</p>
 				<p>
 					<strong>PRIVACIDAD</strong>
 				</p>
 				<p>
-					Este <a href="http://emprendedores.ddns.net" target="_blank">sitio web</a> emprendedores.ddns.net garantiza que la informaciÛn personal que usted envÌa cuenta con la seguridad necesaria. Los datos ingresados por usuario o en el caso de requerir una validaciÛn de los pedidos no ser·n entregados a terceros, salvo que deba ser revelada en cumplimiento a una orden judicial o requerimientos legales.
+					Este <a href="http://emprendedores.ddns.net" target="_blank">sitio web</a> emprendedores.ddns.net garantiza que la informaci√≥n personal que usted env√≠a cuenta con la seguridad necesaria. Los datos ingresados por usuario o en el caso de requerir una validaci√≥n de los pedidos no ser√°n entregados a terceros, salvo que deba ser revelada en cumplimiento a una orden judicial o requerimientos legales.
 				</p>
-				<p>La suscripciÛn a boletines de correos electrÛnicos publicitarios es voluntaria y podrÌa ser seleccionada al momento de crear su cuenta.</p>
-				<p>emprendedores reserva los derechos de cambiar o de modificar estos tÈrminos sin previo aviso.</p>
+				<p>La suscripci√≥n a boletines de correos electr√≥nicos publicitarios es voluntaria y podr√≠a ser seleccionada al momento de crear su cuenta.</p>
+				<p>emprendedores reserva los derechos de cambiar o de modificar estos t√©rminos sin previo aviso.</p>
 				..................................................... .....................................................
 			</div>
 			<div class="modal-footer">

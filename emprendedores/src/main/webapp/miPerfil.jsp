@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
@@ -71,7 +72,7 @@
 											<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/modificarPerfil';">Modificar Mi Perfil</button>
 										</div>
 										<div class="col-md-4">
-											<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/modificarClave';">Modificar Mi Contraseña</button>
+											<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/modificarClave';">Modificar Mi ContraseÃ±a</button>
 										</div>
 										<div class="col-md-4">
 											<button type="button" class="btn btn-primary" onclick="buscarEventosAsistencia(${usuarioLogueado.id})" data-toggle="collapse" data-target="#collapseEventos" aria-expanded="false" aria-controls="collapseEventos">Eventos a los que asistire</button>

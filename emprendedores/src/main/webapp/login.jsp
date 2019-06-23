@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -58,19 +59,19 @@
 									<div class="row">
 										<div class="col-md-6">
 												<h2 class="form-title">Ingresar</h2>
-												<form method="POST" action="${contextPath}/login" class="form-signin">
+												<form method="POST" autocomplete="off" action="${contextPath}/login" class="form-signin">
 													<div class="form-group" >
 														<label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
 														<input type="text" name="username" id="username" placeholder="Usuario"/>
 													</div>
 													<div class="form-group">
 														<label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-														<input type="password" name="password" id="password" placeholder="Contraseña"/>
+														<input type="password" name="password" id="password" placeholder="ContraseÃ±a"/>
 														<span class="error-messages">${error}</span>
 														<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 													</div>
 													<div class="form-group">
-														Olvidó su contraseña? <u><a data-toggle="modal" data-target="#myModal">Click Aquí</a></u>
+														OlvidÃ³ su contraseÃ±a? <u><a data-toggle="modal" data-target="#myModal">Click AquÃ­</a></u>
 													</div>
 													<div class="form-group form-button">
 													<br/>
@@ -108,7 +109,7 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="myModalLabel">Recuperar Contraseña</h4>
+								<h4 class="modal-title" id="myModalLabel">Recuperar ContraseÃ±a</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -116,7 +117,7 @@
 							</div>
 							<div class="modal-body">
 								<h2 class="form-title">e-mail</h2>
-								<form method="POST" action="${contextPath}/solicitudRecuperoClave" class="form-signin">
+								<form method="POST" autocomplete="off" action="${contextPath}/solicitudRecuperoClave" class="form-signin">
 									<div class="form-group" >
 										<input type="text" name="email" id="email" placeholder="e-mail"/>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

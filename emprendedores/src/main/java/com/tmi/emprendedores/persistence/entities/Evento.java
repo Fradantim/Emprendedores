@@ -16,7 +16,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Where;
 
@@ -26,6 +25,7 @@ import com.tmi.emprendedores.dto.EventoDTO.Estado;
 import com.tmi.emprendedores.dto.EventoDTO.TipoInscripcion;
 import com.tmi.emprendedores.dto.EventoDTO.TipoVisibilidad;
 import com.tmi.emprendedores.persistence.entities.ubicacion.Localidad;
+import com.tmi.emprendedores.util.CryptUtil;
 
 @Entity
 @Table(name="EVENTO")
@@ -80,6 +80,10 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Column (name="MAPA" , length = 512)
 	private String mapa;
 	
+	@Lob
+	@Column (name="FOTO_B64")
+	private String fotoB64;
+
 	public Evento() {
 		super();
 	}
@@ -245,6 +249,19 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	public void setCantidadAsistencia(Integer cantidadAsistencia) {
 		this.cantidadAsistencia = cantidadAsistencia;
 	}
+	
+	
+	public String getFotoB64() {
+		return fotoB64;
+	}
+
+	public void setFotoB64(String fotoB64) {
+		this.fotoB64 = fotoB64;
+	}
+	
+	public void setFotoB64(byte[] foto) {
+		this.fotoB64 = CryptUtil.encodeBase64(foto);
+	}
 
 	public void modificarEvento(Evento nuevo) {
 		this.nombre=nuevo.nombre;
@@ -269,7 +286,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Override
 	public EventoDTO toMiniDTO() {
 		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),
-				cantidadEmprendedores);
+				cantidadEmprendedores, fotoB64, cantidadAsistencia);
 	}
 	
 	/**

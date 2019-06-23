@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -34,7 +35,7 @@
 				<div class="inner">
 					<div class="container">
 						<div class="col-md-12">
-							<form:form method="POST" action="${contextPath}/crearEvento" modelAttribute="eventoForm" class="form-signin" >
+							<form:form method="POST" autocomplete="off" action="${contextPath}/crearEvento" modelAttribute="eventoForm" class="form-signin" enctype="multipart/form-data" >
 								<h2 class="form-signin-heading">Crea tu Evento</h2>
 								<jsp:include page="plantillaEvento.jsp"/>
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Crear Evento!</button>

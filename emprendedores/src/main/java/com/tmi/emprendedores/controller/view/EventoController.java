@@ -1,9 +1,8 @@
 package com.tmi.emprendedores.controller.view;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tmi.emprendedores.controller.view.WebUtils.Page;
 import com.tmi.emprendedores.dto.EventoDTO;
@@ -44,6 +44,8 @@ public class EventoController extends WebController {
 
 	private final static String OBJETO = Evento.class.getSimpleName();
 	
+	public final static int FOTO_PORTADA_EVENTO_MAX_SIZE = 20*MB;
+	
 	@Autowired
 	private EventoService eventoService;
 
@@ -52,6 +54,8 @@ public class EventoController extends WebController {
 	
 	@Autowired
 	private EventoValidator eventoValidator;
+
+
 
 	private String noPuedeInteractuarEventoFinalizado(Model model, Principal principal) {
 		addMensajes(model, new MensajeDTO(TipoMensaje.ERROR, "No puede interactuar con un evento Finalizado."));
@@ -81,10 +85,25 @@ public class EventoController extends WebController {
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
 			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad) {
+			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
+			@RequestParam("foto") MultipartFile fotoFile) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
+    	
+    	/*if(null ==null) {
+    		System.out.println(fotoFile);
+    		try {
+				System.out.println(fotoFile.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//TODO SACAME
+			System.out.println();
+			addMensajes(model, new MensajeDTO("NULL"));
+			return welcome(model, principal);
+		}*/
     	
     	Usuario usuarioLogueado = getLoggedUser(principal); 
     	if(!usuarioLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
@@ -151,6 +170,15 @@ public class EventoController extends WebController {
 		if(eventoForm.getMapa()!=null)
 			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
 		
+		if(fotoFile!=null) {
+			try {
+				eventoForm.setFotoB64(fotoFile.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
 		

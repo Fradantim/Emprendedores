@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -75,6 +76,12 @@
 		<div class="form-group" id="fechaDiv">
 			<input id="fecha" name="fecha" type="text" class="form-control" value="${eventoGuardado.fecha}">
 		</div>
+		
+		<h3>Foto de Portada</h3>
+		<div class="form-group" id="fotoDiv">
+			<input id="foto" name="foto" id="foto" type="file" class="form-control">
+		</div>
+		
 		
 		<h3>Mapa del lugar</h3>
 		<div class="form-group" id="mapaDiv">

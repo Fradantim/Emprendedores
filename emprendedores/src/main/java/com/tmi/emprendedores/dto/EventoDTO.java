@@ -36,6 +36,8 @@ public class EventoDTO extends DTO{
 	
 	private Integer cantidadEmprendedores;
 	
+	private Integer cantidadAsistencia;
+	
 	/**
 	* Atributo usado para determinar si el usuario logueado esta inscripto a este evento.
 	*/
@@ -50,8 +52,10 @@ public class EventoDTO extends DTO{
 	
 	private String mapa;
 	
+	private String fotoB64;
+	
 	public EventoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, LocalidadDTO localidad, UsuarioDTO creador,
-			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores) {
+			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, String fotoB64, Integer cantidadAsistencia) {
 		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -62,8 +66,8 @@ public class EventoDTO extends DTO{
 		this.tipoVisibilidad = tipoVisibilidad.name();
 		this.estado = estado.name();
 		this.cantidadEmprendedores=cantidadEmprendedores;
-		this.inscripto=inscripto;
-		this.asiste= asiste;
+		this.fotoB64=fotoB64;
+		this.cantidadAsistencia=cantidadAsistencia;
 	}
 
 	public String getNombre() {
@@ -191,5 +195,21 @@ public class EventoDTO extends DTO{
 				+strMonth
 				+strDay
 				+"\"";
+	}
+
+	public String getFotoB64() {
+		return fotoB64;
+	}
+
+	public void setFotoB64(String fotoB64) {
+		this.fotoB64 = fotoB64;
+	}
+
+	public Integer getCantidadAsistencia() {
+		return cantidadAsistencia;
+	}
+
+	public void setCantidadAsistencia(Integer cantidadAsistencia) {
+		this.cantidadAsistencia = cantidadAsistencia;
 	}
 }

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -12,7 +13,14 @@
 		<c:forEach items="${eventos}" var="e">
 			<!-- Excerpt -->
 			<article class="box excerpt">
-				<a href="#" class="image left"><img src="../assets/css/images/pic06.jpg" alt="" /></a>
+				<c:choose>
+					<c:when test="${empty e.fotoB64}">
+						<a href="${contextPath}/detalleEvento?idEvento=${e.id}" class="image left"><img src="../assets/css/images/pic06.jpg" width="180" height="167" /></a>
+					</c:when>
+					<c:otherwise>
+						<a href="${contextPath}/detalleEvento?idEvento=${e.id}" class="image left"><img src="data:image/png;base64,${e.fotoB64}" /></a>
+					</c:otherwise>
+				</c:choose>
 				<div>
 					<header>
 						<span class="date">
@@ -29,7 +37,7 @@
 					Cuando: ${e.fecha} <br>
 					Donde: ${e.localidad.nombre}, ${e.localidad.provinciaNombre} - ${e.localidad.paisNombre} <br>
 					<c:if test="${!e.finalizado && (e.creador.id != usuarioLogueado.id) && isEmp && e.tipoInscripcion =='ABIERTA'}">
-						<div title="La inscripcion a emprendedores está abierta!">
+						<div title="La inscripcion a emprendedores estÃ¡ abierta!">
 							Emprendedores Bienvenidos!
 						</div>
 					</c:if>

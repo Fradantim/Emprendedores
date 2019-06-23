@@ -18,6 +18,12 @@ import com.tmi.emprendedores.service.UsuarioService;
 @Controller
 public abstract class WebController {
 	
+	/**
+	 * Atributos para determinar dimensiones de archivos
+	 */
+	public static final int B = 1, KB=B*1024, MB=KB*1024, GB=MB*1024;
+	
+	
 	protected final static int DEFAULT_PAGE_SIZE = 10;
     
 	@Autowired

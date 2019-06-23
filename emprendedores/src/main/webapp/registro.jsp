@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -46,7 +47,7 @@
 									<div class="col-md-6">
 										<div class="signin-form">
 											<h2 class="form-title">Registrarse</h2>
-											<form:form method="POST" modelAttribute="userForm" class="register-form" id="login-form">
+											<form:form method="POST" autocomplete="off" modelAttribute="userForm" class="register-form" id="login-form">
 												<spring:bind path="nick">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="nick"><i class="zmdi zmdi-account material-icons-name"></i></label>
@@ -78,14 +79,14 @@
 												<spring:bind path="password">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="pass"><i class="zmdi zmdi-lock"></i></label>
-														<form:input type="password" path="password" name="pass" id="pass" placeholder="Contraseña"></form:input>
+														<form:input type="password" path="password" name="pass" id="pass" placeholder="ContraseÃ±a"></form:input>
 														<form:errors class="error-messages" path="password"></form:errors>
 													</div>
 												</spring:bind>
 												<spring:bind path="passwordConfirm">
 													<div class="form-group ${status.error ? 'has-error' : ''}">
 														<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-														<form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseña"></form:input>
+														<form:input type="password" path="passwordConfirm" name="re-pass" id="re-pass" placeholder="Confirme su contraseÃ±a"></form:input>
 														<form:errors class="error-messages" path="passwordConfirm"></form:errors>
 													</div>
 												</spring:bind>
@@ -93,7 +94,7 @@
 												<input name="aceptaTyCCheckBox" id="aceptaTyCCheckBox" type="checkbox"/>
 												<span title="Haz click aqui para leerlos.">
 													<a data-toggle="modal" data-target="#myModal" style="cursor: pointer;" >
-														<u>Acepto los términos y condiciones.</u>
+														<u>Acepto los tÃ©rminos y condiciones.</u>
 													</a>
 												</span>
 												<br> 

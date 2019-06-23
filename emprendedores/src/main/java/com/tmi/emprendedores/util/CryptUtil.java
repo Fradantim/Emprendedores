@@ -52,7 +52,7 @@ public class CryptUtil {
 
 	public static String encrypt(String str) throws CryptoException {
 		try {
-			return new String(BASE64EncoderStream.encode(ecipher.doFinal(str.getBytes(CHARSET))));
+			return encodeBase64(ecipher.doFinal(str.getBytes(CHARSET)));
 		} catch (IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e) {
 			throw new CryptoException(e.getMessage(), e);
 		}
@@ -64,7 +64,10 @@ public class CryptUtil {
 		} catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
 			throw new CryptoException(e.getMessage(), e);
 		}
-		
+	}
+	
+	public static String encodeBase64(byte[] data) {
+		return new String(BASE64EncoderStream.encode(data));
 	}
 
 }
