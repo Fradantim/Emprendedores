@@ -78,6 +78,15 @@
 		</div>
 		
 		<h3>Foto de Portada</h3>
+		<c:choose>
+					<c:when test="${empty eventoGuardado.fotoB64}">
+						
+					</c:when>
+					<c:otherwise>
+						Foto actual:<br>
+						<img src="data:image/png;base64,${eventoGuardado.fotoB64}" width="180" height="167"/>
+					</c:otherwise>
+				</c:choose>
 		<div class="form-group" id="fotoDiv">
 			<input id="foto" name="foto" id="foto" type="file" class="form-control">
 		</div>

@@ -91,20 +91,6 @@ public class EventoController extends WebController {
     		return goToDebeIniciarSesion(model).getFile();
     	}
     	
-    	/*if(null ==null) {
-    		System.out.println(fotoFile);
-    		try {
-				System.out.println(fotoFile.getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//TODO SACAME
-			System.out.println();
-			addMensajes(model, new MensajeDTO("NULL"));
-			return welcome(model, principal);
-		}*/
-    	
     	Usuario usuarioLogueado = getLoggedUser(principal); 
     	if(!usuarioLogueado.poseePerfil(PerfilService.EMPRENDEDOR)) {
     		return goToNoTienePermisoAcceso(model, principal);
@@ -174,7 +160,7 @@ public class EventoController extends WebController {
 			try {
 				eventoForm.setFotoB64(fotoFile.getBytes());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				/*No me importa...*/
 				e.printStackTrace();
 			}
 		}
@@ -342,8 +328,8 @@ public class EventoController extends WebController {
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
 			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad) {
-		
+			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
+			@RequestParam("foto") MultipartFile fotoFile) {		
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
     	}
@@ -423,6 +409,14 @@ public class EventoController extends WebController {
 		eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
 		if(eventoForm.getMapa()!=null)
 			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
+		if(!fotoFile.isEmpty()) {
+			try {
+				eventoForm.setFotoB64(fotoFile.getBytes());
+			} catch (IOException e) {
+				/*No me calienta*/
+				e.printStackTrace();
+			}
+		}
 		eventoGuardado.modificarEvento(eventoForm);
 		
 		eventoGuardado = eventoService.save(eventoGuardado);

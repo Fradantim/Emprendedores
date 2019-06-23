@@ -34,7 +34,7 @@
 				<div class="inner">
 					<div class="container">
 						<div class="col-md-12">
-							<form:form method="POST" autocomplete="off" action="${contextPath}/modificarEvento" modelAttribute="eventoForm" class="form-signin" >
+							<form:form method="POST" autocomplete="off" action="${contextPath}/modificarEvento" modelAttribute="eventoForm" class="form-signin" enctype="multipart/form-data" >
 								<h2 class="form-signin-heading">Modifica tu Evento</h2>
 								<input id="idEvento" name="idEvento" type="hidden" value="${eventoGuardado.id}">
 								<jsp:include page="plantillaEvento.jsp"/>

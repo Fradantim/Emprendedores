@@ -272,6 +272,9 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		this.tipoVisibilidad= nuevo.tipoVisibilidad;
 		this.descripcionLarga= nuevo.descripcionLarga;
 		this.mapa= nuevo.mapa;
+		if(nuevo.fotoB64!=null) {
+			this.fotoB64=nuevo.fotoB64;
+		}
 	}
 	
 	@Override
