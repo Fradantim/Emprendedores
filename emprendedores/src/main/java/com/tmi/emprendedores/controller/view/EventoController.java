@@ -539,7 +539,7 @@ public class EventoController extends WebController {
         	addUsuarioLogueado(model, usuarioLogueado);
     	}
     	
-    	model.addAttribute("evento", evento.toDTO());
+    	model.addAttribute("evento", dto);
     	
     	return Page.DETALLE_EVENTO.getFile();
 	}
