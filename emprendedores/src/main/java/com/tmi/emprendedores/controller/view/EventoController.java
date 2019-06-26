@@ -304,8 +304,6 @@ public class EventoController extends WebController {
 			eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
 		model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
 		
-		System.out.println("Map: "+eventoGuardado.getMapa());
-		
 		return Page.MODIFICAR_EVENTO.getFile();
 	}
 	
@@ -385,11 +383,27 @@ public class EventoController extends WebController {
 			}
 		}
 		
+		if(eventoForm.getCantidadMaxInscripcion() == null || eventoForm.getCantidadMaxInscripcion()<1) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"La cantidad maxima de emprendedores debe ser mayor a 0."));
+		}
+		
 		eventoValidator.validateInsert(eventoForm, bindingResult);
 		if (bindingResult.hasErrors() || errores.size()>0) {
 			// si hubo errores vuelvo a la web de la que vine
 			addMensajes(model, errores);
+			
+			/*model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+	    	
+			if(eventoForm.getMapa()!= null)
+				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			*/
+			if(eventoGuardado.getMapa()!= null)
+				eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
+			
 			return Page.MODIFICAR_EVENTO.getFile();
+			//return goToModificarEvento(model, principal, idEvento);
 		}
 		
 		//si todo sale ok....
@@ -410,7 +424,6 @@ public class EventoController extends WebController {
 		eventoGuardado = eventoService.save(eventoGuardado);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
-		System.out.println("!!!!!!! "+eventoForm.getMapa());
 		if(eventoForm.getMapa()!=null && !eventoForm.getMapa().trim().isEmpty()) {
 			return welcome(model, principal);
 		} else {

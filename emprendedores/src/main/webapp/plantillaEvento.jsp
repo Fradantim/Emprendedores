@@ -72,6 +72,17 @@
 			</select>
 		</div>
 		
+		<h3>Cantidad Máxima de Emprendedores</h3>
+		<spring:bind path="cantidadMaxInscripcion">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<form:input  type="number"  min="1" path="cantidadMaxInscripcion" class="form-control" placeholder="1" value="${empty eventoGuardado ? 10 : eventoGuardado.cantidadMaxInscripcion}"></form:input>
+				<form:errors path="cantidadMaxInscripcion"></form:errors>
+			</div>
+		</spring:bind>
+		<c:if test="${!empty eventoGuardado && eventoGuardado.cantidadEmprendedores>1}">
+		(Actualmente posee ${eventoGuardado.cantidadEmprendedores} emprendedores inscriptos a su evento. Si modifica la cantidad actual a una menor que ${eventoGuardado.cantidadEmprendedores} entonces todos serán removidos)
+		</c:if>
+		
 		<h3>Fecha y Hora</h3>
 		<div class="form-group" id="fechaDiv">
 			<input id="fecha" name="fecha" type="text" class="form-control" value="${eventoGuardado.fecha}">
@@ -79,14 +90,13 @@
 		
 		<h3>Foto de Portada</h3>
 		<c:choose>
-					<c:when test="${empty eventoGuardado.fotoB64}">
-						
-					</c:when>
-					<c:otherwise>
-						Foto actual:<br>
-						<img src="data:image/png;base64,${eventoGuardado.fotoB64}" width="180" height="167"/>
-					</c:otherwise>
-				</c:choose>
+			<c:when test="${empty eventoGuardado.fotoB64}">
+			</c:when>
+			<c:otherwise>
+				Foto actual:<br>
+				<img src="data:image/png;base64,${eventoGuardado.fotoB64}" width="180" height="167"/>
+			</c:otherwise>
+		</c:choose>
 		<div class="form-group" id="fotoDiv">
 			<input id="foto" name="foto" id="foto" type="file" class="form-control">
 		</div>

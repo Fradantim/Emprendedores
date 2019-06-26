@@ -73,6 +73,9 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Column (name="CANTIDAD_ASISTENCIA")
 	private Integer cantidadAsistencia;
 	
+	@Column (name="CANTIDAD_MAX_INSCRIPCION")
+	private Integer cantidadMaxInscripcion;
+
 	@Lob
 	@Column (name="DESCRIPCION_LARGA")
 	private String descripcionLarga;
@@ -263,6 +266,14 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		this.fotoB64 = CryptUtil.encodeBase64(foto);
 	}
 
+	public Integer getCantidadMaxInscripcion() {
+		return cantidadMaxInscripcion;
+	}
+
+	public void setCantidadMaxInscripcion(Integer cantidadMaxInscripcion) {
+		this.cantidadMaxInscripcion = cantidadMaxInscripcion;
+	}
+	
 	public void modificarEvento(Evento nuevo) {
 		this.nombre=nuevo.nombre;
 		this.descripcion=nuevo.descripcion;
@@ -275,6 +286,17 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 		if(nuevo.fotoB64!=null) {
 			this.fotoB64=nuevo.fotoB64;
 		}
+		if(this.cantidadMaxInscripcion == null) this.cantidadMaxInscripcion=emprendedores.size(); 
+		
+		if(nuevo.tipoInscripcion== TipoInscripcion.CERRADA)
+			nuevo.cantidadMaxInscripcion=1;
+		
+		if(this.cantidadMaxInscripcion > nuevo.cantidadMaxInscripcion) {
+			this.emprendedores.clear();
+			this.emprendedores.add(creador);
+		}
+		this.cantidadMaxInscripcion = nuevo.cantidadMaxInscripcion;
+		
 	}
 	
 	@Override
@@ -289,7 +311,7 @@ public class Evento extends AbsEntity implements HasOwner<Usuario>, DTOTransform
 	@Override
 	public EventoDTO toMiniDTO() {
 		return new EventoDTO(id, fechaCreacion, nombre, descripcion, localidad.toMiniDTO(), creador.toMiniDTO(), fecha, tipoInscripcion, tipoVisibilidad, getEstado(),
-				cantidadEmprendedores, fotoB64, cantidadAsistencia);
+				cantidadEmprendedores, fotoB64, cantidadAsistencia, cantidadMaxInscripcion);
 	}
 	
 	/**
