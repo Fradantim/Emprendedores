@@ -84,7 +84,7 @@
 							<article>
 								<header class="major">
 									<h2>Evento: ${evento.nombre} </h2>
-									<h2>Creador: ${evento.creador.nick} </h2><br>
+									<h2>Creador: <a href="${contextPath}/detalleEmprendedor?idEmprendedor=${evento.creador.id}">${evento.creador.nick}</a> </h2><br>
 								</header>
 								
 								<h3>Cuando: ${evento.fecha} </h3><br>

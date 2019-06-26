@@ -183,20 +183,8 @@ public class EventoController extends WebController {
 	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_PUBLICOS)
 	public String getEventosPublicos(Model model, Principal principal, @RequestParam(value = "jsp", required = false) String jsp) {
 		List<Evento> eventos = eventoService.findPublicos();
-		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
-    	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-    		addUsuarioLogueado(model, principal);
-    		for(Evento evento: eventos) {
-    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
-    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
-    			} else {
-    				dto.setAsiste(false);
-    			}
-    		}
-    	}
-    	
+		List<EventoDTO> dtos = asignarInfoDeUsuarioAEvento(eventos, model, principal, false);
+    	    	
     	model.addAttribute("eventos", dtos);
     	return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
@@ -520,28 +508,62 @@ public class EventoController extends WebController {
     		return welcome(model, principal);
     	}
     	
-    	EventoDTO dto = evento.toDTO();
+    	EventoDTO dto;
     	
     	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-        	
-        	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
-    		} else {
-    			dto.setAsiste(false);
-    		}
-        	
-        	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		dto.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
-        	} else {
-        		dto.setInscripto(false);
-        	}
+        	dto= asignarInfoDeUsuarioAEvento(evento, principal, true);
+        	Usuario usuarioLogueado = getLoggedUser(principal);
         	addUsuarioLogueado(model, usuarioLogueado);
+    	} else {
+    		dto = evento.toDTO();
     	}
     	
     	model.addAttribute("evento", dto);
     	
     	return Page.DETALLE_EVENTO.getFile();
+	}
+	
+	public EventoDTO asignarInfoDeUsuarioAEvento(Evento evento, Principal principal, boolean full) {
+		if(isUsuarioLogueado(principal)) {
+			Usuario usuarioLogueado = getLoggedUser(principal);
+    		return asignarInfoDeUsuarioAEvento(evento, usuarioLogueado, full);
+    	}
+		return full ? evento.toDTO() : evento.toMiniDTO();
+	}
+	
+	public EventoDTO asignarInfoDeUsuarioAEvento(Evento evento, Usuario usuarioLogueado, boolean full) {
+		EventoDTO dto = full ? evento.toDTO() : evento.toMiniDTO();
+		
+       	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+       		dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+   		} else {
+   			dto.setAsiste(false);
+   		}
+       	
+       	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+       		dto.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
+       	} else {
+       		dto.setInscripto(false);
+       	}
+		return dto;
+	}
+	
+	public List<EventoDTO> asignarInfoDeUsuarioAEvento(List<Evento> eventos, Model model, Principal principal, boolean full){
+		List<EventoDTO> dtos;
+    	if(isUsuarioLogueado(principal)) {
+    		dtos = new ArrayList<>();
+    		Usuario usuarioLogueado = getLoggedUser(principal);
+    		addUsuarioLogueado(model, principal);
+    		for(Evento evento: eventos) {
+    			dtos.add(asignarInfoDeUsuarioAEvento(evento, usuarioLogueado, false));
+    		}
+    	} else {
+    		if(full)
+    			dtos = eventos.stream().map(Evento::toDTO).collect(Collectors.toList());
+    		else
+    			dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+    	}
+    	return dtos;
 	}
 
 	
@@ -674,19 +696,7 @@ public class EventoController extends WebController {
 			, @RequestParam(value = "day", required = false) String day) {
 		
 		List<Evento> eventos = eventoService.getByYearAndMonthAndDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
-    	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-    		addUsuarioLogueado(model, principal);
-    		for(Evento evento: eventos) {
-    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
-    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
-    			} else {
-    				dto.setAsiste(false);
-    			}
-    		}
-    	}
+		List<EventoDTO> dtos = asignarInfoDeUsuarioAEvento(eventos, model, principal, false);
     	
     	model.addAttribute("eventos", dtos);
     	return choice(jsp,Page.LISTA_EVENTOS.getFile());
