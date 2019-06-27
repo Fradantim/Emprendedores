@@ -103,6 +103,7 @@ public abstract class WebController {
     * nuevo a la pantalla rompe el jsp y se va todo a la mierda, asi amortiguo las cosas.
 	*/
     protected String amortiguarInputHTML(String value) {
+    	if (value==null) return null;
     	return value.replace("\r", "").replace("\n", "").trim();
     }
     

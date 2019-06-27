@@ -101,7 +101,7 @@
 												
 												<c:forEach items="${evento.emprendedores}" var="emp">
 													<tr>
-														<th scope="row">${index}</th>
+														<td scope="row">${index}</td>
 														<td><a href="${contextPath}/detalleEmprendedor?idEmprendedor=${emp.id}">${emp.nick}</a></td>
 													</tr>
 													<c:set var="index" value="${index + 1}" />
@@ -109,7 +109,7 @@
 												
 												<c:forEach var="i" begin="${index}" end="${evento.cantidadMaxInscripcion}">
 													<tr>
-														<th scope="row">${i}</th>
+														<td scope="row">${i}</td>
 														<td> - </td>
 													</tr>
 												</c:forEach>

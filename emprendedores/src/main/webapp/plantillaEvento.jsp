@@ -55,22 +55,18 @@
 		</script>
 		
 		<h3>Inscripcion</h3>
-		<div class="form-group" id="VisibilidadDiv">
-			<select class="form-control" id="tipoInscripcion" name="tipoInscripcion">
-				<c:forEach items="${tiposInscripcion}" var="t">
-					<option value="${t}" ${eventoGuardado.tipoInscripcion == t ? 'selected' : ''}>${t}</option>
-				</c:forEach>
-			</select>
-		</div>
-		
+		<form:select path="tipoInscripcion">
+			<c:forEach items="${tiposInscripcion}" var="t">
+				<form:option value="${t}" label="${t}" selected="${eventoGuardado.tipoInscripcion == t ? 'true' : ''}"/>
+			</c:forEach>
+		</form:select>
+
 		<h3>Visibilidad</h3>
-		<div class="form-group" id="InscripcionDiv">
-			<select class="form-control" id="tipoVisibilidad" name="tipoVisibilidad">
-				<c:forEach items="${tiposVisibilidad}" var="t">
-					<option value="${t}" ${eventoGuardado.tipoVisibilidad == t ? 'selected' : ''}>${t}</option>
-				</c:forEach>
-			</select>
-		</div>
+		<form:select path="tipoVisibilidad">
+			<c:forEach items="${tiposVisibilidad}" var="t">
+				<form:option value="${t}" label="${t}" selected="${eventoGuardado.tipoVisibilidad == t ? 'true' : ''}"/>
+			</c:forEach>
+		</form:select>
 		
 		<h3>Cantidad Máxima de Emprendedores</h3>
 		<spring:bind path="cantidadMaxInscripcion">

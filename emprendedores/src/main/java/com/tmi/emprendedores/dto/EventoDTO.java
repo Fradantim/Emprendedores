@@ -106,6 +106,7 @@ public class EventoDTO extends DTO{
 	}
 
 	public String getFecha() {
+		if(fecha == null) return null;
 		return DatePickerUtil.getDateformater().format(fecha);
 	}
 

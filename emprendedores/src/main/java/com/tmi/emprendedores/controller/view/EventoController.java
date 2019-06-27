@@ -84,8 +84,6 @@ public class EventoController extends WebController {
 	public String CrearEvento(Model model, Principal principal, @ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
-			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
 			@RequestParam("foto") MultipartFile fotoFile) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -124,34 +122,6 @@ public class EventoController extends WebController {
 			}
 		}
 		
-		if(tipoInscripcion == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de inscripcion."));
-		} else {
-			try {
-				eventoForm.setTipoInscripcion(tipoInscripcion);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de inscripcion:"+tipoInscripcion));
-			}
-		}
-		
-		if(tipoVisibilidad == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de visibilidad."));
-		} else {
-			try {
-				eventoForm.setTipoVisibilidad(tipoVisibilidad);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de visibilidad:"+tipoVisibilidad));
-			}
-		}
-		
-		eventoValidator.validateInsert(eventoForm, bindingResult);
-		if (bindingResult.hasErrors() || errores.size()>0) {
-			// si hubo errores vuelvo a la web de la que vine
-			addMensajes(model, errores);
-			return Page.CREAR_EVENTO.getFile();
-		}
-		
-		//si todo sale ok....
 		eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
 		if(eventoForm.getMapa()!=null)
 			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
@@ -164,7 +134,23 @@ public class EventoController extends WebController {
 				e.printStackTrace();
 			}
 		}
-
+		
+		eventoValidator.validateInsert(eventoForm, bindingResult);
+		if (bindingResult.hasErrors() || errores.size()>0) {
+			// si hubo errores vuelvo a la web de la que vine
+			addMensajes(model, errores);
+			model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+			if(eventoForm.getMapa()!= null)
+				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
+			addUsuarioLogueado(model, usuarioLogueado);
+			model.addAttribute("eventoGuardado", eventoForm.toDTO());
+			return Page.CREAR_EVENTO.getFile();
+		}
+		
+		//si todo sale ok....
+		
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
 		
@@ -303,7 +289,7 @@ public class EventoController extends WebController {
 		if(eventoGuardado.getMapa()!= null)
 			eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
 		model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
-		
+
 		return Page.MODIFICAR_EVENTO.getFile();
 	}
 	
@@ -313,8 +299,6 @@ public class EventoController extends WebController {
 			@ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
-			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
 			@RequestParam("foto") MultipartFile fotoFile) {		
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -363,26 +347,6 @@ public class EventoController extends WebController {
 			}
 		}
 		
-		if(tipoInscripcion == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de inscripcion."));
-		} else {
-			try {
-				eventoForm.setTipoInscripcion(tipoInscripcion);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de inscripcion:"+tipoInscripcion));
-			}
-		}
-		
-		if(tipoVisibilidad == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de visibilidad."));
-		} else {
-			try {
-				eventoForm.setTipoVisibilidad(tipoVisibilidad);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de visibilidad:"+tipoVisibilidad));
-			}
-		}
-		
 		if(eventoForm.getCantidadMaxInscripcion() == null || eventoForm.getCantidadMaxInscripcion()<1) {
 			errores.add(new MensajeDTO(TipoMensaje.ERROR,"La cantidad maxima de emprendedores debe ser mayor a 0."));
 		}
@@ -395,13 +359,17 @@ public class EventoController extends WebController {
 			/*model.addAttribute("tiposInscripcion", TipoInscripcion.values());
 	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
 	    	
-			if(eventoForm.getMapa()!= null)
-				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
-			*/
 			if(eventoGuardado.getMapa()!= null)
 				eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
-			model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
+			*/
+			model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+			if(eventoForm.getMapa()!= null)
+				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
+			eventoForm.setId(idEvento);
 			
+			model.addAttribute("eventoGuardado", eventoForm.toDTO());
 			return Page.MODIFICAR_EVENTO.getFile();
 			//return goToModificarEvento(model, principal, idEvento);
 		}
