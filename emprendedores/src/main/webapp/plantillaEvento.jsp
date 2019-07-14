@@ -55,22 +55,29 @@
 		</script>
 		
 		<h3>Inscripcion</h3>
-		<div class="form-group" id="VisibilidadDiv">
-			<select class="form-control" id="tipoInscripcion" name="tipoInscripcion">
-				<c:forEach items="${tiposInscripcion}" var="t">
-					<option value="${t}" ${eventoGuardado.tipoInscripcion == t ? 'selected' : ''}>${t}</option>
-				</c:forEach>
-			</select>
-		</div>
-		
+		<form:select path="tipoInscripcion">
+			<c:forEach items="${tiposInscripcion}" var="t">
+				<form:option value="${t}" label="${t}" selected="${eventoGuardado.tipoInscripcion == t ? 'true' : ''}"/>
+			</c:forEach>
+		</form:select>
+
 		<h3>Visibilidad</h3>
-		<div class="form-group" id="InscripcionDiv">
-			<select class="form-control" id="tipoVisibilidad" name="tipoVisibilidad">
-				<c:forEach items="${tiposVisibilidad}" var="t">
-					<option value="${t}" ${eventoGuardado.tipoVisibilidad == t ? 'selected' : ''}>${t}</option>
-				</c:forEach>
-			</select>
-		</div>
+		<form:select path="tipoVisibilidad">
+			<c:forEach items="${tiposVisibilidad}" var="t">
+				<form:option value="${t}" label="${t}" selected="${eventoGuardado.tipoVisibilidad == t ? 'true' : ''}"/>
+			</c:forEach>
+		</form:select>
+		
+		<h3>Cantidad Máxima de Emprendedores</h3>
+		<spring:bind path="cantidadMaxInscripcion">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<form:input  type="number"  min="1" path="cantidadMaxInscripcion" class="form-control" placeholder="1" value="${empty eventoGuardado ? 10 : eventoGuardado.cantidadMaxInscripcion}"></form:input>
+				<form:errors path="cantidadMaxInscripcion"></form:errors>
+			</div>
+		</spring:bind>
+		<c:if test="${!empty eventoGuardado && eventoGuardado.cantidadEmprendedores>1}">
+		(Actualmente posee ${eventoGuardado.cantidadEmprendedores} emprendedores inscriptos a su evento. Si modifica la cantidad actual a una menor que ${eventoGuardado.cantidadEmprendedores} entonces todos serán removidos)
+		</c:if>
 		
 		<h3>Fecha y Hora</h3>
 		<div class="form-group" id="fechaDiv">
@@ -79,14 +86,13 @@
 		
 		<h3>Foto de Portada</h3>
 		<c:choose>
-					<c:when test="${empty eventoGuardado.fotoB64}">
-						
-					</c:when>
-					<c:otherwise>
-						Foto actual:<br>
-						<img src="data:image/png;base64,${eventoGuardado.fotoB64}" width="180" height="167"/>
-					</c:otherwise>
-				</c:choose>
+			<c:when test="${empty eventoGuardado.fotoB64}">
+			</c:when>
+			<c:otherwise>
+				Foto actual:<br>
+				<img src="data:image/png;base64,${eventoGuardado.fotoB64}" width="180" height="167"/>
+			</c:otherwise>
+		</c:choose>
 		<div class="form-group" id="fotoDiv">
 			<input id="foto" name="foto" id="foto" type="file" class="form-control">
 		</div>

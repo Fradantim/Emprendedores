@@ -84,8 +84,6 @@ public class EventoController extends WebController {
 	public String CrearEvento(Model model, Principal principal, @ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
-			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
 			@RequestParam("foto") MultipartFile fotoFile) {
     	if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -124,34 +122,6 @@ public class EventoController extends WebController {
 			}
 		}
 		
-		if(tipoInscripcion == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de inscripcion."));
-		} else {
-			try {
-				eventoForm.setTipoInscripcion(tipoInscripcion);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de inscripcion:"+tipoInscripcion));
-			}
-		}
-		
-		if(tipoVisibilidad == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de visibilidad."));
-		} else {
-			try {
-				eventoForm.setTipoVisibilidad(tipoVisibilidad);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de visibilidad:"+tipoVisibilidad));
-			}
-		}
-		
-		eventoValidator.validateInsert(eventoForm, bindingResult);
-		if (bindingResult.hasErrors() || errores.size()>0) {
-			// si hubo errores vuelvo a la web de la que vine
-			addMensajes(model, errores);
-			return Page.CREAR_EVENTO.getFile();
-		}
-		
-		//si todo sale ok....
 		eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
 		if(eventoForm.getMapa()!=null)
 			eventoForm.setMapa(amortiguarInputHTML(eventoForm.getMapa()));
@@ -164,7 +134,23 @@ public class EventoController extends WebController {
 				e.printStackTrace();
 			}
 		}
-
+		
+		eventoValidator.validateInsert(eventoForm, bindingResult);
+		if (bindingResult.hasErrors() || errores.size()>0) {
+			// si hubo errores vuelvo a la web de la que vine
+			addMensajes(model, errores);
+			model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+			if(eventoForm.getMapa()!= null)
+				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
+			addUsuarioLogueado(model, usuarioLogueado);
+			model.addAttribute("eventoGuardado", eventoForm.toDTO());
+			return Page.CREAR_EVENTO.getFile();
+		}
+		
+		//si todo sale ok....
+		
 		eventoForm.setCreador(usuarioLogueado);
 		eventoForm.addEmprendedor(usuarioLogueado);
 		
@@ -183,20 +169,8 @@ public class EventoController extends WebController {
 	@GetMapping(WebUtils.MAPPING_GET_EVENTOS_PUBLICOS)
 	public String getEventosPublicos(Model model, Principal principal, @RequestParam(value = "jsp", required = false) String jsp) {
 		List<Evento> eventos = eventoService.findPublicos();
-		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
-    	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-    		addUsuarioLogueado(model, principal);
-    		for(Evento evento: eventos) {
-    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
-    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
-    			} else {
-    				dto.setAsiste(false);
-    			}
-    		}
-    	}
-    	
+		List<EventoDTO> dtos = asignarInfoDeUsuarioAEvento(eventos, model, principal, false);
+    	    	
     	model.addAttribute("eventos", dtos);
     	return choice(jsp,Page.LISTA_EVENTOS.getFile());
 	}
@@ -315,9 +289,7 @@ public class EventoController extends WebController {
 		if(eventoGuardado.getMapa()!= null)
 			eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
 		model.addAttribute("eventoGuardado", eventoGuardado.toDTO());
-		
-		System.out.println("Map: "+eventoGuardado.getMapa());
-		
+
 		return Page.MODIFICAR_EVENTO.getFile();
 	}
 	
@@ -327,8 +299,6 @@ public class EventoController extends WebController {
 			@ModelAttribute("eventoForm") Evento eventoForm, BindingResult bindingResult,
 			@RequestParam(value = "localidadId", required = false) Integer localidadId,
 			@RequestParam(value = "fecha", required = false) String fecha,
-			@RequestParam(value = "tipoInscripcion", required = false) String tipoInscripcion,
-			@RequestParam(value = "tipoVisibilidad", required = false) String tipoVisibilidad,
 			@RequestParam("foto") MultipartFile fotoFile) {		
 		if(!isUsuarioLogueado(principal)) {
     		return goToDebeIniciarSesion(model).getFile();
@@ -377,31 +347,31 @@ public class EventoController extends WebController {
 			}
 		}
 		
-		if(tipoInscripcion == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de inscripcion."));
-		} else {
-			try {
-				eventoForm.setTipoInscripcion(tipoInscripcion);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de inscripcion:"+tipoInscripcion));
-			}
-		}
-		
-		if(tipoVisibilidad == null) {
-			errores.add(new MensajeDTO(TipoMensaje.ERROR,"Debe ingresar un tipo de visibilidad."));
-		} else {
-			try {
-				eventoForm.setTipoVisibilidad(tipoVisibilidad);
-			} catch (IllegalArgumentException e) {
-				errores.add(new MensajeDTO(TipoMensaje.ERROR,"No se conoce un tipo de visibilidad:"+tipoVisibilidad));
-			}
+		if(eventoForm.getCantidadMaxInscripcion() == null || eventoForm.getCantidadMaxInscripcion()<1) {
+			errores.add(new MensajeDTO(TipoMensaje.ERROR,"La cantidad maxima de emprendedores debe ser mayor a 0."));
 		}
 		
 		eventoValidator.validateInsert(eventoForm, bindingResult);
 		if (bindingResult.hasErrors() || errores.size()>0) {
 			// si hubo errores vuelvo a la web de la que vine
 			addMensajes(model, errores);
+			
+			/*model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+	    	
+			if(eventoGuardado.getMapa()!= null)
+				eventoGuardado.setMapa(eventoGuardado.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			*/
+			model.addAttribute("tiposInscripcion", TipoInscripcion.values());
+	    	model.addAttribute("tiposVisibilidad", TipoVisibilidad.values());
+			if(eventoForm.getMapa()!= null)
+				eventoForm.setMapa(eventoForm.getMapa().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\"", "&quot;"));
+			eventoForm.setDescripcionLarga(amortiguarInputHTML(eventoForm.getDescripcionLarga()));
+			eventoForm.setId(idEvento);
+			
+			model.addAttribute("eventoGuardado", eventoForm.toDTO());
 			return Page.MODIFICAR_EVENTO.getFile();
+			//return goToModificarEvento(model, principal, idEvento);
 		}
 		
 		//si todo sale ok....
@@ -422,7 +392,6 @@ public class EventoController extends WebController {
 		eventoGuardado = eventoService.save(eventoGuardado);
 		
 		addMensajes(model, new MensajeDTO(TipoMensaje.SUCCESS, "Modifico su evento con exito!"));
-		System.out.println("!!!!!!! "+eventoForm.getMapa());
 		if(eventoForm.getMapa()!=null && !eventoForm.getMapa().trim().isEmpty()) {
 			return welcome(model, principal);
 		} else {
@@ -520,28 +489,62 @@ public class EventoController extends WebController {
     		return welcome(model, principal);
     	}
     	
-    	EventoDTO dto = evento.toDTO();
+    	EventoDTO dto;
     	
     	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-        	
-        	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
-    		} else {
-    			dto.setAsiste(false);
-    		}
-        	
-        	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-        		dto.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
-        	} else {
-        		dto.setInscripto(false);
-        	}
+        	dto= asignarInfoDeUsuarioAEvento(evento, principal, true);
+        	Usuario usuarioLogueado = getLoggedUser(principal);
         	addUsuarioLogueado(model, usuarioLogueado);
+    	} else {
+    		dto = evento.toDTO();
     	}
     	
-    	model.addAttribute("evento", evento.toDTO());
+    	model.addAttribute("evento", dto);
     	
     	return Page.DETALLE_EVENTO.getFile();
+	}
+	
+	public EventoDTO asignarInfoDeUsuarioAEvento(Evento evento, Principal principal, boolean full) {
+		if(isUsuarioLogueado(principal)) {
+			Usuario usuarioLogueado = getLoggedUser(principal);
+    		return asignarInfoDeUsuarioAEvento(evento, usuarioLogueado, full);
+    	}
+		return full ? evento.toDTO() : evento.toMiniDTO();
+	}
+	
+	public EventoDTO asignarInfoDeUsuarioAEvento(Evento evento, Usuario usuarioLogueado, boolean full) {
+		EventoDTO dto = full ? evento.toDTO() : evento.toMiniDTO();
+		
+       	if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+       		dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));
+   		} else {
+   			dto.setAsiste(false);
+   		}
+       	
+       	if(evento.isAbierto() && !evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
+       		dto.setInscripto(evento.getEmprendedores().contains(usuarioLogueado));
+       	} else {
+       		dto.setInscripto(false);
+       	}
+		return dto;
+	}
+	
+	public List<EventoDTO> asignarInfoDeUsuarioAEvento(List<Evento> eventos, Model model, Principal principal, boolean full){
+		List<EventoDTO> dtos;
+    	if(isUsuarioLogueado(principal)) {
+    		dtos = new ArrayList<>();
+    		Usuario usuarioLogueado = getLoggedUser(principal);
+    		addUsuarioLogueado(model, principal);
+    		for(Evento evento: eventos) {
+    			dtos.add(asignarInfoDeUsuarioAEvento(evento, usuarioLogueado, false));
+    		}
+    	} else {
+    		if(full)
+    			dtos = eventos.stream().map(Evento::toDTO).collect(Collectors.toList());
+    		else
+    			dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
+    	}
+    	return dtos;
 	}
 
 	
@@ -674,19 +677,7 @@ public class EventoController extends WebController {
 			, @RequestParam(value = "day", required = false) String day) {
 		
 		List<Evento> eventos = eventoService.getByYearAndMonthAndDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-		List<EventoDTO> dtos = eventos.stream().map(Evento::toMiniDTO).collect(Collectors.toList());
-    	if(isUsuarioLogueado(principal)) {
-    		Usuario usuarioLogueado = getLoggedUser(principal);
-    		addUsuarioLogueado(model, principal);
-    		for(Evento evento: eventos) {
-    			EventoDTO dto = dtos.stream().filter(e -> e.getId().equals(evento.getId())).findFirst().get();
-    			if(!evento.isFinalizado() && !evento.getCreador().equals(usuarioLogueado)) {
-    				dto.setAsiste(evento.getAsistencia().contains(usuarioLogueado));;
-    			} else {
-    				dto.setAsiste(false);
-    			}
-    		}
-    	}
+		List<EventoDTO> dtos = asignarInfoDeUsuarioAEvento(eventos, model, principal, false);
     	
     	model.addAttribute("eventos", dtos);
     	return choice(jsp,Page.LISTA_EVENTOS.getFile());

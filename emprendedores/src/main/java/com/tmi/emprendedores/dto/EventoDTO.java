@@ -54,8 +54,10 @@ public class EventoDTO extends DTO{
 	
 	private String fotoB64;
 	
+	private Integer cantidadMaxInscripcion;
+	
 	public EventoDTO(Integer id, Date fechaCreacion, String nombre, String descripcion, LocalidadDTO localidad, UsuarioDTO creador,
-			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, String fotoB64, Integer cantidadAsistencia) {
+			Date fecha, TipoInscripcion tipoInscripcion, TipoVisibilidad tipoVisibilidad, Estado estado, Integer cantidadEmprendedores, String fotoB64, Integer cantidadAsistencia, Integer cantidadMaxInscripcion) {
 		super(id, fechaCreacion);
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -65,9 +67,10 @@ public class EventoDTO extends DTO{
 		this.tipoInscripcion = tipoInscripcion.name();
 		this.tipoVisibilidad = tipoVisibilidad.name();
 		this.estado = estado.name();
-		this.cantidadEmprendedores=cantidadEmprendedores;
-		this.fotoB64=fotoB64;
-		this.cantidadAsistencia=cantidadAsistencia;
+		this.cantidadEmprendedores = cantidadEmprendedores;
+		this.fotoB64 = fotoB64;
+		this.cantidadAsistencia = cantidadAsistencia;
+		this.cantidadMaxInscripcion = cantidadMaxInscripcion;
 	}
 
 	public String getNombre() {
@@ -103,6 +106,7 @@ public class EventoDTO extends DTO{
 	}
 
 	public String getFecha() {
+		if(fecha == null) return null;
 		return DatePickerUtil.getDateformater().format(fecha);
 	}
 
@@ -211,5 +215,13 @@ public class EventoDTO extends DTO{
 
 	public void setCantidadAsistencia(Integer cantidadAsistencia) {
 		this.cantidadAsistencia = cantidadAsistencia;
+	}
+
+	public Integer getCantidadMaxInscripcion() {
+		return cantidadMaxInscripcion;
+	}
+
+	public void setCantidadMaxInscripcion(Integer cantidadMaxInscripcion) {
+		this.cantidadMaxInscripcion = cantidadMaxInscripcion;
 	}
 }

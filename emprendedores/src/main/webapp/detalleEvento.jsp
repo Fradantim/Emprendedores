@@ -84,11 +84,39 @@
 							<article>
 								<header class="major">
 									<h2>Evento: ${evento.nombre} </h2>
-									<h2>Creador: ${evento.creador.nick} </h2><br>
+									<h2>Creador: <a href="${contextPath}/detalleEmprendedor?idEmprendedor=${evento.creador.id}">${evento.creador.nick}</a> </h2><br>
 								</header>
 								
 								<h3>Cuando: ${evento.fecha} </h3><br>
-								<h3>Donde: ${evento.localidad.nombre}, ${evento.localidad.provinciaNombre} - ${evento.localidad.paisNombre}</h3> <br>
+								
+								<h3>Donde: ${evento.localidad.nombre}, ${evento.localidad.provinciaNombre} - ${evento.localidad.paisNombre}</h3> <br> 
+								<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseEmprendedores" aria-expanded="false" aria-controls="collapseEmprendedores">
+									Ver Emprendedores Confirmados
+								</button>
+								<div class="collapse" id="collapseEmprendedores">
+									<div class="card card-body" style="overflow-x:auto;  max-height: 250px;">
+										<table class="table table-striped">
+											<tbody>
+												<c:set var="index" value="1" />
+												
+												<c:forEach items="${evento.emprendedores}" var="emp">
+													<tr>
+														<td scope="row">${index}</td>
+														<td><a href="${contextPath}/detalleEmprendedor?idEmprendedor=${emp.id}">${emp.nick}</a></td>
+													</tr>
+													<c:set var="index" value="${index + 1}" />
+												</c:forEach>
+												
+												<c:forEach var="i" begin="${index}" end="${evento.cantidadMaxInscripcion}">
+													<tr>
+														<td scope="row">${i}</td>
+														<td> - </td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
 								
 								<hr>
 								<!--  <span class="image featured"><img src="../assets/css/images/pic08.jpg" alt="" /></span>-->
