@@ -28,10 +28,14 @@
 		    $.notify(${m.build});
 		</c:forEach>
 	</script>
-	<!-- Logo -->
-		<h1><a href="${contextPath}/portal" id="logo"></a></h1>
-	<!-- Nav -->
+	
+	<div class="logo" id="logo">
+           <!--  <a class="navbar-brand" href="#"></a>--> 
+           <img  src="${contextPath}/assets/pics/logo.png" alt="">
+        </div>
+        
 	<nav id="nav">
+	<!-- Nav -->
 		<ul>
 			<li><a href="${contextPath}/portal">Home</a></li>
 			<!--  
@@ -88,7 +92,7 @@
 						
 					</li>
 					<li><a href="#" onclick="document.forms['logoutForm'].submit()">Log out</a></li>
-					<li><p id="usuarioLogueado" class="navbar-text">Logueado como: ${pageContext.request.userPrincipal.name}</p> </li>
+					<li><p id="usuarioLogueado" class="navbar-text">Usuario: ${pageContext.request.userPrincipal.name}</p> </li>
 				</c:when>
 				<c:otherwise>
 					<li><p id="usuarioLogueado" class="navbar-text"></p> </li>
