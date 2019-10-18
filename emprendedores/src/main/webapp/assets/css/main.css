@@ -7,6 +7,9 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+
+
+
 /* @extend display-flex; */
 display-flex, .display-flex, .display-flex-center, .signup-content, .signin-content, .social-login, .socials {
 	display: flex;
@@ -2126,6 +2129,11 @@ form input[type="checkbox"]{
 					line-height: 44px;
 					text-align: center;
 				}
+				
+				#titleBar .title img {
+					height: 40px;
+					width: 100px;
+				}
 
 				#titleBar .toggle {
 					position: absolute;
@@ -2709,4 +2717,16 @@ padding: 5px; }
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     padding-right: 1.0rem;
+}
+
+.logo{
+	padding-top: 13px;
+    float:inherit;
+    width: 150px;
+    height: 60px;
+}
+
+.logo img {
+	height: 100%;
+    width: 100%;
 }
